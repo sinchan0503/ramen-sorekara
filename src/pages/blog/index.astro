@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<Layout title="記事一覧 | ラーメン、それから。">
+  <h1 class="page-title">記事一覧</h1>
+  <div class="post-list">
+    {posts.map(post => (
+      <article class="post-item">
+        <span class="post-emoji">{post.data.emoji}</span>
+        <div class="post-body">
+          <a href={`/blog/${post.slug}`}>
+            <h2>{post.data.title}</h2>
+          </a>
+          <p class="post-desc">{post.data.description}</p>
+          <time class="post-date">{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
+        </div>
+      </article>
+    ))}
+  </div>
+</Layout>
+
+<style>
+  .page-title {
+    font-size: 1.6rem;
+    margin-bottom: 32px;
+    border-left: 4px solid #c0392b;
+    padding-left: 12px;
+  }
+  .post-list { display: flex; flex-direction: column; gap: 20px; }
+  .post-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 20px 24px;
+    transition: box-shadow 0.2s;
+  }
+  .post-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .post-emoji { font-size: 2.2rem; flex-shrink: 0; }
+  .post-body h2 { font-size: 1.1rem; margin-bottom: 6px; }
+  .post-body h2 a { color: #2c2c2c; text-decoration: none; }
+  .post-body h2 a:hover { color: #c0392b; }
+  .post-desc { font-size: 0.9rem; color: #666; margin-bottom: 8px; }
+  .post-date { font-size: 0.8rem; color: #aaa; }
+</style>

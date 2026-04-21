@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={`${post.data.title} | ラーメン、それから。`} description={post.data.description}>
+  <article class="post">
+    <header class="post-header">
+      <div class="post-emoji">{post.data.emoji}</div>
+      <h1>{post.data.title}</h1>
+      <time>{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
+    </header>
+    <div class="post-content">
+      <Content />
+    </div>
+    <div class="post-footer">
+      <a href="/blog">← 記事一覧に戻る</a>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .post { max-width: 680px; margin: 0 auto; }
+  .post-header { text-align: center; margin-bottom: 48px; }
+  .post-emoji { font-size: 3rem; margin-bottom: 16px; }
+  .post-header h1 { font-size: 1.8rem; margin-bottom: 8px; color: #2c2c2c; }
+  .post-header time { color: #aaa; font-size: 0.85rem; }
+  .post-content { font-size: 1.05rem; line-height: 2; }
+  .post-content h2 {
+    font-size: 1.3rem;
+    margin: 40px 0 16px;
+    border-left: 4px solid #c0392b;
+    padding-left: 12px;
+  }
+  .post-content p { margin-bottom: 20px; }
+  .post-footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+  .post-footer a { color: #c0392b; text-decoration: none; font-weight: bold; }
+  .post-footer a:hover { text-decoration: underline; }
+</style>

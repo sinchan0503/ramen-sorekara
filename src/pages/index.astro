@@ -1,11 +1,95 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="ラーメン、それから。">
+  <section class="hero">
+    <div class="hero-text">
+      <h1>🍜 ラーメン、それから。</h1>
+      <p>食べて、考えて、また食べる。<br>東京在住・麺狂い女子のラーメンブログ。</p>
+      <a href="/blog" class="btn">記事を読む</a>
+    </div>
+  </section>
+
+  <section class="recent">
+    <h2>最新記事</h2>
+    <div class="card-grid">
+      <article class="card">
+        <div class="card-emoji">🍥</div>
+        <h3>はじめての一杯</h3>
+        <p>このブログを始めたきっかけと、わたしのラーメン遍歴について。</p>
+        <a href="/blog">続きを読む →</a>
+      </article>
+      <article class="card">
+        <div class="card-emoji">🌶️</div>
+        <h3>辛さの向こう側</h3>
+        <p>激辛ラーメンに魅せられて、全国の名店を食べ歩いた記録。</p>
+        <a href="/blog">続きを読む →</a>
+      </article>
+      <article class="card">
+        <div class="card-emoji">🤖</div>
+        <h3>AIとラーメンの話</h3>
+        <p>AIを使ってラーメンレシピを生成してみたら、意外な発見があった。</p>
+        <a href="/blog">続きを読む →</a>
+      </article>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #fff5f5 0%, #fff9f0 100%);
+    border-radius: 12px;
+    margin-bottom: 60px;
+    border: 1px solid #f5e0d0;
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+    color: #c0392b;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    color: #555;
+    font-size: 1.05rem;
+    margin-bottom: 28px;
+  }
+  .btn {
+    background: #c0392b;
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background 0.2s;
+  }
+  .btn:hover { background: #a93226; }
+
+  .recent h2 {
+    font-size: 1.4rem;
+    margin-bottom: 24px;
+    border-left: 4px solid #c0392b;
+    padding-left: 12px;
+    color: #2c2c2c;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 24px;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .card-emoji { font-size: 2rem; margin-bottom: 12px; }
+  .card h3 { font-size: 1.05rem; margin-bottom: 8px; color: #2c2c2c; }
+  .card p { font-size: 0.9rem; color: #666; margin-bottom: 16px; }
+  .card a { color: #c0392b; text-decoration: none; font-size: 0.9rem; font-weight: bold; }
+  .card a:hover { text-decoration: underline; }
+</style>
