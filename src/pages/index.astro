@@ -1,5 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+
+const recentPosts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 ---
 
 <Layout title="ラーメン、それから。">
@@ -14,24 +19,14 @@ import Layout from '../layouts/Layout.astro';
   <section class="recent">
     <h2>最新記事</h2>
     <div class="card-grid">
-      <article class="card">
-        <div class="card-emoji">🍥</div>
-        <h3>はじめての一杯</h3>
-        <p>このブログを始めたきっかけと、わたしのラーメン遍歴について。</p>
-        <a href="/blog">続きを読む →</a>
-      </article>
-      <article class="card">
-        <div class="card-emoji">🌶️</div>
-        <h3>辛さの向こう側</h3>
-        <p>激辛ラーメンに魅せられて、全国の名店を食べ歩いた記録。</p>
-        <a href="/blog">続きを読む →</a>
-      </article>
-      <article class="card">
-        <div class="card-emoji">🤖</div>
-        <h3>AIとラーメンの話</h3>
-        <p>AIを使ってラーメンレシピを生成してみたら、意外な発見があった。</p>
-        <a href="/blog">続きを読む →</a>
-      </article>
+      {recentPosts.map(post => (
+        <article class="card">
+          <div class="card-emoji">{post.data.emoji}</div>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.description}</p>
+          <a href={`/blog/${post.slug}`}>続きを読む →</a>
+        </article>
+      ))}
     </div>
   </section>
 </Layout>
