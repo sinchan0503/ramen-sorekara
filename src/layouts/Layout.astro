@@ -23,32 +23,43 @@ const { title = 'ラーメン、それから。', description = 'ラーメンを
       }
       header {
         background: #c0392b;
-        padding: 16px 24px;
+        padding: 12px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
       }
       header a { text-decoration: none; }
       header .site-title {
         color: #fff;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         font-weight: bold;
         letter-spacing: 0.05em;
+        white-space: nowrap;
       }
       header .site-title span {
-        font-size: 0.9rem;
-        font-weight: normal;
-        margin-left: 8px;
-        opacity: 0.85;
+        display: none;
+      }
+      nav {
+        display: flex;
+        gap: 4px;
+        flex-shrink: 0;
       }
       nav a {
         color: #fff;
         text-decoration: none;
-        margin-left: 20px;
-        font-size: 0.9rem;
+        padding: 6px 10px;
+        font-size: 0.85rem;
         opacity: 0.9;
+        white-space: nowrap;
       }
       nav a:hover { opacity: 1; text-decoration: underline; }
+      @media (min-width: 600px) {
+        header .site-title { font-size: 1.4rem; }
+        header .site-title span { display: inline; font-size: 0.9rem; font-weight: normal; margin-left: 8px; opacity: 0.85; }
+        nav a { margin-left: 8px; font-size: 0.9rem; }
+      }
       main {
         max-width: 860px;
         margin: 40px auto;
