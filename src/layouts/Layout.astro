@@ -25,9 +25,8 @@ const { title = 'ラーメン、それから。', description = 'ラーメンを
         background: #c0392b;
         padding: 12px 20px;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: flex-start;
         gap: 8px;
       }
       header a { text-decoration: none; }
@@ -36,29 +35,37 @@ const { title = 'ラーメン、それから。', description = 'ラーメンを
         font-size: 1.2rem;
         font-weight: bold;
         letter-spacing: 0.05em;
-        white-space: nowrap;
       }
       header .site-title span {
-        display: none;
+        display: block;
+        font-size: 0.8rem;
+        font-weight: normal;
+        opacity: 0.85;
+        margin-top: 2px;
       }
       nav {
         display: flex;
         gap: 4px;
-        flex-shrink: 0;
+        flex-wrap: wrap;
       }
       nav a {
         color: #fff;
         text-decoration: none;
-        padding: 6px 10px;
+        padding: 4px 10px;
         font-size: 0.85rem;
         opacity: 0.9;
-        white-space: nowrap;
+        background: rgba(255,255,255,0.15);
+        border-radius: 4px;
       }
-      nav a:hover { opacity: 1; text-decoration: underline; }
+      nav a:hover { opacity: 1; background: rgba(255,255,255,0.25); }
       @media (min-width: 600px) {
+        header {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
         header .site-title { font-size: 1.4rem; }
-        header .site-title span { display: inline; font-size: 0.9rem; font-weight: normal; margin-left: 8px; opacity: 0.85; }
-        nav a { margin-left: 8px; font-size: 0.9rem; }
+        header .site-title span { display: inline; font-size: 0.9rem; margin-top: 0; margin-left: 8px; }
       }
       main {
         max-width: 860px;
