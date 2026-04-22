@@ -14,7 +14,7 @@ const posts = (await getCollection('blog')).sort(
       <article class="post-item">
         <span class="post-emoji">{post.data.emoji}</span>
         <div class="post-body">
-          <a href={`/blog/${post.slug}`}>
+          <a href={`/blog/${post.id.replace(/\.md$/, '')}`}>
             <h2>{post.data.title}</h2>
           </a>
           <p class="post-desc">{post.data.description}</p>
