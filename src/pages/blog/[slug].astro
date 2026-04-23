@@ -16,16 +16,8 @@ const { Content } = await render(post);
 
 <Layout title={`${post.data.title} | ラーメン、それから。`} description={post.data.description}>
   <article class="post">
-    {post.data.image && (
-      <div class="post-hero">
-        <img src={post.data.image} alt={post.data.title} />
-      </div>
-    )}
     <header class="post-header">
-      <div class="post-meta">
-        <span class="post-emoji">{post.data.emoji}</span>
-        <time>{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-      </div>
+      <time>{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
       <h1>{post.data.title}</h1>
       <p class="post-desc">{post.data.description}</p>
     </header>
@@ -39,124 +31,114 @@ const { Content } = await render(post);
 </Layout>
 
 <style>
-  .post { max-width: 680px; margin: 0 auto; }
+  .post {
+    max-width: 720px;
+    margin: 0 auto;
+  }
 
-  .post-hero {
-    width: 100%;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    border-radius: 16px;
+  /* ── ヘッダー ── */
+  .post-header {
     margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 2px solid #f0e8e4;
   }
-  .post-hero img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .post-header { margin-bottom: 48px; }
-
-  .post-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .post-header time {
+    display: block;
+    font-size: 0.8rem;
+    color: #c0a090;
+    letter-spacing: 0.08em;
     margin-bottom: 16px;
   }
-  .post-emoji { font-size: 1.4rem; }
-  .post-meta time {
-    font-size: 0.8rem;
-    color: #bbb;
-    letter-spacing: 0.05em;
-  }
-
   .post-header h1 {
     font-family: 'Shippori Mincho', serif;
-    font-size: clamp(1.7rem, 4vw, 2.2rem);
+    font-size: clamp(1.8rem, 4.5vw, 2.4rem);
     font-weight: 600;
-    line-height: 1.45;
+    line-height: 1.5;
     color: #1a1a1a;
-    margin-bottom: 14px;
-    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+    letter-spacing: 0.04em;
   }
   .post-desc {
-    font-size: 0.95rem;
-    color: #aaa;
-    line-height: 1.7;
-    padding-bottom: 28px;
-    border-bottom: 1px solid #f0e8e4;
+    font-size: 1rem;
+    color: #999;
+    line-height: 1.8;
   }
 
-  .post-content { font-size: 1.05rem; line-height: 2.1; color: #333; }
+  /* ── 本文 ── */
+  .post-content {
+    font-size: 1.08rem;
+    line-height: 2.1;
+    color: #2e2e2e;
+  }
+
+  .post-content p {
+    margin-bottom: 28px;
+  }
 
   .post-content h2 {
     font-family: 'Shippori Mincho', serif;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 600;
-    margin: 52px 0 20px;
+    margin: 60px 0 20px;
     color: #1a1a1a;
-    letter-spacing: 0.03em;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    letter-spacing: 0.04em;
+    padding-left: 16px;
+    border-left: 3px solid #b5352a;
+    line-height: 1.6;
   }
-  .post-content h2::before {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 1.1em;
-    background: #b5352a;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  .post-content p { margin-bottom: 24px; }
 
   .post-content blockquote {
     border: none;
-    padding: 20px 24px;
-    margin: 36px 0;
+    padding: 24px 28px 24px 48px;
+    margin: 40px 0;
     background: #fdf8f5;
     border-radius: 12px;
-    color: #888;
-    font-size: 0.88rem;
-    line-height: 1.9;
+    color: #999;
+    font-size: 0.9rem;
+    line-height: 2;
     position: relative;
   }
   .post-content blockquote::before {
     content: '"';
     font-family: 'Shippori Mincho', serif;
-    font-size: 3rem;
+    font-size: 4rem;
     color: #e8c4bb;
     position: absolute;
-    top: -8px;
-    left: 16px;
+    top: 4px;
+    left: 12px;
     line-height: 1;
   }
 
   .post-content hr {
     border: none;
     border-top: 1px solid #f0e8e4;
-    margin: 36px 0;
+    margin: 40px 0;
   }
 
-  .post-footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid #f0e8e4; }
+  /* ── フッター ── */
+  .post-footer {
+    margin-top: 72px;
+    padding-top: 28px;
+    border-top: 1px solid #f0e8e4;
+  }
   .post-footer a {
     color: #b5352a;
     text-decoration: none;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     font-weight: 500;
   }
   .post-footer a:hover { text-decoration: underline; }
 </style>
 
 <style is:global>
+  /* 記事内の画像 */
   .post-content img {
     display: block;
     width: 100%;
-    max-width: 560px;
+    max-width: 100%;
     height: auto;
-    border-radius: 14px;
-    margin: 8px auto 36px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-radius: 16px;
+    margin: 4px 0 40px;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.10);
   }
 </style>
