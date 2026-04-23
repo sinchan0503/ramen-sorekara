@@ -16,8 +16,16 @@ const { Content } = await render(post);
 
 <Layout title={`${post.data.title} | ラーメン、それから。`} description={post.data.description}>
   <article class="post">
+    {post.data.image && (
+      <div class="post-hero">
+        <img src={post.data.image} alt={post.data.title} />
+      </div>
+    )}
     <header class="post-header">
-      <time>{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
+      <div class="post-meta">
+        <span class="post-emoji">{post.data.emoji}</span>
+        <time>{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+      </div>
       <h1>{post.data.title}</h1>
       <p class="post-desc">{post.data.description}</p>
     </header>
@@ -31,63 +39,107 @@ const { Content } = await render(post);
 </Layout>
 
 <style>
-  .post { max-width: 660px; margin: 0 auto; }
+  .post { max-width: 680px; margin: 0 auto; }
 
-  .post-header {
-    margin-bottom: 48px;
+  .post-hero {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    border-radius: 16px;
+    margin-bottom: 40px;
+  }
+  .post-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .post-header { margin-bottom: 48px; }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .post-emoji { font-size: 1.4rem; }
+  .post-meta time {
+    font-size: 0.8rem;
+    color: #bbb;
+    letter-spacing: 0.05em;
+  }
+
+  .post-header h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(1.7rem, 4vw, 2.2rem);
+    font-weight: 600;
+    line-height: 1.45;
+    color: #1a1a1a;
+    margin-bottom: 14px;
+    letter-spacing: 0.03em;
+  }
+  .post-desc {
+    font-size: 0.95rem;
+    color: #aaa;
+    line-height: 1.7;
     padding-bottom: 28px;
     border-bottom: 1px solid #f0e8e4;
   }
-  .post-header time {
-    font-size: 0.78rem;
-    color: #bbb;
-    letter-spacing: 0.04em;
-    display: block;
-    margin-bottom: 12px;
-  }
-  .post-header h1 {
-    font-family: 'Shippori Mincho', serif;
-    font-size: 1.9rem;
-    font-weight: 600;
-    line-height: 1.5;
-    color: #1a1a1a;
-    margin-bottom: 12px;
-    letter-spacing: 0.02em;
-  }
-  .post-desc {
-    font-size: 0.9rem;
-    color: #aaa;
-    line-height: 1.6;
-  }
 
-  .post-content { font-size: 1rem; line-height: 2; }
+  .post-content { font-size: 1.05rem; line-height: 2.1; color: #333; }
+
   .post-content h2 {
     font-family: 'Shippori Mincho', serif;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 600;
-    margin: 44px 0 16px;
+    margin: 52px 0 20px;
     color: #1a1a1a;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #f0e8e4;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
-  .post-content p { margin-bottom: 20px; color: #333; }
+  .post-content h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.1em;
+    background: #b5352a;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .post-content p { margin-bottom: 24px; }
+
   .post-content blockquote {
-    border-left: 3px solid #e8c4bb;
-    padding: 12px 16px;
-    margin: 28px 0;
+    border: none;
+    padding: 20px 24px;
+    margin: 36px 0;
     background: #fdf8f5;
-    border-radius: 0 8px 8px 0;
+    border-radius: 12px;
     color: #888;
     font-size: 0.88rem;
-    line-height: 1.8;
+    line-height: 1.9;
+    position: relative;
   }
+  .post-content blockquote::before {
+    content: '"';
+    font-family: 'Shippori Mincho', serif;
+    font-size: 3rem;
+    color: #e8c4bb;
+    position: absolute;
+    top: -8px;
+    left: 16px;
+    line-height: 1;
+  }
+
   .post-content hr {
     border: none;
     border-top: 1px solid #f0e8e4;
-    margin: 32px 0;
+    margin: 36px 0;
   }
 
-  .post-footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid #f0e8e4; }
+  .post-footer { margin-top: 64px; padding-top: 24px; border-top: 1px solid #f0e8e4; }
   .post-footer a {
     color: #b5352a;
     text-decoration: none;
@@ -101,9 +153,10 @@ const { Content } = await render(post);
   .post-content img {
     display: block;
     width: 100%;
-    max-width: 520px;
+    max-width: 560px;
     height: auto;
-    border-radius: 12px;
-    margin: 0 auto 28px;
+    border-radius: 14px;
+    margin: 8px auto 36px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   }
 </style>
