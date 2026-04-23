@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="お問い合わせ | ラーメン、それから。" description="ラーメン、それから。へのお問い合わせはこちら">
+  <div class="contact">
+    <h1>お問い合わせ</h1>
+    <p class="lead">お気軽にどうぞ。ラーメンの情報もお待ちしています。</p>
+
+    <form action="https://formspree.io/f/XXXXXXXX" method="POST" class="form">
+      <div class="field">
+        <label for="name">お名前</label>
+        <input type="text" id="name" name="name" placeholder="ぽん" required />
+      </div>
+      <div class="field">
+        <label for="email">メールアドレス</label>
+        <input type="email" id="email" name="email" placeholder="ramen@example.com" required />
+      </div>
+      <div class="field">
+        <label for="message">メッセージ</label>
+        <textarea id="message" name="message" rows="6" placeholder="おすすめのラーメン屋があればぜひ。" required></textarea>
+      </div>
+      <button type="submit">送信する</button>
+    </form>
+  </div>
+</Layout>
+
+<style>
+  .contact { max-width: 560px; margin: 0 auto; }
+  .contact h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1a1a1a;
+  }
+  .lead {
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 40px;
+  }
+  .form { display: flex; flex-direction: column; gap: 24px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #555;
+  }
+  .field input, .field textarea {
+    border: 1px solid #e8e0dc;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: #fff;
+    color: #1a1a1a;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field textarea:focus {
+    border-color: #b5352a;
+  }
+  .field textarea { resize: vertical; }
+  button {
+    background: #b5352a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  button:hover { background: #9e2d23; }
+</style>
