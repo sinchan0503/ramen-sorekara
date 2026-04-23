@@ -13,83 +13,86 @@ const { title = 'ラーメン、それから。', description = 'ラーメンを
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.ico" />
     <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Shippori+Mincho:wght@500;600&display=swap" rel="stylesheet">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body {
-        font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-        background: #fffdf8;
-        color: #2c2c2c;
-        line-height: 1.8;
+        font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+        background: #fdf8f3;
+        color: #2a2a2a;
+        line-height: 1.9;
       }
       header {
-        background: #c0392b;
-        padding: 12px 20px;
+        background: #fff;
+        border-bottom: 1px solid #f0e8e4;
+        padding: 0 24px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .header-inner {
+        max-width: 960px;
+        margin: 0 auto;
+        height: 56px;
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
       }
       header a { text-decoration: none; }
-      header .site-title {
-        color: #fff;
-        font-size: 1.2rem;
-        font-weight: bold;
-        letter-spacing: 0.05em;
+      .site-title {
+        font-family: 'Shippori Mincho', serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #b5352a;
+        white-space: nowrap;
+        flex-shrink: 0;
+        letter-spacing: 0.04em;
       }
-      header .site-title span {
-        display: block;
-        font-size: 0.8rem;
-        font-weight: normal;
-        opacity: 0.85;
-        margin-top: 2px;
-      }
-      nav {
-        display: flex;
-        gap: 4px;
-        flex-wrap: wrap;
-      }
+      nav { display: flex; }
       nav a {
-        color: #fff;
+        color: #888;
         text-decoration: none;
-        padding: 4px 10px;
-        font-size: 0.85rem;
-        opacity: 0.9;
-        background: rgba(255,255,255,0.15);
-        border-radius: 4px;
+        padding: 6px 10px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        border-radius: 20px;
+        transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
       }
-      nav a:hover { opacity: 1; background: rgba(255,255,255,0.25); }
-      @media (min-width: 600px) {
-        header {
-          flex-direction: row;
-          align-items: center;
-          justify-content: space-between;
-        }
-        header .site-title { font-size: 1.4rem; }
-        header .site-title span { display: inline; font-size: 0.9rem; margin-top: 0; margin-left: 8px; }
-      }
+      nav a:hover { background: #fdf0ed; color: #b5352a; }
       main {
-        max-width: 860px;
-        margin: 40px auto;
+        max-width: 960px;
+        margin: 48px auto;
         padding: 0 20px;
       }
       footer {
         text-align: center;
         padding: 40px 20px;
-        color: #999;
-        font-size: 0.85rem;
-        border-top: 1px solid #eee;
-        margin-top: 60px;
+        color: #ccc;
+        font-size: 0.78rem;
+        border-top: 1px solid #f0e8e4;
+        margin-top: 80px;
+        letter-spacing: 0.05em;
+      }
+      @media (max-width: 600px) {
+        .header-inner { height: auto; padding: 10px 0; flex-wrap: wrap; gap: 8px; }
+        nav a { padding: 4px 8px; font-size: 0.78rem; }
       }
     </style>
   </head>
   <body>
     <header>
-      <a href="/" class="site-title">🍜 ラーメン、それから。<span>— 食べて、考えて、また食べる。</span></a>
-      <nav>
-        <a href="/">ホーム</a>
-        <a href="/blog">記事一覧</a>
-        <a href="/about">このブログについて</a>
-      </nav>
+      <div class="header-inner">
+        <a href="/" class="site-title">🍜 ラーメン、それから。</a>
+        <nav>
+          <a href="/">ホーム</a>
+          <a href="/blog">記事一覧</a>
+          <a href="/about">このブログについて</a>
+        </nav>
+      </div>
     </header>
     <main>
       <slot />
