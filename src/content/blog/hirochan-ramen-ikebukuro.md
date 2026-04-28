@@ -1,7 +1,7 @@
 ---
 title: "また来たくなる、ひろちゃん"
 description: "池袋西口のちゃん系。普通においしい、が一番の褒め言葉だと思う。"
-pubDate: 2026-04-15
+pubDate: 2026-04-22
 emoji: "🍜"
 image: "/images/hirochan-ramen-ikebukuro.jpg"
 ---

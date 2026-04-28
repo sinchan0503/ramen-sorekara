@@ -1,7 +1,7 @@
 ---
 title: "辛くすると、生卵が正解になる"
 description: "たた味に再訪。今度は特製辛スタミナ中華。辛くすると生卵との相性が段違いだった。"
-pubDate: 2026-04-29
+pubDate: 2026-04-29T00:05:00+09:00
 emoji: "🥚"
 image: "/images/tatami-karai-01.jpg"
 ---

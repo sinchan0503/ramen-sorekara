@@ -1,7 +1,7 @@
 ---
 title: "朝からラーメン、という選択肢"
 description: "つじ田飯田橋店の朝ラーメン。ご飯・卵つきで600円台。牛丼屋の朝食に負けてない。"
-pubDate: 2026-04-29
+pubDate: 2026-04-29T00:33:00+09:00
 emoji: "🌅"
 image: "/images/tsujita-asa-iidabashi.jpg"
 ---

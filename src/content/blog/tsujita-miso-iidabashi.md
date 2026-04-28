@@ -1,7 +1,7 @@
 ---
 title: "冬の味噌は、やっぱりいい"
 description: "飯田橋のつじ田 味噌の章。辛味噌二種、どっちも美味しかった記憶。"
-pubDate: 2026-04-19
+pubDate: 2026-04-22
 emoji: "🌶️"
 image: "/images/tsujita-miso-iidabashi.jpg"
 ---

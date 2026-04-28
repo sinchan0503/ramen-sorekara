@@ -1,7 +1,7 @@
 ---
 title: "口がしょぼしょぼする、最高"
 description: "YouTubeで見て気になってた中野坂上の家系。豆板醤との相性が正義だった。"
-pubDate: 2026-04-29
+pubDate: 2026-04-29T00:10:00+09:00
 emoji: "🍖"
 image: "/images/taisei-nakano-02.jpg"
 ---
