@@ -2,15 +2,20 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-);
+export async function getStaticPaths({ paginate }) {
+  const posts = (await getCollection('blog')).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  return paginate(posts, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
 ---
 
 <Layout title="記事一覧 | ラーメン、それから。">
   <h1 class="page-title">記事一覧</h1>
   <div class="post-grid">
-    {posts.map(post => (
+    {page.data.map(post => (
       <a href={`/blog/${post.id.replace(/\.md$/, '')}`} class="post-card">
         <div class="card-thumb">
           {post.data.image
@@ -26,6 +31,16 @@ const posts = (await getCollection('blog')).sort(
       </a>
     ))}
   </div>
+
+  <nav class="pagination">
+    {page.url.prev && (
+      <a href={page.url.prev} class="page-btn">← 新しい記事</a>
+    )}
+    <span class="page-info">{page.currentPage} / {page.lastPage}</span>
+    {page.url.next && (
+      <a href={page.url.next} class="page-btn">古い記事 →</a>
+    )}
+  </nav>
 </Layout>
 
 <style>
@@ -88,5 +103,34 @@ const posts = (await getCollection('blog')).sort(
     font-size: 0.82rem;
     color: #999;
     line-height: 1.6;
+  }
+
+  /* ── Pagination ── */
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .page-btn {
+    display: inline-block;
+    background: #fff;
+    color: #b5352a;
+    border: 1px solid #b5352a;
+    padding: 8px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+  }
+  .page-btn:hover {
+    background: #b5352a;
+    color: #fff;
+  }
+  .page-info {
+    font-size: 0.82rem;
+    color: #bbb;
   }
 </style>
