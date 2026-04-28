@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import CommentSection from '../../components/CommentSection.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -27,6 +28,7 @@ const { Content } = await render(post);
     <div class="post-footer">
       <a href="/blog">← 記事一覧に戻る</a>
     </div>
+    <CommentSection slug={post.id.replace(/\.md$/, '')} />
   </article>
 </Layout>
 
