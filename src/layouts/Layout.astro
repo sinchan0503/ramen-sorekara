@@ -3,7 +3,7 @@ interface Props {
   title?: string;
   description?: string;
 }
-const { title = 'ラーメン、それから。', description = 'ラーメンがモンブランにしか見えないOLのブログ。食べて、考えて、また食べる。' } = Astro.props;
+const { title = 'ラーメンブログ｜ラーメン、それから。', description = '東京のラーメンブログ。ラーメンがモンブランにしか見えないOLが食べて書く、東京ラーメンレビュー。' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, 'https://ramen-sorekara.com');
 ---
 <!doctype html>
