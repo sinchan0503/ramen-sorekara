@@ -44,6 +44,13 @@ const breadcrumbSchema = {
 <Layout title={`${post.data.title} | ラーメン、それから。`} description={post.data.description}>
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <a href="/">ホーム</a>
+    <span>›</span>
+    <a href="/blog">ブログ</a>
+    <span>›</span>
+    <span>{post.data.title}</span>
+  </nav>
   <article class="post">
     <header class="post-header">
       <time>{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
@@ -61,6 +68,28 @@ const breadcrumbSchema = {
 </Layout>
 
 <style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    color: #bbb;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .breadcrumb a {
+    color: #b5352a;
+    text-decoration: none;
+  }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span:last-child {
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+  }
+
   .post {
     max-width: 720px;
     margin: 0 auto;
