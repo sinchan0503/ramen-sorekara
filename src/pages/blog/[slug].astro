@@ -51,20 +51,24 @@ const breadcrumbSchema = {
     <span>›</span>
     <span>{post.data.title}</span>
   </nav>
-  <article class="post">
-    <header class="post-header">
-      <time>{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
-      <h1>{post.data.title}</h1>
-      <p class="post-desc">{post.data.description}</p>
-    </header>
-    <div class="post-content">
-      <Content />
-    </div>
-    <div class="post-footer">
-      <a href="/blog">← 記事一覧に戻る</a>
-    </div>
-    <CommentSection slug={post.id.replace(/\.md$/, '')} />
-  </article>
+  <div class="post-layout">
+    <article class="post">
+      <header class="post-header">
+        <time>{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <h1>{post.data.title}</h1>
+        <p class="post-desc">{post.data.description}</p>
+      </header>
+      <div class="post-content">
+        <Content />
+      </div>
+      <div class="post-footer">
+        <a href="/blog">← 記事一覧に戻る</a>
+      </div>
+    </article>
+    <aside class="post-sidebar">
+      <CommentSection slug={post.id.replace(/\.md$/, '')} />
+    </aside>
+  </div>
 </Layout>
 
 <style>
@@ -90,9 +94,21 @@ const breadcrumbSchema = {
     max-width: 200px;
   }
 
+  .post-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .post-layout {
+      grid-template-columns: 1fr 320px;
+    }
+  }
+
   .post {
-    max-width: 720px;
-    margin: 0 auto;
+    min-width: 0;
   }
 
   /* ── ヘッダー ── */
@@ -190,6 +206,16 @@ const breadcrumbSchema = {
 </style>
 
 <style is:global>
+  /* サイドバー内のコメント欄リセット */
+  .post-sidebar .comments {
+    max-width: 100%;
+    margin: 0;
+    padding-top: 0;
+    border-top: none;
+    position: sticky;
+    top: 80px;
+  }
+
   /* 記事内の画像 */
   .post-content img {
     display: block;
