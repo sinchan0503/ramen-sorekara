@@ -13,9 +13,37 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+const siteUrl = 'https://ramen-sorekara.com';
+const postUrl = `${siteUrl}/blog/${post.id.replace(/\.md$/, '')}`;
+const pubDate = post.data.pubDate.toISOString();
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": pubDate,
+  "url": postUrl,
+  "author": { "@type": "Person", "name": "ぽん" },
+  "publisher": { "@type": "Organization", "name": "ラーメン、それから。", "url": siteUrl },
+  ...(post.data.image ? { "image": `${siteUrl}${post.data.image}` } : {}),
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "ホーム", "item": siteUrl },
+    { "@type": "ListItem", "position": 2, "name": "ブログ", "item": `${siteUrl}/blog` },
+    { "@type": "ListItem", "position": 3, "name": post.data.title, "item": postUrl },
+  ],
+};
 ---
 
 <Layout title={`${post.data.title} | ラーメン、それから。`} description={post.data.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <article class="post">
     <header class="post-header">
       <time>{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
