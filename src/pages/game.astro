@@ -1,0 +1,358 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="呪文リズムゲーム｜ラーメン、それから。" description="二郎系の注文呪文をビートに合わせて叩け！ラーメン、それから。のミニゲーム。">
+  <div class="game-wrap">
+    <h1>🥣 呪文を叩け！</h1>
+    <p class="subtitle">「ニンニク入れますか？」— ビートに合わせてトッピングを選ぼう</p>
+
+    <div class="screen" id="screen-start">
+      <p class="store-text">いらっしゃいませ。<br>ニンニク入れますか？</p>
+      <button class="btn-start" id="btn-start">はじめる</button>
+    </div>
+
+    <div class="screen hidden" id="screen-game">
+      <div class="beat-bar">
+        <div class="beat-dot" id="beat-dot"></div>
+      </div>
+      <p class="prompt" id="prompt-text">ニンニク入れますか？</p>
+      <div class="order-display" id="order-display">（まだ何も言ってない）</div>
+      <div class="toppings">
+        <button class="topping-btn" data-topping="ニンニク">🧄 ニンニク</button>
+        <button class="topping-btn" data-topping="野菜">🥬 野菜</button>
+        <button class="topping-btn" data-topping="背脂">🍖 背脂</button>
+        <button class="topping-btn" data-topping="カラメ">🫙 カラメ</button>
+        <button class="topping-btn topping-mashi" data-topping="マシ">⬆️ マシ</button>
+        <button class="topping-btn topping-mashi" data-topping="マシマシ">⬆️⬆️ マシマシ</button>
+      </div>
+      <div class="actions">
+        <button class="btn-submit" id="btn-submit">これで！</button>
+        <button class="btn-nashi" id="btn-nashi">なし！</button>
+      </div>
+      <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
+    </div>
+
+    <div class="screen hidden" id="screen-result">
+      <p class="result-order" id="result-order"></p>
+      <p class="result-pon" id="result-pon"></p>
+      <div class="result-score" id="result-score"></div>
+      <button class="btn-start" id="btn-retry">もう一回</button>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // ── 定数 ──────────────────────────────────────────
+  const BPM = 120;
+  const BEAT_MS = (60 / BPM) * 1000;
+  const GAME_BEATS = 8; // 8ビート以内に決める
+
+  // 結果パターン（ぽんのひとこと）
+  const comments: Record<string, string> = {
+    none:            'なし！キリッとしてるじゃん。',
+    ninniku:         'ニンニクだけ。シンプルイズベスト。',
+    yasai:           '野菜だけ。ヘルシー意識してる笑',
+    abura:           '背脂だけ。こってり派。',
+    karame:          'カラメだけ。醤油命。',
+    masimasi:        'マシマシ！上級者すぎる…',
+    all:             '全部マシマシ！！ それ完全に罰ゲームやん笑',
+    allNoMashi:      'ニンニク野菜背脂カラメ全部！ 欲張りすぎやろ笑',
+    ninnikuYasai:    'ニンニク野菜。ザ・王道コンボ。',
+    ninnikuMashi:    'ニンニクマシマシ！ 勇者か。',
+    yasaiMashi:      '野菜マシマシ。お腹いっぱいになりそう。',
+    slow:            '…もたついてたけど、ちゃんと言えてた笑',
+    default:         'それで正解かは知らんけど、おいしく食べてね。',
+  };
+
+  // ── 状態 ─────────────────────────────────────────
+  let selected: string[] = [];
+  let beatCount = 0;
+  let beatTimer: ReturnType<typeof setInterval> | null = null;
+  let timerInterval: ReturnType<typeof setInterval> | null = null;
+  let startTime = 0;
+  let audioCtx: AudioContext | null = null;
+
+  // ── DOM ──────────────────────────────────────────
+  const screenStart  = document.getElementById('screen-start')!;
+  const screenGame   = document.getElementById('screen-game')!;
+  const screenResult = document.getElementById('screen-result')!;
+  const beatDot      = document.getElementById('beat-dot')!;
+  const orderDisplay = document.getElementById('order-display')!;
+  const timerBar     = document.getElementById('timer-bar')!;
+  const resultOrder  = document.getElementById('result-order')!;
+  const resultPon    = document.getElementById('result-pon')!;
+  const resultScore  = document.getElementById('result-score')!;
+
+  // ── 音 ───────────────────────────────────────────
+  function playBeat(accent = false) {
+    if (!audioCtx) audioCtx = new AudioContext();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.frequency.value = accent ? 880 : 440;
+    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.1);
+  }
+
+  function playSubmit() {
+    if (!audioCtx) audioCtx = new AudioContext();
+    [523, 659, 784].forEach((freq, i) => {
+      const osc = audioCtx!.createOscillator();
+      const gain = audioCtx!.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx!.destination);
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.12, audioCtx!.currentTime + i * 0.08);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx!.currentTime + i * 0.08 + 0.15);
+      osc.start(audioCtx!.currentTime + i * 0.08);
+      osc.stop(audioCtx!.currentTime + i * 0.08 + 0.2);
+    });
+  }
+
+  // ── ゲーム制御 ────────────────────────────────────
+  function show(el: HTMLElement) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    el.classList.remove('hidden');
+  }
+
+  function startGame() {
+    selected = [];
+    beatCount = 0;
+    startTime = Date.now();
+    orderDisplay.textContent = '（まだ何も言ってない）';
+    updateTimerBar();
+    show(screenGame);
+
+    beatTimer = setInterval(() => {
+      beatCount++;
+      const accent = beatCount % 4 === 1;
+      playBeat(accent);
+      beatDot.classList.toggle('accent', accent);
+      beatDot.classList.add('pulse');
+      setTimeout(() => beatDot.classList.remove('pulse'), 100);
+
+      if (beatCount >= GAME_BEATS) {
+        endGame(true);
+      }
+    }, BEAT_MS);
+
+    timerInterval = setInterval(updateTimerBar, 30);
+  }
+
+  function updateTimerBar() {
+    const elapsed = Date.now() - startTime;
+    const total = BEAT_MS * GAME_BEATS;
+    const pct = Math.max(0, 100 - (elapsed / total) * 100);
+    timerBar.style.width = pct + '%';
+    timerBar.style.background = pct > 40 ? '#b5352a' : pct > 20 ? '#e07b00' : '#cc0000';
+  }
+
+  function endGame(timedOut = false) {
+    if (beatTimer) clearInterval(beatTimer);
+    if (timerInterval) clearInterval(timerInterval);
+    playSubmit();
+
+    const orderText = selected.length === 0 ? 'なし' : selected.join('・');
+    const elapsed = Date.now() - startTime;
+    const beatUsed = Math.floor(elapsed / BEAT_MS);
+    const score = Math.max(0, GAME_BEATS - beatUsed);
+
+    resultOrder.textContent = `「${orderText}」`;
+    resultScore.textContent = timedOut
+      ? `⏱ 時間切れ！ビート: ${GAME_BEATS}/${GAME_BEATS}`
+      : `🥁 ${beatUsed}ビートで決めた！`;
+    resultPon.textContent = `ぽん: 「${getComment()}」`;
+
+    show(screenResult);
+  }
+
+  function getComment(): string {
+    const s = new Set(selected);
+    const hasMashi = s.has('マシ') || s.has('マシマシ');
+    const hasMashiMashi = s.has('マシマシ');
+    if (selected.length === 0) return comments.none;
+    if (hasMashiMashi && selected.length >= 4) return comments.all;
+    if (hasMashi && selected.length >= 4) return comments.allNoMashi;
+    if (hasMashiMashi) return hasMashiMashi && s.has('ニンニク') ? comments.ninnikuMashi : comments.masimasi;
+    if (hasMashi && s.has('野菜')) return comments.yasaiMashi;
+    if (s.has('ニンニク') && s.has('野菜') && selected.length === 2) return comments.ninnikuYasai;
+    if (s.size === 1 && s.has('ニンニク')) return comments.ninniku;
+    if (s.size === 1 && s.has('野菜')) return comments.yasai;
+    if (s.size === 1 && s.has('背脂')) return comments.abura;
+    if (s.size === 1 && s.has('カラメ')) return comments.karame;
+    return comments.default;
+  }
+
+  // ── イベント ──────────────────────────────────────
+  document.getElementById('btn-start')!.addEventListener('click', startGame);
+  document.getElementById('btn-retry')!.addEventListener('click', startGame);
+  document.getElementById('btn-submit')!.addEventListener('click', () => endGame(false));
+  document.getElementById('btn-nashi')!.addEventListener('click', () => {
+    selected = [];
+    endGame(false);
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('.topping-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.topping!;
+      if (selected.includes(t)) {
+        selected = selected.filter(s => s !== t);
+        btn.classList.remove('active');
+      } else {
+        selected.push(t);
+        btn.classList.add('active');
+      }
+      orderDisplay.textContent = selected.length === 0
+        ? '（まだ何も言ってない）'
+        : selected.join('・');
+    });
+  });
+</script>
+
+<style>
+  .game-wrap {
+    text-align: center;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 0.85rem;
+    color: #999;
+    margin-bottom: 32px;
+  }
+
+  /* ── screens ── */
+  .screen { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .hidden { display: none !important; }
+
+  .store-text {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.3rem;
+    line-height: 2;
+    color: #2a2a2a;
+  }
+
+  /* ── beat ── */
+  .beat-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+  }
+  .beat-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ddd;
+    transition: background 0.05s;
+  }
+  .beat-dot.accent { background: #b5352a; }
+  .beat-dot.pulse { transform: scale(1.4); background: #b5352a; }
+
+  .prompt {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.1rem;
+    color: #555;
+  }
+
+  .order-display {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #b5352a;
+    min-height: 1.5em;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── toppings ── */
+  .toppings {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+  .topping-btn {
+    padding: 14px 8px;
+    border: 2px solid #e8ddd8;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 0.9rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #2a2a2a;
+  }
+  .topping-btn:hover { border-color: #b5352a; background: #fdf0ed; }
+  .topping-btn.active { border-color: #b5352a; background: #b5352a; color: #fff; }
+  .topping-mashi { grid-column: span 1; }
+
+  /* ── actions ── */
+  .actions { display: flex; gap: 12px; }
+  .btn-submit, .btn-nashi, .btn-start {
+    padding: 12px 28px;
+    border-radius: 30px;
+    border: none;
+    font-size: 0.95rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+  }
+  .btn-submit, .btn-start {
+    background: #b5352a;
+    color: #fff;
+  }
+  .btn-submit:hover, .btn-start:hover { background: #9b2d22; transform: translateY(-1px); }
+  .btn-nashi {
+    background: #f0e8e4;
+    color: #888;
+  }
+  .btn-nashi:hover { background: #e0d0c8; }
+
+  /* ── timer ── */
+  .timer-bar-wrap {
+    width: 100%;
+    height: 6px;
+    background: #f0e8e4;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .timer-bar {
+    height: 100%;
+    width: 100%;
+    background: #b5352a;
+    transition: width 0.03s linear, background 0.3s;
+    border-radius: 3px;
+  }
+
+  /* ── result ── */
+  .result-order {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.6rem;
+    color: #b5352a;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .result-pon {
+    font-size: 1rem;
+    color: #555;
+    background: #fdf0ed;
+    padding: 12px 20px;
+    border-radius: 12px;
+    line-height: 1.7;
+  }
+  .result-score {
+    font-size: 0.85rem;
+    color: #aaa;
+  }
+</style>
