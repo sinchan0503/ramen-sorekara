@@ -79,53 +79,67 @@ const FALL_BEATS = 4;
 const FALL_MS   = BEAT_MS * FALL_BEATS;
 const NW = 72, NH = 86, NR = 18;   // note card dimensions
 const PERFECT_MS = 70, GOOD_MS = 140;
-const TOTAL_BEATS = 16;
+const TOTAL_BEATS = 22; // 12ノートが収まる余裕を持たせる
 
 const TOPPINGS: Record<string, Topping> = {
   'ニンニク': { key:'ニンニク', emoji:'🧄', label:'にんにく', bg:'#fdf5e0', border:'#c8a040', text:'#7a5c00', particle:'#f0c040' },
   '野菜':     { key:'野菜',    emoji:'🥬', label:'もやし',   bg:'#edfaed', border:'#5aaa5a', text:'#2a6a2a', particle:'#60cc60' },
   '背脂':     { key:'背脂',   emoji:'🍖', label:'あぶら',   bg:'#fff3ee', border:'#d08868', text:'#8a4020', particle:'#f0a060' },
   'カラメ':   { key:'カラメ', emoji:'🫙', label:'からめ',   bg:'#2a1208', border:'#804020', text:'#f5c890', particle:'#c05020' },
-  'マシ':     { key:'マシ',   emoji:'⭐', label:'マシ！',   bg:'#fffae8', border:'#d4a000', text:'#7a5a00', particle:'#f4c000' },
 };
 
-// NOTE_SEQ は毎ゲーム generateNoteSeq() でランダム生成する
-const TOPPING_KEYS = ['ニンニク','野菜','背脂','カラメ','マシ'];
+// 各トッピング3回ずつ、計12ノート。ランダムに配置。
+const TOPPING_KEYS = ['ニンニク','野菜','背脂','カラメ'];
+const TOTAL_NOTES = 12; // 4種 × 3回
 let NOTE_SEQ: {beat:number, key:string, lane:number}[] = [];
 
 function generateNoteSeq() {
-  // ビートスロット（重ならないよう最低2ビート間隔）
-  const slots = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+  // 3回ずつのキーリスト
+  const keys = [...TOPPING_KEYS, ...TOPPING_KEYS, ...TOPPING_KEYS];
   // シャッフル
-  for (let i=slots.length-1;i>0;i--) {
-    const j=Math.floor(Math.random()*(i+1));
-    [slots[i],slots[j]]=[slots[j],slots[i]];
-  }
-  // トッピングもシャッフル（各2回出現）
-  const keys = [...TOPPING_KEYS, ...TOPPING_KEYS];
   for (let i=keys.length-1;i>0;i--) {
     const j=Math.floor(Math.random()*(i+1));
     [keys[i],keys[j]]=[keys[j],keys[i]];
   }
-  const count = Math.min(10, slots.length, keys.length);
-  NOTE_SEQ = slots.slice(0,count).map((beat,i)=>({
+  // 12ノートを16ビート以内にランダム配置（2ビート以上間隔）
+  const usedBeats = new Set<number>();
+  const beats: number[] = [];
+  let attempts = 0;
+  while (beats.length < TOTAL_NOTES && attempts < 200) {
+    attempts++;
+    const b = 1 + Math.floor(Math.random() * 18);
+    const tooClose = beats.some(x => Math.abs(x-b) < 2);
+    if (!tooClose && !usedBeats.has(b)) {
+      beats.push(b);
+      usedBeats.add(b);
+    }
+  }
+  beats.sort((a,b)=>a-b);
+  NOTE_SEQ = beats.map((beat,i)=>({
     beat,
     key: keys[i],
     lane: Math.floor(Math.random()*3),
   }));
-  NOTE_SEQ.sort((a,b)=>a.beat-b.beat);
+}
+
+// ヒット数からマシ度を判定
+function getMashiLevel(count: number): string {
+  if (count >= 3) return 'マシマシ';
+  if (count === 2) return 'マシ';
+  if (count === 1) return '';
+  return '';
 }
 
 const COMMENTS: Record<string, string> = {
-  all:   '全部入り！ 欲張りすぎやろ笑',
-  none:  'なし！ キリッとしてるやん。',
-  mashi: 'マシが入ってる。勇者か。',
-  ninniku: 'ニンニクだけ。シンプルイズベスト。',
-  yasai: '野菜だけ。ヘルシー意識してる笑',
-  abura: '背脂だけ。こってり派やね。',
-  karame:'カラメだけ。醤油命。',
-  ninnikuYasai: 'ニンニク野菜。ザ・王道。',
-  default:'それで正解かは知らんけど、おいしく食べてね。',
+  allMashiMashi: '全部マシマシ！！ 完全に変態や笑',
+  allNormal:     '全部入り！ 完璧な呪文やん。',
+  none:          'なし！ キリッとしてるやん。',
+  ninniku:       'ニンニクだけ。シンプルイズベスト。',
+  yasai:         '野菜だけ。ヘルシー意識してる笑',
+  abura:         '背脂だけ。こってり派やね。',
+  karame:        'カラメだけ。醤油命。',
+  ninnikuYasai:  'ニンニク野菜。ザ・王道。',
+  default:       'それで正解かは知らんけど、おいしく食べてね。',
 };
 
 // ── 状態 ─────────────────────────────────────────────
@@ -523,23 +537,34 @@ function endGame() {
   if (beatInterval) clearInterval(beatInterval);
 
   const hitKeys = hits.filter(h=>h.judge!=='MISS').map(h=>h.key);
-  const s = new Set(hitKeys);
   const perfects = hits.filter(h=>h.judge==='PERFECT').length;
   const goods    = hits.filter(h=>h.judge==='GOOD').length;
   const misses   = hits.filter(h=>h.judge==='MISS').length + (NOTE_SEQ.length-hits.length);
 
-  document.getElementById('result-order')!.textContent = hitKeys.length===0 ? 'なし' : hitKeys.join(' ・ ');
+  // 各トッピングのヒット数を集計
+  const hitCounts: Record<string,number> = {};
+  for (const k of hitKeys) hitCounts[k] = (hitCounts[k]||0) + 1;
+
+  // 注文テキスト生成（マシ度付き）
+  const orderParts = TOPPING_KEYS
+    .filter(k => hitCounts[k] > 0)
+    .map(k => {
+      const mashi = getMashiLevel(hitCounts[k]);
+      return mashi ? `${k}${mashi}` : k;
+    });
+
+  document.getElementById('result-order')!.textContent = orderParts.length===0 ? 'なし' : orderParts.join(' ・ ');
   document.getElementById('result-score')!.textContent = String(score);
-  document.getElementById('result-pon')!.textContent   = `ぽん:「${getComment(s, hitKeys)}」`;
+  document.getElementById('result-pon')!.textContent   = `ぽん:「${getComment(hitCounts)}」`;
   document.getElementById('result-stats')!.innerHTML   =
     `<span class="s-p">PERFECT ${perfects}</span> <span class="s-g">GOOD ${goods}</span> <span class="s-m">MISS ${misses}</span>`;
 
   show(screenResult);
-  drawRamen(s);
+  drawRamen(hitCounts);
 }
 
 // ── ラーメン丼イラスト描画 ──────────────────────────────
-function drawRamen(toppings: Set<string>) {
+function drawRamen(toppings: Record<string,number>) {
   const rc = document.getElementById('ramenCanvas') as HTMLCanvasElement;
   const r = rc.getContext('2d')!;
   const W = rc.width, H = rc.height;
@@ -597,7 +622,7 @@ function drawRamen(toppings: Set<string>) {
   r.restore();
 
   // ── スープ面（楕円） ──
-  const soupColor = toppings.has('カラメ') ? '#3a1a08' : '#8b5e3c';
+  const soupColor = toppings['カラメ']>0 ? '#3a1a08' : '#8b5e3c';
   r.save();
   r.beginPath();
   r.ellipse(cx, bowlTop + bowlH*0.55, bowlW/2, 22, 0, 0, Math.PI*2);
@@ -620,7 +645,7 @@ function drawRamen(toppings: Set<string>) {
   r.restore();
 
   // ── 背脂 ──
-  if (toppings.has('背脂')) {
+  if (toppings['背脂']>0) {
     r.save();
     r.globalAlpha = 0.7;
     for (let i=0;i<10;i++) {
@@ -635,7 +660,7 @@ function drawRamen(toppings: Set<string>) {
   }
 
   // ── もやし（野菜） ──
-  if (toppings.has('野菜')) {
+  if (toppings['野菜']>0) {
     r.save();
     r.globalAlpha = 0.9;
     for (let i=0;i<14;i++) {
@@ -690,7 +715,7 @@ function drawRamen(toppings: Set<string>) {
   r.restore();
 
   // ── ニンニク ──
-  if (toppings.has('ニンニク')) {
+  if (toppings['ニンニク']>0) {
     r.save();
     const gx = cx+50, gy = bowlTop+bowlH*0.22;
     for (let i=0;i<4;i++) {
@@ -705,7 +730,7 @@ function drawRamen(toppings: Set<string>) {
   }
 
   // ── カラメ（醤油タレ）─ 丼の縁に垂らす ──
-  if (toppings.has('カラメ')) {
+  if (toppings['カラメ']>0) {
     r.save();
     r.globalAlpha = 0.55;
     r.fillStyle = '#1a0800';
@@ -718,13 +743,15 @@ function drawRamen(toppings: Set<string>) {
     r.restore();
   }
 
-  // ── マシ（盛り盛りもやし） ──
-  if (toppings.has('マシ')) {
+  // ── マシマシ表示（野菜のヒット数で盛り盛り度が変わる） ──
+  const yasaiCount = toppings['野菜'] || 0;
+  if (yasaiCount >= 2) {
     r.save();
     r.globalAlpha = 0.85;
-    for (let i=0;i<20;i++) {
-      const mx = cx - 80 + i*8 + (Math.random()-0.5)*10;
-      const my = bowlTop + bowlH*0.1 + (Math.random()-0.5)*20;
+    const extra = yasaiCount >= 3 ? 20 : 12;
+    for (let i=0;i<extra;i++) {
+      const mx = cx - 80 + i*(160/extra) + (Math.random()-0.5)*10;
+      const my = bowlTop + bowlH*0.08 + (Math.random()-0.5)*20;
       const angle = (Math.random()-0.5)*1.5;
       r.save();
       r.translate(mx,my);
@@ -732,21 +759,27 @@ function drawRamen(toppings: Set<string>) {
       r.strokeStyle = '#b8e080';
       r.lineWidth = 2;
       r.beginPath();
-      r.moveTo(0,0); r.lineTo(0,-22);
+      r.moveTo(0,0); r.lineTo(0, yasaiCount>=3 ? -28 : -22);
       r.stroke();
       r.beginPath();
-      r.ellipse(0,-24,5,3.5,0,0,Math.PI*2);
+      r.ellipse(0, yasaiCount>=3 ? -30 : -24, 5, 3.5, 0, 0, Math.PI*2);
       r.fillStyle = '#d0f090';
       r.fill();
       r.restore();
     }
     r.restore();
-    // マシ！ラベル
+  }
+
+  // ── マシ度ラベル ──
+  const totalHits = Object.values(toppings).reduce((a,b)=>a+b,0);
+  const hasMashiMashi = TOPPING_KEYS.some(k=>(toppings[k]||0)>=3);
+  const hasMashi = TOPPING_KEYS.some(k=>(toppings[k]||0)>=2);
+  if (hasMashiMashi || hasMashi) {
     r.save();
     r.font = 'bold 13px "Noto Sans JP",sans-serif';
     r.fillStyle = '#d4a000';
     r.textAlign = 'right';
-    r.fillText('⭐マシ！', W-12, 24);
+    r.fillText(hasMashiMashi ? '🔥マシマシ！' : '⬆️マシ！', W-12, 24);
     r.restore();
   }
 
@@ -764,19 +797,21 @@ function drawRamen(toppings: Set<string>) {
   r.font = 'bold 16px "Shippori Mincho",serif';
   r.fillStyle = '#b5352a';
   r.textAlign = 'center';
-  r.fillText(toppings.size===0 ? 'シンプルな一杯' : 'できあがり！', cx, H-8);
+  r.fillText(totalHits===0 ? 'シンプルな一杯' : 'できあがり！', cx, H-8);
   r.restore();
 }
 
-function getComment(s:Set<string>, keys:string[]): string {
+function getComment(counts: Record<string,number>): string {
+  const keys = Object.keys(counts).filter(k=>counts[k]>0);
   if (keys.length===0) return COMMENTS.none;
-  if (s.has('マシ')) return keys.length>=4 ? COMMENTS.all : COMMENTS.mashi;
-  if (keys.length>=NOTE_SEQ.length-1) return COMMENTS.all;
-  if (s.size===1&&s.has('ニンニク')) return COMMENTS.ninniku;
-  if (s.size===1&&s.has('野菜'))    return COMMENTS.yasai;
-  if (s.size===1&&s.has('背脂'))   return COMMENTS.abura;
-  if (s.size===1&&s.has('カラメ')) return COMMENTS.karame;
-  if (s.has('ニンニク')&&s.has('野菜')&&keys.length===2) return COMMENTS.ninnikuYasai;
+  const allMashiMashi = TOPPING_KEYS.every(k=>counts[k]>=3);
+  if (allMashiMashi) return COMMENTS.allMashiMashi;
+  if (keys.length===TOPPING_KEYS.length) return COMMENTS.allNormal;
+  if (keys.length===1&&keys[0]==='ニンニク') return COMMENTS.ninniku;
+  if (keys.length===1&&keys[0]==='野菜')    return COMMENTS.yasai;
+  if (keys.length===1&&keys[0]==='背脂')   return COMMENTS.abura;
+  if (keys.length===1&&keys[0]==='カラメ') return COMMENTS.karame;
+  if (counts['ニンニク']>0&&counts['野菜']>0&&keys.length===2) return COMMENTS.ninnikuYasai;
   return COMMENTS.default;
 }
 
