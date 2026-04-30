@@ -36,7 +36,8 @@ import Layout from '../layouts/Layout.astro';
     </div>
 
     <div id="screen-result" class="screen hidden">
-      <p class="result-label">あなたの注文</p>
+      <p class="result-label">できあがり！</p>
+      <canvas id="ramenCanvas" width="300" height="260"></canvas>
       <p class="result-order" id="result-order"></p>
       <p class="result-score-txt">スコア <strong id="result-score"></strong></p>
       <p class="result-pon" id="result-pon"></p>
@@ -88,18 +89,32 @@ const TOPPINGS: Record<string, Topping> = {
   'マシ':     { key:'マシ',   emoji:'⭐', label:'マシ！',   bg:'#fffae8', border:'#d4a000', text:'#7a5a00', particle:'#f4c000' },
 };
 
-const NOTE_SEQ = [
-  { beat:1,  key:'ニンニク', lane:1 },
-  { beat:2,  key:'野菜',    lane:0 },
-  { beat:4,  key:'背脂',   lane:2 },
-  { beat:5,  key:'カラメ', lane:1 },
-  { beat:7,  key:'ニンニク',lane:2 },
-  { beat:8,  key:'マシ',   lane:0 },
-  { beat:10, key:'野菜',   lane:1 },
-  { beat:11, key:'背脂',  lane:0 },
-  { beat:12, key:'カラメ', lane:2 },
-  { beat:14, key:'マシ',   lane:1 },
-];
+// NOTE_SEQ は毎ゲーム generateNoteSeq() でランダム生成する
+const TOPPING_KEYS = ['ニンニク','野菜','背脂','カラメ','マシ'];
+let NOTE_SEQ: {beat:number, key:string, lane:number}[] = [];
+
+function generateNoteSeq() {
+  // ビートスロット（重ならないよう最低2ビート間隔）
+  const slots = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+  // シャッフル
+  for (let i=slots.length-1;i>0;i--) {
+    const j=Math.floor(Math.random()*(i+1));
+    [slots[i],slots[j]]=[slots[j],slots[i]];
+  }
+  // トッピングもシャッフル（各2回出現）
+  const keys = [...TOPPING_KEYS, ...TOPPING_KEYS];
+  for (let i=keys.length-1;i>0;i--) {
+    const j=Math.floor(Math.random()*(i+1));
+    [keys[i],keys[j]]=[keys[j],keys[i]];
+  }
+  const count = Math.min(10, slots.length, keys.length);
+  NOTE_SEQ = slots.slice(0,count).map((beat,i)=>({
+    beat,
+    key: keys[i],
+    lane: Math.floor(Math.random()*3),
+  }));
+  NOTE_SEQ.sort((a,b)=>a.beat-b.beat);
+}
 
 const COMMENTS: Record<string, string> = {
   all:   '全部入り！ 欲張りすぎやろ笑',
@@ -397,6 +412,7 @@ function show(el:HTMLElement) {
 }
 
 function startGame() {
+  generateNoteSeq();
   score=0; combo=0; hits=[]; notes=[]; particles=[]; judgeEffects=[]; laneFlashes=[];
   beatCount=0; beatPhase=0; gameRunning=true;
   scoreVal.textContent='0'; comboDisp.textContent='';
@@ -519,6 +535,227 @@ function endGame() {
     `<span class="s-p">PERFECT ${perfects}</span> <span class="s-g">GOOD ${goods}</span> <span class="s-m">MISS ${misses}</span>`;
 
   show(screenResult);
+  drawRamen(s);
+}
+
+// ── ラーメン丼イラスト描画 ──────────────────────────────
+function drawRamen(toppings: Set<string>) {
+  const rc = document.getElementById('ramenCanvas') as HTMLCanvasElement;
+  const r = rc.getContext('2d')!;
+  const W = rc.width, H = rc.height;
+  r.clearRect(0,0,W,H);
+
+  const cx = W/2, bowlTop = 80, bowlW = 220, bowlH = 130;
+
+  // ── 背景 ──
+  r.fillStyle = '#fdf8f3';
+  r.fillRect(0,0,W,H);
+
+  // ── 湯気 ──
+  r.save();
+  r.globalAlpha = 0.18;
+  for (let i=0;i<3;i++) {
+    const sx = cx - 30 + i*30;
+    r.strokeStyle = '#aaa';
+    r.lineWidth = 2.5;
+    r.beginPath();
+    r.moveTo(sx, bowlTop-10);
+    r.bezierCurveTo(sx-8,bowlTop-28, sx+8,bowlTop-46, sx,bowlTop-60);
+    r.stroke();
+  }
+  r.restore();
+
+  // ── 丼（外側）──
+  r.save();
+  // 丼の外形
+  r.beginPath();
+  r.ellipse(cx, bowlTop + bowlH*0.55, bowlW/2+14, 28, 0, 0, Math.PI*2);
+  r.fillStyle = '#d0c0b0';
+  r.fill();
+
+  r.beginPath();
+  r.moveTo(cx - bowlW/2 - 14, bowlTop + bowlH*0.55);
+  r.quadraticCurveTo(cx - bowlW/2 - 14, bowlTop + bowlH + 40, cx, bowlTop + bowlH + 50);
+  r.quadraticCurveTo(cx + bowlW/2 + 14, bowlTop + bowlH + 40, cx + bowlW/2 + 14, bowlTop + bowlH*0.55);
+  r.ellipse(cx, bowlTop + bowlH*0.55, bowlW/2+14, 28, 0, Math.PI, Math.PI*2);
+  r.fillStyle = '#e8d8c8';
+  r.fill();
+  r.strokeStyle = '#c0a898';
+  r.lineWidth = 2;
+  r.stroke();
+  r.restore();
+
+  // ── 丼のリム（上部楕円）──
+  r.save();
+  r.beginPath();
+  r.ellipse(cx, bowlTop + bowlH*0.55, bowlW/2+14, 28, 0, 0, Math.PI*2);
+  r.fillStyle = '#f0e0d0';
+  r.fill();
+  r.strokeStyle = '#c0a898';
+  r.lineWidth = 2;
+  r.stroke();
+  r.restore();
+
+  // ── スープ面（楕円） ──
+  const soupColor = toppings.has('カラメ') ? '#3a1a08' : '#8b5e3c';
+  r.save();
+  r.beginPath();
+  r.ellipse(cx, bowlTop + bowlH*0.55, bowlW/2, 22, 0, 0, Math.PI*2);
+  r.fillStyle = soupColor;
+  r.fill();
+  r.restore();
+
+  // ── 麺 ──
+  r.save();
+  r.strokeStyle = '#e8d090';
+  r.lineWidth = 2.2;
+  r.globalAlpha = 0.85;
+  for (let i=0;i<5;i++) {
+    const ny = bowlTop + bowlH*0.45 + i*6 - 10;
+    r.beginPath();
+    r.moveTo(cx - 70, ny);
+    r.bezierCurveTo(cx-35, ny-8+i*2, cx+35, ny+8-i*2, cx+70, ny);
+    r.stroke();
+  }
+  r.restore();
+
+  // ── 背脂 ──
+  if (toppings.has('背脂')) {
+    r.save();
+    r.globalAlpha = 0.7;
+    for (let i=0;i<10;i++) {
+      const fx = cx - 60 + Math.random()*120;
+      const fy = bowlTop + bowlH*0.3 + Math.random()*30;
+      r.beginPath();
+      r.ellipse(fx, fy, 6+Math.random()*8, 4+Math.random()*4, Math.random(), 0, Math.PI*2);
+      r.fillStyle = 'rgba(255,245,220,0.85)';
+      r.fill();
+    }
+    r.restore();
+  }
+
+  // ── もやし（野菜） ──
+  if (toppings.has('野菜')) {
+    r.save();
+    r.globalAlpha = 0.9;
+    for (let i=0;i<14;i++) {
+      const mx = cx - 75 + i*11 + (Math.random()-0.5)*8;
+      const my = bowlTop + bowlH*0.25 + (Math.random()-0.5)*14;
+      const angle = (Math.random()-0.5)*1.2;
+      r.save();
+      r.translate(mx,my);
+      r.rotate(angle);
+      r.strokeStyle = '#c8e890';
+      r.lineWidth = 2;
+      r.beginPath();
+      r.moveTo(0,0); r.lineTo(0,-16);
+      r.stroke();
+      r.beginPath();
+      r.ellipse(0,-18,5,3.5,0,0,Math.PI*2);
+      r.fillStyle = '#ddf5a0';
+      r.fill();
+      r.restore();
+    }
+    r.restore();
+  }
+
+  // ── チャーシュー（常時） ──
+  r.save();
+  r.beginPath();
+  r.ellipse(cx-28, bowlTop+bowlH*0.3, 32, 22, -0.2, 0, Math.PI*2);
+  const chashuGrad = r.createRadialGradient(cx-28,bowlTop+bowlH*0.3,4,cx-28,bowlTop+bowlH*0.3,32);
+  chashuGrad.addColorStop(0,'#e8a080');
+  chashuGrad.addColorStop(0.6,'#c06040');
+  chashuGrad.addColorStop(1,'#8a3820');
+  r.fillStyle = chashuGrad;
+  r.fill();
+  r.strokeStyle = '#7a3010';
+  r.lineWidth = 1.5;
+  r.stroke();
+  // 脂身
+  r.beginPath();
+  r.ellipse(cx-28, bowlTop+bowlH*0.3-8, 30, 8, -0.2, 0, Math.PI*2);
+  r.fillStyle = 'rgba(255,235,200,0.7)';
+  r.fill();
+  r.restore();
+
+  // ── ニンニク ──
+  if (toppings.has('ニンニク')) {
+    r.save();
+    const gx = cx+50, gy = bowlTop+bowlH*0.22;
+    for (let i=0;i<4;i++) {
+      r.beginPath();
+      r.ellipse(gx+(i%2)*10-5, gy+Math.floor(i/2)*10, 7, 9, (i-1.5)*0.3, 0, Math.PI*2);
+      r.fillStyle = '#f5f0e0';
+      r.strokeStyle = '#c8b888';
+      r.lineWidth = 1;
+      r.fill(); r.stroke();
+    }
+    r.restore();
+  }
+
+  // ── カラメ（醤油タレ）─ 丼の縁に垂らす ──
+  if (toppings.has('カラメ')) {
+    r.save();
+    r.globalAlpha = 0.55;
+    r.fillStyle = '#1a0800';
+    for (let i=0;i<3;i++) {
+      const dx = cx - 40 + i*40;
+      r.beginPath();
+      r.ellipse(dx, bowlTop+bowlH*0.45, 18, 7, 0, 0, Math.PI*2);
+      r.fill();
+    }
+    r.restore();
+  }
+
+  // ── マシ（盛り盛りもやし） ──
+  if (toppings.has('マシ')) {
+    r.save();
+    r.globalAlpha = 0.85;
+    for (let i=0;i<20;i++) {
+      const mx = cx - 80 + i*8 + (Math.random()-0.5)*10;
+      const my = bowlTop + bowlH*0.1 + (Math.random()-0.5)*20;
+      const angle = (Math.random()-0.5)*1.5;
+      r.save();
+      r.translate(mx,my);
+      r.rotate(angle);
+      r.strokeStyle = '#b8e080';
+      r.lineWidth = 2;
+      r.beginPath();
+      r.moveTo(0,0); r.lineTo(0,-22);
+      r.stroke();
+      r.beginPath();
+      r.ellipse(0,-24,5,3.5,0,0,Math.PI*2);
+      r.fillStyle = '#d0f090';
+      r.fill();
+      r.restore();
+    }
+    r.restore();
+    // マシ！ラベル
+    r.save();
+    r.font = 'bold 13px "Noto Sans JP",sans-serif';
+    r.fillStyle = '#d4a000';
+    r.textAlign = 'right';
+    r.fillText('⭐マシ！', W-12, 24);
+    r.restore();
+  }
+
+  // ── 丼リムの模様（線） ──
+  r.save();
+  r.beginPath();
+  r.ellipse(cx, bowlTop+bowlH*0.55, bowlW/2+8, 25, 0, 0, Math.PI*2);
+  r.strokeStyle = 'rgba(160,120,90,0.3)';
+  r.lineWidth = 1;
+  r.stroke();
+  r.restore();
+
+  // ── 「完成！」テキスト ──
+  r.save();
+  r.font = 'bold 16px "Shippori Mincho",serif';
+  r.fillStyle = '#b5352a';
+  r.textAlign = 'center';
+  r.fillText(toppings.size===0 ? 'シンプルな一杯' : 'できあがり！', cx, H-8);
+  r.restore();
 }
 
 function getComment(s:Set<string>, keys:string[]): string {
@@ -597,6 +834,9 @@ document.addEventListener('keydown', e=>{
   }
   .lane-btn:active { transform:scale(0.93); background:#9b2d22; }
   .lane-btn small { display:block; font-size:0.7rem; opacity:0.7; font-weight:500; }
+
+  /* ramen canvas */
+  #ramenCanvas { width:100%; max-width:300px; border-radius:16px; border:1px solid #f0e8e4; background:#fdf8f3; display:block; }
 
   /* result */
   .result-label { font-size:0.78rem; color:#aaa; letter-spacing:0.1em; }
