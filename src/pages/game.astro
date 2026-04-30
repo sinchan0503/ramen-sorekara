@@ -659,24 +659,34 @@ function drawRamen(toppings: Set<string>) {
     r.restore();
   }
 
-  // ── チャーシュー（常時） ──
+  // ── チャーシュー（常時）── 平たい楕円スライス
   r.save();
+  const chx = cx - 20, chy = bowlTop + bowlH * 0.35;
+  // 肉本体（平たい楕円）
   r.beginPath();
-  r.ellipse(cx-28, bowlTop+bowlH*0.3, 32, 22, -0.2, 0, Math.PI*2);
-  const chashuGrad = r.createRadialGradient(cx-28,bowlTop+bowlH*0.3,4,cx-28,bowlTop+bowlH*0.3,32);
-  chashuGrad.addColorStop(0,'#e8a080');
-  chashuGrad.addColorStop(0.6,'#c06040');
-  chashuGrad.addColorStop(1,'#8a3820');
+  r.ellipse(chx, chy, 42, 18, -0.15, 0, Math.PI * 2);
+  const chashuGrad = r.createLinearGradient(chx-42, chy-18, chx+42, chy+18);
+  chashuGrad.addColorStop(0, '#d08060');
+  chashuGrad.addColorStop(0.4, '#c06848');
+  chashuGrad.addColorStop(1, '#9a4028');
   r.fillStyle = chashuGrad;
   r.fill();
-  r.strokeStyle = '#7a3010';
+  r.strokeStyle = '#8a3820';
   r.lineWidth = 1.5;
   r.stroke();
-  // 脂身
+  // 脂身ライン（白いスジ）
+  for (let i = 0; i < 2; i++) {
+    r.beginPath();
+    r.ellipse(chx + (i - 0.5) * 16, chy - 2, 10, 5, -0.15, 0, Math.PI * 2);
+    r.fillStyle = 'rgba(255,240,220,0.55)';
+    r.fill();
+  }
+  // 縁の焼き色
   r.beginPath();
-  r.ellipse(cx-28, bowlTop+bowlH*0.3-8, 30, 8, -0.2, 0, Math.PI*2);
-  r.fillStyle = 'rgba(255,235,200,0.7)';
-  r.fill();
+  r.ellipse(chx, chy, 42, 18, -0.15, 0, Math.PI * 2);
+  r.strokeStyle = 'rgba(80,20,0,0.25)';
+  r.lineWidth = 3;
+  r.stroke();
   r.restore();
 
   // ── ニンニク ──
