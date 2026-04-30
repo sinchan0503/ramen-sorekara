@@ -79,7 +79,7 @@ const FALL_BEATS = 4;
 const FALL_MS   = BEAT_MS * FALL_BEATS;
 const NW = 72, NH = 86, NR = 18;   // note card dimensions
 const PERFECT_MS = 70, GOOD_MS = 140;
-const TOTAL_BEATS = 22; // 12ノートが収まる余裕を持たせる
+const TOTAL_BEATS = 26; // 12ノート×2ビート間隔 + 余裕
 
 const TOPPINGS: Record<string, Topping> = {
   'ニンニク': { key:'ニンニク', emoji:'🧄', label:'にんにく', bg:'#fdf5e0', border:'#c8a040', text:'#7a5c00', particle:'#f0c040' },
@@ -94,27 +94,17 @@ const TOTAL_NOTES = 12; // 4種 × 3回
 let NOTE_SEQ: {beat:number, key:string, lane:number}[] = [];
 
 function generateNoteSeq() {
-  // 3回ずつのキーリスト
+  // 12スロットを2ビート間隔で固定配置（1,3,5,...,23）→ランダムにずらす
+  const BASE_SLOTS = [1,3,5,7,9,11,13,15,17,19,21,23];
+  const beats = BASE_SLOTS.map(b => b + Math.floor(Math.random()*2));
+
+  // 4種×3回のキーをシャッフル
   const keys = [...TOPPING_KEYS, ...TOPPING_KEYS, ...TOPPING_KEYS];
-  // シャッフル
   for (let i=keys.length-1;i>0;i--) {
     const j=Math.floor(Math.random()*(i+1));
     [keys[i],keys[j]]=[keys[j],keys[i]];
   }
-  // 12ノートを16ビート以内にランダム配置（2ビート以上間隔）
-  const usedBeats = new Set<number>();
-  const beats: number[] = [];
-  let attempts = 0;
-  while (beats.length < TOTAL_NOTES && attempts < 200) {
-    attempts++;
-    const b = 1 + Math.floor(Math.random() * 18);
-    const tooClose = beats.some(x => Math.abs(x-b) < 2);
-    if (!tooClose && !usedBeats.has(b)) {
-      beats.push(b);
-      usedBeats.add(b);
-    }
-  }
-  beats.sort((a,b)=>a-b);
+
   NOTE_SEQ = beats.map((beat,i)=>({
     beat,
     key: keys[i],
