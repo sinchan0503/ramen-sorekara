@@ -20,7 +20,7 @@ const { page } = Astro.props;
         <div class="card-thumb">
           {post.data.image
             ? <img src={post.data.image} alt={post.data.title} />
-            : <div class="card-emoji">{post.data.emoji}</div>
+            : <img src="/images/pon-eating.png" alt={post.data.title} />
           }
         </div>
         <div class="card-body">
