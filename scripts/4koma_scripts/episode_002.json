@@ -1,0 +1,24 @@
+{
+  "episode_title": "【四コマ】雨の日理論",
+  "pub_date": "2026-05-02",
+  "slug": "4koma-2026-05-02",
+  "output": "4koma-2026-05-02.png",
+  "panels": [
+    {
+      "image": "pon-normal",
+      "narration": "雨の日"
+    },
+    {
+      "image": "pon-excited",
+      "text": "なんか…ラーメン食べたい"
+    },
+    {
+      "image": "pon-confused",
+      "text": "晴れの日も食べたいけどな…？"
+    },
+    {
+      "image": "pon-happy",
+      "text": "まあ今日は「雨だから」ってことにしよう"
+    }
+  ]
+}

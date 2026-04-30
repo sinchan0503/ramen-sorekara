@@ -1,0 +1,24 @@
+{
+  "episode_title": "【四コマ】月曜日の朝から",
+  "pub_date": "2026-05-01",
+  "slug": "4koma-2026-05-01",
+  "output": "4koma-2026-05-01.png",
+  "panels": [
+    {
+      "image": "pon-normal",
+      "narration": "月曜、朝7時"
+    },
+    {
+      "image": "pon-excited",
+      "text": "今週…どのラーメン行こうかな"
+    },
+    {
+      "image": "pon-confused",
+      "text": "あ、まだ出社もしてない"
+    },
+    {
+      "image": "pon-happy",
+      "text": "まあいいや。火曜は家系にしよう"
+    }
+  ]
+}

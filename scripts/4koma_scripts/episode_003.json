@@ -1,0 +1,25 @@
+{
+  "episode_title": "【四コマ】全部のせ5分間",
+  "pub_date": "2026-05-03",
+  "slug": "4koma-2026-05-03",
+  "output": "4koma-2026-05-03.png",
+  "panels": [
+    {
+      "image": "pon-normal",
+      "narration": "券売機の前"
+    },
+    {
+      "image": "pon-confused",
+      "text": "全部のせにするか…迷う"
+    },
+    {
+      "image": "pon-sad",
+      "text": "でも高いし…\nでも…でも…"
+    },
+    {
+      "image": "pon-excited",
+      "narration": "5分後",
+      "text": "全部のせで！"
+    }
+  ]
+}
