@@ -1,0 +1,95 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const posts = (await getCollection('blog'))
+  .filter(p => p.data.title.startsWith('【四コマ】'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title="四コマ漫画 | ラーメン、それから。" description="ぽんのラーメン四コマ日誌。東京在住OLぽんのラーメンあるあるを四コマ漫画で毎日更新。">
+  <div class="koma-page">
+    <h1>四コマ漫画</h1>
+    <p class="koma-desc">ぽんのラーメン四コマ日誌 — ラーメンあるあるを毎日1本更新中</p>
+
+    <div class="koma-list">
+      {posts.map(post => (
+        <a href={`/blog/${post.id.replace(/\.md$/, '')}`} class="koma-card">
+          <div class="koma-thumb">
+            <img src={post.data.image} alt={post.data.title} />
+          </div>
+          <div class="koma-meta">
+            <time>{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
+            <h2>{post.data.title.replace('【四コマ】', '')}</h2>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    {posts.length === 0 && (
+      <p class="empty">まだ投稿がありません。</p>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .koma-page { max-width: 720px; margin: 0 auto; }
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    border-left: 4px solid #b5352a;
+    padding-left: 12px;
+    color: #1a1a1a;
+  }
+  .koma-desc {
+    font-size: 0.88rem;
+    color: #888;
+    margin-bottom: 40px;
+    padding-left: 16px;
+  }
+  .koma-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .koma-card {
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #f0e8e4;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: block;
+  }
+  .koma-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+  }
+  .koma-thumb img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .koma-meta {
+    padding: 16px 20px;
+  }
+  .koma-meta time {
+    font-size: 0.75rem;
+    color: #bbb;
+  }
+  .koma-meta h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 4px;
+    color: #2a2a2a;
+  }
+  .empty {
+    color: #bbb;
+    text-align: center;
+    padding: 48px 0;
+  }
+</style>
