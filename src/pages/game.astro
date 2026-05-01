@@ -137,16 +137,104 @@ function getMashiLevel(count: number): string {
   return '';
 }
 
-const COMMENTS: Record<string, string> = {
-  allMashiMashi: '全部マシマシ！！ 完全に変態や笑',
-  allNormal:     '全部入り！ 完璧な呪文やん。',
-  none:          'なし！ キリッとしてるやん。',
-  ninniku:       'ニンニクだけ。シンプルイズベスト。',
-  yasai:         '野菜だけ。ヘルシー意識してる笑',
-  abura:         '背脂だけ。こってり派やね。',
-  karame:        'カラメだけ。醤油命。',
-  ninnikuYasai:  'ニンニク野菜。ザ・王道。',
-  default:       'それで正解かは知らんけど、おいしく食べてね。',
+// トッピングの組み合わせキー生成（例: "ニンニク_野菜"）
+function makeCombKey(counts: Record<string,number>): string {
+  return ['ニンニク','野菜','背脂','カラメ'].filter(k=>counts[k]>0).join('_');
+}
+
+// マシ度サフィックス
+function mashiSuffix(counts: Record<string,number>): string {
+  const allMM = ['ニンニク','野菜','背脂','カラメ'].every(k=>(counts[k]||0)>=3);
+  const anyMM = ['ニンニク','野菜','背脂','カラメ'].some(k=>(counts[k]||0)>=3);
+  const anyM  = ['ニンニク','野菜','背脂','カラメ'].some(k=>(counts[k]||0)>=2);
+  if (allMM) return '全部マシマシで来たね。本物や。';
+  if (anyMM) return 'なんかマシマシのやつがある。やばい。';
+  if (anyM)  return 'マシがある。わかってるじゃん。';
+  return '';
+}
+
+// 組み合わせ別コメント（16通り）
+const COMBO_COMMENTS: Record<string, string[]> = {
+  '': [
+    'なし！ すごい、ストイックすぎる。',
+    'なし！ もしかして初めて？ それもあり。',
+    'なし！ シンプル、好き。清潔感ある。',
+  ],
+  'ニンニク': [
+    'ニンニクだけ！ においとやる気が出た。',
+    'ニンニクオンリー。たぶんこれが一番正直。',
+    'ニンニクのみ。シンプルイズベスト、わかる。',
+  ],
+  '野菜': [
+    '野菜だけ！ ヘルシー意識してる、えらい。',
+    '野菜のみ。もやしって地味だけどやばくない？',
+    '野菜オンリー。なんか健康的な感じがして好き。',
+  ],
+  '背脂': [
+    '背脂だけ！ こってりに全振りしてる。',
+    '背脂のみ。ラーメンへの愛が脂に出てる。',
+    '背脂オンリー。たぶん最高の選択。',
+  ],
+  'カラメ': [
+    'カラメだけ！ 醤油命って感じがする。',
+    'カラメのみ。スープ濃くして正解だと思う。',
+    'カラメオンリー。もしかして通？',
+  ],
+  'ニンニク_野菜': [
+    'ニンニク野菜。ザ・王道、好き。',
+    'ニンニクと野菜。これが二郎のスタンダードよな。',
+    'ニンニク野菜！ なんかテンション上がる組み合わせ。',
+  ],
+  'ニンニク_背脂': [
+    'ニンニク背脂。こってりパンチ系。好きだよ。',
+    'ニンニクと背脂か、たぶん明日しんどくなる笑',
+    'ニンニク背脂。やばい、においが想像できる。',
+  ],
+  'ニンニク_カラメ': [
+    'ニンニクカラメ。パンチと醤油の二刀流。',
+    'ニンニクとカラメ。もしかして経験者？',
+    'ニンニク醤油コンビ。たぶん間違いない。',
+  ],
+  '野菜_背脂': [
+    '野菜背脂！ ヘルシーとこってりのハイブリッド。',
+    '野菜と背脂か。バランス取ろうとしてる感がある。',
+    '野菜背脂。なんかこれもありだと思う。',
+  ],
+  '野菜_カラメ': [
+    '野菜カラメ。さっぱり＆しっかり系。好き。',
+    '野菜とカラメ。スープが濃くなって野菜が映える。',
+    '野菜カラメ！ もしかして玄人の選択では？',
+  ],
+  '背脂_カラメ': [
+    '背脂カラメ。こってり醤油最高峰。',
+    '背脂とカラメか。スープがやばいことになってる。',
+    '背脂カラメ。たぶん最後の一滴まで飲み干す系。',
+  ],
+  'ニンニク_野菜_背脂': [
+    'ニンニク野菜背脂！ 三冠王や。カラメだけ残してる。',
+    'ニンニク野菜背脂か。すごい、カラメだけ抑えてる。',
+    '三種入れてカラメだけなし。なんか計算した感じがする。',
+  ],
+  'ニンニク_野菜_カラメ': [
+    'ニンニク野菜カラメ！ 背脂だけいらなかった感じ？',
+    'ニンニク野菜カラメ。もしかして背脂は苦手？',
+    'ニンニク野菜醤油。たぶんこれも立派な呪文。',
+  ],
+  'ニンニク_背脂_カラメ': [
+    'ニンニク背脂カラメ！ やばい、全部重い。最高。',
+    'ニンニク背脂カラメか。野菜だけ抜いてる。大人の選択。',
+    'ニンニク背脂醤油。たぶん全部飲み干す気でいる。',
+  ],
+  '野菜_背脂_カラメ': [
+    '野菜背脂カラメ！ ニンニクだけ外してる。やさしい。',
+    '野菜背脂カラメか。もしかして翌日のこと考えた？',
+    '野菜背脂醤油。ニンニクなしでもじゅうぶん呪文。',
+  ],
+  'ニンニク_野菜_背脂_カラメ': [
+    '全部入り！ 完璧な呪文、お見事。',
+    '全部！！ たぶん店主も嬉しいと思う。',
+    '全マシ！ これが二郎への正しい愛の表現。',
+  ],
 };
 
 // ── 状態 ─────────────────────────────────────────────
@@ -827,17 +915,11 @@ function drawRamen(toppings: Record<string,number>) {
 }
 
 function getComment(counts: Record<string,number>): string {
-  const keys = Object.keys(counts).filter(k=>counts[k]>0);
-  if (keys.length===0) return COMMENTS.none;
-  const allMashiMashi = TOPPING_KEYS.every(k=>counts[k]>=3);
-  if (allMashiMashi) return COMMENTS.allMashiMashi;
-  if (keys.length===TOPPING_KEYS.length) return COMMENTS.allNormal;
-  if (keys.length===1&&keys[0]==='ニンニク') return COMMENTS.ninniku;
-  if (keys.length===1&&keys[0]==='野菜')    return COMMENTS.yasai;
-  if (keys.length===1&&keys[0]==='背脂')   return COMMENTS.abura;
-  if (keys.length===1&&keys[0]==='カラメ') return COMMENTS.karame;
-  if (counts['ニンニク']>0&&counts['野菜']>0&&keys.length===2) return COMMENTS.ninnikuYasai;
-  return COMMENTS.default;
+  const key = makeCombKey(counts);
+  const variants = COMBO_COMMENTS[key] ?? ['それで正解かは知らんけど、おいしく食べてね。'];
+  const base = variants[Math.floor(Math.random() * variants.length)];
+  const suffix = mashiSuffix(counts);
+  return suffix ? `${base} ${suffix}` : base;
 }
 
 // ── イベント ──────────────────────────────────────────
