@@ -108,9 +108,11 @@ const recentPosts = (await getCollection('blog'))
   }
   .btn:hover { background: #9b2d22; transform: translateY(-1px); }
   @media (max-width: 700px) {
-    .hero-content { flex-direction: column-reverse; }
-    .hero-illust { width: 100%; max-width: 320px; margin: 0 auto; }
-    .hero-text { text-align: center; }
+    .hero { padding: 32px 0 40px; }
+    .hero-content { flex-direction: column-reverse; align-items: center; }
+    .hero-illust { width: 100%; max-width: 280px; margin: 0 auto; }
+    .hero-text { text-align: center; width: 100%; }
+    .hero-sub br { display: none; }
   }
 
   /* ── Recent posts ── */
