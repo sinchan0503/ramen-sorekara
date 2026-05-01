@@ -94,6 +94,8 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://ramen-sorekara.com');
         white-space: nowrap;
       }
       nav a:hover { background: #fdf0ed; color: #b5352a; }
+      .header-top { display: contents; }
+      .nav-sub { display: none; }
       main {
         max-width: 960px;
         margin: 48px auto;
@@ -120,8 +122,15 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://ramen-sorekara.com');
       @media (max-width: 600px) {
         header { padding: 0 12px; }
         .header-inner { height: auto; padding: 8px 0; flex-direction: column; align-items: flex-start; gap: 4px; }
+        /* タイトル行：サイト名 + ゲーム・お問い合わせ */
+        .header-top { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+        .nav-sub { display: flex; gap: 0; flex-shrink: 0; }
+        .nav-sub a { color: #888; text-decoration: none; padding: 4px 6px; font-size: 0.72rem; font-weight: 500; white-space: nowrap; }
+        /* メインナビ：ホーム・記事一覧・四コマ・このブログについて */
         nav { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         nav a { padding: 4px 8px; font-size: 0.75rem; }
+        /* メインナビからゲーム・お問い合わせを隠す */
+        nav .hide-sp { display: none; }
         main { margin: 24px auto; padding: 0 12px; }
         .main-inner { padding: 24px 16px; border-radius: 14px; }
       }
@@ -130,14 +139,20 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://ramen-sorekara.com');
   <body>
     <header>
       <div class="header-inner">
-        <a href="/" class="site-title">🍜 ラーメン、それから。</a>
+        <div class="header-top">
+          <a href="/" class="site-title">🍜 ラーメン、それから。</a>
+          <div class="nav-sub">
+            <a href="/game">🎮 ゲーム</a>
+            <a href="/contact">お問い合わせ</a>
+          </div>
+        </div>
         <nav>
           <a href="/">ホーム</a>
           <a href="/blog">記事一覧</a>
           <a href="/4koma">四コマ</a>
           <a href="/about">このブログについて</a>
-          <a href="/game">🎮 ゲーム</a>
-          <a href="/contact">お問い合わせ</a>
+          <a href="/game" class="hide-sp">🎮 ゲーム</a>
+          <a href="/contact" class="hide-sp">お問い合わせ</a>
         </nav>
       </div>
     </header>
