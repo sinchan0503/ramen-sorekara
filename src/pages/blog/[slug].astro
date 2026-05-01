@@ -226,4 +226,13 @@ const breadcrumbSchema = {
     margin: 4px 0 40px;
     box-shadow: 0 6px 28px rgba(0,0,0,0.10);
   }
+
+  /* 四コマ画像: 縦長なので1画面に収まるよう高さ制限 */
+  .post-content img[src*="4koma"] {
+    width: auto;
+    max-height: 88vh;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 </style>
