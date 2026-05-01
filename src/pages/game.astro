@@ -40,8 +40,12 @@ import Layout from '../layouts/Layout.astro';
       <canvas id="ramenCanvas" width="300" height="260"></canvas>
       <p class="result-order" id="result-order"></p>
       <p class="result-score-txt">スコア <strong id="result-score"></strong></p>
-      <p class="result-pon" id="result-pon"></p>
-      <img id="result-face" class="result-face" src="/images/pon-normal.png" alt="ぽん" />
+      <div class="result-comment-box">
+        <p class="result-pon" id="result-pon"></p>
+        <div class="result-face-wrap">
+          <img id="result-face" class="result-face" src="/images/pon-normal.png" alt="ぽん" />
+        </div>
+      </div>
       <div id="result-stats" class="result-stats"></div>
       <div class="share-btns">
         <p class="share-label">シェアする</p>
@@ -1012,8 +1016,23 @@ document.addEventListener('keydown', e=>{
   .result-order { font-family:'Shippori Mincho',serif; font-size:1.5rem; color:#b5352a; font-weight:700; min-height:1.5em; }
   .result-score-txt { font-size:0.9rem; color:#888; }
   .result-score-txt strong { color:#1a1a1a; font-size:1.3rem; }
-  .result-pon { font-size:0.95rem; background:#fdf0ed; padding:12px 20px; border-radius:12px 12px 0 0; color:#555; line-height:1.8; width:100%; margin-bottom:0; }
-  .result-face { width:100px; height:auto; display:block; margin: 0 auto; }
+  .result-comment-box {
+    position: relative;
+    width: 100%;
+    background: #fdf0ed;
+    border-radius: 12px;
+    padding-bottom: 80px;
+  }
+  .result-pon { font-size:0.95rem; background:none; padding:12px 20px 8px 20px; border-radius:0; color:#555; line-height:1.8; width:100%; margin-bottom:0; }
+  .result-face-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    width: 76px;
+    height: 82px;
+    overflow: hidden;
+  }
+  .result-face { width:100%; height:auto; display:block; margin:0; }
   .result-stats { font-size:0.82rem; display:flex; gap:12px; }
   .s-p { color:#f0c000; font-weight:700; }
   .s-g { color:#60cc60; font-weight:700; }
