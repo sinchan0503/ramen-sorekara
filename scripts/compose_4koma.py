@@ -45,24 +45,16 @@ def compose(panel_paths, output_name, episode_title, pub_date):
         img = img.resize((panel_w, panel_h), Image.LANCZOS)
         panels.append(img)
 
-    total_h = TITLE_H + sum(p.height for p in panels) + GAP * (len(panels) - 1) + BORDER_W * 2
+    total_h = sum(p.height for p in panels) + GAP * (len(panels) - 1)
     canvas = Image.new("RGB", (CANVAS_W, total_h), "#F8F0EC")
     draw = ImageDraw.Draw(canvas)
 
-    # タイトル帯
-    draw.rectangle([0, 0, CANVAS_W, TITLE_H], fill=TITLE_BG)
-    font_title = load_font(34)
-    draw.text((CANVAS_W // 2, TITLE_H // 2), "ぽんのラーメン四コマ日誌",
-              fill="white", font=font_title, anchor="mm")
-
-    # コマを縦に並べる
-    y = TITLE_H
+    # コマを縦に並べる（タイトルなし・枠線なし）
+    y = 0
     for i, panel in enumerate(panels):
         if i > 0:
             y += GAP
-        # コマ枠線
-        draw.rectangle([0, y, CANVAS_W, y + panel.height], outline=BORDER_COL, width=BORDER_W)
-        canvas.paste(panel, (BORDER_W, y))
+        canvas.paste(panel, (0, y))
         y += panel.height
 
     # 保存
