@@ -41,6 +41,7 @@ import Layout from '../layouts/Layout.astro';
       <p class="result-order" id="result-order"></p>
       <p class="result-score-txt">スコア <strong id="result-score"></strong></p>
       <p class="result-pon" id="result-pon"></p>
+      <img id="result-face" class="result-face" src="/images/pon-normal.png" alt="ぽん" />
       <div id="result-stats" class="result-stats"></div>
       <div class="share-btns">
         <p class="share-label">シェアする</p>
@@ -654,6 +655,22 @@ function endGame() {
   document.getElementById('result-stats')!.innerHTML   =
     `<span class="s-p">PERFECT ${perfects}</span> <span class="s-g">GOOD ${goods}</span> <span class="s-m">MISS ${misses}</span>`;
 
+  // 表情切り替え
+  const faceImg = document.getElementById('result-face') as HTMLImageElement;
+  const allMM = TOPPING_KEYS.every(k=>(hitCounts[k]||0)>=3);
+  const hasAny = Object.values(hitCounts).some(v=>v>0);
+  if (!hasAny) {
+    faceImg.src = '/images/pon-confused.png';
+  } else if (misses >= 6) {
+    faceImg.src = '/images/pon-sad.png';
+  } else if (allMM) {
+    faceImg.src = '/images/pon-excited.png';
+  } else if (perfects >= 6 || (hasAny && misses <= 2)) {
+    faceImg.src = '/images/pon-happy.png';
+  } else {
+    faceImg.src = '/images/pon-normal.png';
+  }
+
   show(screenResult);
   drawRamen(hitCounts);
 
@@ -995,7 +1012,8 @@ document.addEventListener('keydown', e=>{
   .result-order { font-family:'Shippori Mincho',serif; font-size:1.5rem; color:#b5352a; font-weight:700; min-height:1.5em; }
   .result-score-txt { font-size:0.9rem; color:#888; }
   .result-score-txt strong { color:#1a1a1a; font-size:1.3rem; }
-  .result-pon { font-size:0.95rem; background:#fdf0ed; padding:12px 20px; border-radius:12px; color:#555; line-height:1.8; width:100%; }
+  .result-pon { font-size:0.95rem; background:#fdf0ed; padding:12px 20px; border-radius:12px 12px 0 0; color:#555; line-height:1.8; width:100%; margin-bottom:0; }
+  .result-face { width:100px; height:auto; display:block; margin: 0 auto; }
   .result-stats { font-size:0.82rem; display:flex; gap:12px; }
   .s-p { color:#f0c000; font-weight:700; }
   .s-g { color:#60cc60; font-weight:700; }
