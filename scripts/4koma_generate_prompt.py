@@ -34,14 +34,63 @@ SYSTEM_PROMPT = """あなたは四コマ漫画のストーリーライターで�
 ラーメン好きOL「ぽん」を主人公にした、クスッと笑えるあるある系四コマを考えます。
 必ず日本語で回答してください。"""
 
+WEEKDAY_JA = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"]
+
+def get_season(month: int) -> str:
+    if month in (3, 4, 5):   return "春（桜・新生活・GW）"
+    if month in (6, 7, 8):   return "夏（猛暑・夏休み・花火）"
+    if month in (9, 10, 11): return "秋（食欲の秋・紅葉・ハロウィン）"
+    return "冬（寒い・鍋・年末年始）"
+
+def get_date_context(today: datetime.date) -> str:
+    weekday = WEEKDAY_JA[today.weekday()]
+    season  = get_season(today.month)
+    is_weekend = today.weekday() >= 5
+
+    # 特別な日のチェック
+    special = ""
+    md = (today.month, today.day)
+    if md == (1, 1):   special = "元日"
+    elif md == (2, 14): special = "バレンタインデー"
+    elif md == (3, 14): special = "ホワイトデー"
+    elif md == (4, 1):  special = "エイプリルフール"
+    elif md == (12, 24): special = "クリスマスイブ"
+    elif md == (12, 31): special = "大晦日"
+    elif today.month == 4 and 29 <= today.day <= 30: special = "GW直前"
+    elif today.month == 5 and 1 <= today.day <= 5:   special = "ゴールデンウィーク"
+    elif today.month == 5 and today.day == 6:         special = "GW明け初日"
+
+    lines = [
+        f"- 今日: {today} ({weekday})",
+        f"- 季節: {season}",
+        f"- 曜日の雰囲気: {'休日（のんびり・ラーメン遠征日和）' if is_weekend else weekday + 'らしい気分（仕事・平日あるある）'}",
+    ]
+    if special:
+        lines.append(f"- 特別な日: {special}")
+
+    return "\n".join(lines)
+
+
 def generate(theme: str) -> dict:
     client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
     today = datetime.date.today()
+    date_context = get_date_context(today)
 
     user_prompt = f"""
-今日（{today}）公開する四コマ漫画を1本作ってください。
-テーマヒント: {theme if theme else "ラーメンあるある（自由）"}
+今日公開する四コマ漫画を1本作ってください。
+
+## 今日の日付・状況
+{date_context}
+
+## 重要: ストーリーを今日の状況に合わせること
+- 曜日・季節・特別な日がストーリーや背景に自然に反映されていること
+- 例: 金曜日なら「週末ラーメン計画」「花金気分」など
+- 例: GWなら「ラーメン遠征」「人気店の行列」など
+- 例: 春なら桜が背景に見える、夏ならセミや蝉の声など
+- セリフや状況に違和感なく溶け込ませること（あからさまに説明しなくていい）
+
+テーマヒント: {theme if theme else "（上記の日付・曜日・季節から自然に）"}
 
 ## 出力形式（JSON）
 
@@ -65,8 +114,9 @@ def generate(theme: str) -> dict:
 ## chatgpt_promptの形式
 各コマのchatgpt_promptは以下を必ず含めてください:
 - 画風指定: "watercolor anime style, soft warm colors, manga panel border, clean line art"
-- ぽんの外見: "Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks"
+- ぽんの外見（毎回固定）: "Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks"
 - そのコマの具体的な状況・表情・背景
+- 季節・曜日が伝わる背景描写（例: spring cherry blossoms, Friday evening glow, summer heat haze など）
 - 「4-panel manga, panel [番号] of 4」を末尾に
 
 簡潔で笑えるオチがつくように工夫してください。
