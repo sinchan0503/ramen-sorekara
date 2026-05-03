@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 .vercel
 .env*.local
+
+# 四コマ原本アーカイブ（git管理不要）
+4koma_originals/
