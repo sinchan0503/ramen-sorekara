@@ -13,6 +13,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const is4koma = post.id.includes('4koma');
 
 const siteUrl = 'https://ramen-sorekara.com';
 const postUrl = `${siteUrl}/blog/${post.id.replace(/\.md$/, '')}`;
@@ -51,7 +52,7 @@ const breadcrumbSchema = {
     <span>›</span>
     <span>{post.data.title}</span>
   </nav>
-  <div class="post-layout">
+  <div class={`post-layout${is4koma ? ' layout-4koma' : ''}`}>
     <article class="post">
       <header class="post-header">
         <time>{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
@@ -227,12 +228,34 @@ const breadcrumbSchema = {
     box-shadow: 0 6px 28px rgba(0,0,0,0.10);
   }
 
-  /* 四コマ画像: 縦長なので1画面に収まるよう高さ制限 */
+  /* 四コマ専用レイアウト: ヘッダーをコンパクトにして画像を1画面に収める */
+  .layout-4koma .post-header {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+  }
+  .layout-4koma .post-header time {
+    margin-bottom: 8px;
+  }
+  .layout-4koma .post-header h1 {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+  }
+  .layout-4koma .post-desc {
+    display: none;
+  }
+
+  /* 四コマ画像: 1画面に収まるよう高さ制限 */
   .post-content img[src*="4koma"] {
     width: auto;
-    max-height: 88vh;
+    max-height: calc(100svh - 280px);
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  @media (max-width: 600px) {
+    .post-content img[src*="4koma"] {
+      max-height: calc(100svh - 240px);
+    }
   }
 </style>
