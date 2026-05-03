@@ -68,10 +68,16 @@ const posts = (await getCollection('blog'))
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.07);
   }
+  .koma-thumb {
+    overflow: hidden;
+    max-height: 280px;
+  }
   .koma-thumb img {
     width: 100%;
     height: auto;
     display: block;
+    object-fit: cover;
+    object-position: top;
   }
   .koma-meta {
     padding: 16px 20px;
