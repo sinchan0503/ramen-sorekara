@@ -245,17 +245,18 @@ const breadcrumbSchema = {
   }
 
   /* 四コマ画像: 1画面に収まるよう高さ制限 */
-  .post-content img[src*="4koma"] {
-    width: auto;
-    max-height: calc(100svh - 280px);
+  .layout-4koma .post-content img {
+    width: auto !important;
+    max-height: calc(100svh - 260px);
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+    display: block;
   }
 
   @media (max-width: 600px) {
-    .post-content img[src*="4koma"] {
-      max-height: calc(100svh - 240px);
+    .layout-4koma .post-content img {
+      max-height: calc(100svh - 120px);
     }
   }
 </style>
