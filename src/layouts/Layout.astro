@@ -74,12 +74,23 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://ramen-sorekara.com');
       }
       header a { text-decoration: none; }
       .site-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .site-title img {
+        width: 36px;
+        height: 36px;
+        display: block;
+        flex-shrink: 0;
+      }
+      .site-title-text {
         font-family: 'Shippori Mincho', serif;
         font-weight: 600;
         font-size: 1.1rem;
         color: #b5352a;
-        white-space: nowrap;
-        flex-shrink: 0;
         letter-spacing: 0.04em;
       }
       nav { display: flex; }
@@ -140,7 +151,10 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://ramen-sorekara.com');
     <header>
       <div class="header-inner">
         <div class="header-top">
-          <a href="/" class="site-title">🍜 ラーメン、それから。</a>
+          <a href="/" class="site-title">
+            <img src="/images/logo-ramen.svg" alt="" aria-hidden="true" />
+            <span class="site-title-text">ラーメン、それから。</span>
+          </a>
           <div class="nav-sub">
             <a href="/game">🎮 ゲーム</a>
             <a href="/contact">お問い合わせ</a>
