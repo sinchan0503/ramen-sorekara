@@ -78,6 +78,7 @@ const { slug } = Astro.props;
       .from('comments')
       .select('id, name, body, created_at')
       .eq('post_slug', slug)
+      .eq('approved', true)
       .order('created_at', { ascending: false });
 
     if (error || !data) {
@@ -136,6 +137,10 @@ const { slug } = Astro.props;
     }
 
     form.reset();
+    errorEl.style.color = '#4a8a4a';
+    errorEl.textContent = 'コメントを受け付けました。確認後に公開されます。';
+    errorEl.hidden = false;
+    setTimeout(() => { errorEl.hidden = true; errorEl.style.color = ''; }, 5000);
     await loadComments();
   });
 
