@@ -35,7 +35,10 @@ import Layout from '../layouts/Layout.astro';
           <p class="profile-name">ぽん</p>
           <p>東京在住OL。週2〜3回はラーメンを食べています。</p>
           <p>好きなジャンルは二郎系とちゃん系。でも気分によって何でも食べます。学生のころは二郎系ばかり行ってたのに、最近はあっさり系に移行してきた気がする。歳かな。</p>
-          <p>ラーメンがモンブランにしか見えないけど、どちらも好きです。</p>
+          <div class="montblanc-line">
+            <p>ラーメンがモンブランにしか見えないけど、どちらも好きです。</p>
+            <img src="/images/ramen-montblanc.png" alt="モンブラーメン" class="montblanc-img" />
+          </div>
         </div>
       </div>
     </section>
@@ -79,8 +82,20 @@ import Layout from '../layouts/Layout.astro';
     color: #2a2a2a;
     margin-bottom: 8px !important;
   }
+  .montblanc-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .montblanc-line p { margin-bottom: 0 !important; }
+  .montblanc-img {
+    width: 100px;
+    height: auto;
+    flex-shrink: 0;
+  }
   @media (max-width: 600px) {
     .profile { flex-direction: column; align-items: center; }
     .profile-text { text-align: left; }
+    .montblanc-img { width: 80px; }
   }
 </style>
