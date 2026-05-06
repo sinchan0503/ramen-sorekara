@@ -27,3 +27,8 @@ pnpm-debug.log*
 
 # 四コマ原本アーカイブ（git管理不要）
 4koma_originals/
+
+# シークレット・認証情報
+service-account.json
+credentials.json
+blog_token.json
