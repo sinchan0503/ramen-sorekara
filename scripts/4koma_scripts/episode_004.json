@@ -1,0 +1,26 @@
+{
+  "episode_title": "【四コマ】替え玉の後悔",
+  "pub_date": "2026-05-12",
+  "slug": "4koma-2026-05-12",
+  "output": "4koma-2026-05-12.png",
+  "panels": [
+    {
+      "image": "pon-eating",
+      "narration": "火曜日のランチ",
+      "text": "うーん…完食！\nおいしかった〜"
+    },
+    {
+      "image": "pon-confused",
+      "text": "替え玉…どうしよ。\n火曜日だし…自重すべき？"
+    },
+    {
+      "image": "pon-excited",
+      "text": "いっちゃえ！\n替え玉ひとつください！"
+    },
+    {
+      "image": "pon-sad",
+      "narration": "食後",
+      "text": "火曜日から\nなにやってんだ私"
+    }
+  ]
+}
