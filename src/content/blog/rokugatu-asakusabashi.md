@@ -10,6 +10,8 @@ image: "/images/rokugatu-1.jpg"
 
 駅前にある飲み屋街がわりと控えめな感じで、ごちゃごちゃしてなくて個人的には好きな雰囲気だった。どこにも寄ってないけど。
 
+![ろく月 外観](/images/rokugatu-outside.jpg)
+
 ![冷やしスパイスまぜそば](/images/rokugatu-1.jpg)
 
 ## 限定メニューって言われたら頼むしかない
