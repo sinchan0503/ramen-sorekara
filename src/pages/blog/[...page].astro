@@ -6,52 +6,158 @@ export async function getStaticPaths({ paginate }) {
   const posts = (await getCollection('blog'))
     .filter(p => !p.data.title.startsWith('【四コマ】'))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-  return paginate(posts, { pageSize: 10 });
+  return paginate(posts, { pageSize: 30 });
 }
 
 const { page } = Astro.props;
+
+const allPosts = page.data.map(post => ({
+  id: post.id.replace(/\.md$/, ''),
+  title: post.data.title,
+  description: post.data.description,
+  image: post.data.image || null,
+  pubDate: post.data.pubDate.toLocaleDateString('ja-JP'),
+}));
 ---
 
 <Layout title="記事一覧 | ラーメン、それから。">
   <h1 class="page-title">記事一覧</h1>
-  <div class="post-grid">
-    {page.data.map(post => (
-      <a href={`/blog/${post.id.replace(/\.md$/, '')}`} class="post-card">
+
+  <div class="size-switcher">
+    <span class="size-label">表示件数：</span>
+    {[10, 20, 30].map(n => (
+      <button class="size-btn" data-size={n}>{n}件</button>
+    ))}
+  </div>
+
+  <div class="post-grid" id="post-grid">
+    {allPosts.map(post => (
+      <a href={`/blog/${post.id}`} class="post-card">
         <div class="card-thumb">
-          {post.data.image
-            ? <img src={post.data.image} alt={post.data.title} />
-            : <img src="/images/pon-eating.png" alt={post.data.title} />
+          {post.image
+            ? <img src={post.image} alt={post.title} />
+            : <img src="/images/pon-eating.png" alt={post.title} />
           }
         </div>
         <div class="card-body">
-          <time>{post.data.pubDate.toLocaleDateString('ja-JP')}</time>
-          <h2>{post.data.title}</h2>
-          <p>{post.data.description}</p>
+          <time>{post.pubDate}</time>
+          <h2>{post.title}</h2>
+          <p>{post.description}</p>
         </div>
       </a>
     ))}
   </div>
 
-  <nav class="pagination">
-    {page.url.prev && (
-      <a href={page.url.prev} class="page-btn">← 新しい記事</a>
-    )}
-    <span class="page-info">{page.currentPage} / {page.lastPage}</span>
-    {page.url.next && (
-      <a href={page.url.next} class="page-btn">古い記事 →</a>
-    )}
-  </nav>
+  <nav class="pagination" id="pagination"></nav>
 </Layout>
+
+<script define:vars={{ allPosts }}>
+  const PAGE_SIZE_KEY = 'blog_page_size';
+  let currentPage = 1;
+  let pageSize = parseInt(localStorage.getItem(PAGE_SIZE_KEY) || '10', 10);
+
+  const grid = document.getElementById('post-grid');
+  const paginationEl = document.getElementById('pagination');
+  const cards = Array.from(grid.querySelectorAll('.post-card'));
+
+  function render() {
+    const total = cards.length;
+    const totalPages = Math.ceil(total / pageSize);
+    if (currentPage > totalPages) currentPage = 1;
+
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+
+    cards.forEach((card, i) => {
+      card.style.display = (i >= start && i < end) ? '' : 'none';
+    });
+
+    // pagination
+    paginationEl.innerHTML = '';
+    if (totalPages <= 1) return;
+
+    if (currentPage > 1) {
+      const prev = document.createElement('a');
+      prev.href = '#';
+      prev.className = 'page-btn';
+      prev.textContent = '← 新しい記事';
+      prev.addEventListener('click', e => { e.preventDefault(); currentPage--; render(); window.scrollTo(0,0); });
+      paginationEl.appendChild(prev);
+    }
+
+    const info = document.createElement('span');
+    info.className = 'page-info';
+    info.textContent = `${currentPage} / ${totalPages}`;
+    paginationEl.appendChild(info);
+
+    if (currentPage < totalPages) {
+      const next = document.createElement('a');
+      next.href = '#';
+      next.className = 'page-btn';
+      next.textContent = '古い記事 →';
+      next.addEventListener('click', e => { e.preventDefault(); currentPage++; render(); window.scrollTo(0,0); });
+      paginationEl.appendChild(next);
+    }
+  }
+
+  // size buttons
+  document.querySelectorAll('.size-btn').forEach(btn => {
+    const size = parseInt(btn.dataset.size, 10);
+    if (size === pageSize) btn.classList.add('active');
+
+    btn.addEventListener('click', () => {
+      pageSize = size;
+      currentPage = 1;
+      localStorage.setItem(PAGE_SIZE_KEY, size);
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.size) === size));
+      render();
+    });
+  });
+
+  render();
+</script>
 
 <style>
   .page-title {
     font-family: 'Shippori Mincho', serif;
     font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
     color: #2a2a2a;
     letter-spacing: 0.04em;
   }
+
+  /* ── Page size switcher ── */
+  .size-switcher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .size-label {
+    font-size: 0.82rem;
+    color: #999;
+  }
+  .size-btn {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    color: #666;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .size-btn:hover {
+    border-color: #b5352a;
+    color: #b5352a;
+  }
+  .size-btn.active {
+    background: #b5352a;
+    border-color: #b5352a;
+    color: #fff;
+  }
+
   .post-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
