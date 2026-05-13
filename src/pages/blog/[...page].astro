@@ -24,10 +24,12 @@ const allPosts = page.data.map(post => ({
   <h1 class="page-title">記事一覧</h1>
 
   <div class="size-switcher">
-    <span class="size-label">表示件数：</span>
-    {[10, 20, 30].map(n => (
-      <button class="size-btn" data-size={n}>{n}件</button>
-    ))}
+    <label class="size-label" for="page-size-select">表示件数：</label>
+    <select id="page-size-select" class="size-select">
+      {[10, 20, 30, 50].map(n => (
+        <option value={n}>{n}件</option>
+      ))}
+    </select>
   </div>
 
   <div class="post-grid" id="post-grid">
@@ -100,18 +102,14 @@ const allPosts = page.data.map(post => ({
     }
   }
 
-  // size buttons
-  document.querySelectorAll('.size-btn').forEach(btn => {
-    const size = parseInt(btn.dataset.size, 10);
-    if (size === pageSize) btn.classList.add('active');
-
-    btn.addEventListener('click', () => {
-      pageSize = size;
-      currentPage = 1;
-      localStorage.setItem(PAGE_SIZE_KEY, size);
-      document.querySelectorAll('.size-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.size) === size));
-      render();
-    });
+  // size select
+  const select = document.getElementById('page-size-select');
+  select.value = pageSize;
+  select.addEventListener('change', () => {
+    pageSize = parseInt(select.value, 10);
+    currentPage = 1;
+    localStorage.setItem(PAGE_SIZE_KEY, pageSize);
+    render();
   });
 
   render();
@@ -138,24 +136,23 @@ const allPosts = page.data.map(post => ({
     font-size: 0.82rem;
     color: #999;
   }
-  .size-btn {
+  .size-select {
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 20px;
-    padding: 4px 14px;
+    padding: 4px 28px 4px 14px;
     font-size: 0.82rem;
+    color: #555;
     cursor: pointer;
-    color: #666;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    transition: border-color 0.2s;
   }
-  .size-btn:hover {
+  .size-select:focus {
+    outline: none;
     border-color: #b5352a;
-    color: #b5352a;
-  }
-  .size-btn.active {
-    background: #b5352a;
-    border-color: #b5352a;
-    color: #fff;
   }
 
   .post-grid {
