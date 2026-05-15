@@ -67,6 +67,12 @@ import Layout from '../layouts/Layout.astro';
       <button class="btn-primary" id="btn-retry">もう一回</button>
     </div>
   </div>
+
+  <div class="blog-link-section">
+    <p class="blog-link-label">ぽんが食べたラーメン、読んでいく？</p>
+    <a href="/blog" class="blog-link-btn">記事一覧を見る →</a>
+    <a href="/4koma" class="blog-link-btn blog-link-btn--sub">四コマ漫画を見る →</a>
+  </div>
 </Layout>
 
 <script>
@@ -961,6 +967,37 @@ document.addEventListener('keydown', e=>{
 </script>
 
 <style>
+  .blog-link-section {
+    text-align: center;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid #f0e8e4;
+  }
+  .blog-link-label {
+    font-size: 0.88rem;
+    color: #999;
+    margin-bottom: 16px;
+  }
+  .blog-link-btn {
+    display: inline-block;
+    background: #b5352a;
+    color: #fff;
+    padding: 10px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin: 4px 6px;
+    transition: background 0.2s;
+  }
+  .blog-link-btn:hover { background: #9b2d22; }
+  .blog-link-btn--sub {
+    background: transparent;
+    color: #b5352a;
+    border: 1px solid #b5352a;
+  }
+  .blog-link-btn--sub:hover { background: #fdf0ed; }
+
   .game-wrap {
     max-width: 500px;
     margin: 0 auto;

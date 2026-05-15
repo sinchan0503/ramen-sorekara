@@ -13,6 +13,13 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+const allPosts = await getCollection('blog');
+const is4komaPost = post.id.includes('4koma');
+const relatedPosts = allPosts
+  .filter(p => p.id !== post.id && p.id.includes('4koma') === is4komaPost)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 const is4koma = post.id.includes('4koma');
 
 const siteUrl = 'https://ramen-sorekara.com';
@@ -62,6 +69,24 @@ const breadcrumbSchema = {
       <div class="post-content">
         <Content />
       </div>
+      {relatedPosts.length > 0 && (
+        <div class="related-posts">
+          <h2 class="related-title">{is4koma ? 'ほかの四コマ' : 'ほかの記事'}</h2>
+          <div class="related-grid">
+            {relatedPosts.map(p => (
+              <a href={`/blog/${p.id.replace(/\.md$/, '')}`} class="related-card">
+                <div class="related-thumb">
+                  {p.data.image
+                    ? <img src={p.data.image} alt={p.data.title} />
+                    : <span class="related-emoji">{p.data.emoji ?? '🍜'}</span>
+                  }
+                </div>
+                <p class="related-card-title">{p.data.title}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
       <div class="post-footer">
         <a href={is4koma ? '/4koma' : '/blog'}>{is4koma ? '← 四コマ一覧に戻る' : '← 記事一覧に戻る'}</a>
       </div>
@@ -189,6 +214,65 @@ const breadcrumbSchema = {
     border: none;
     border-top: 1px solid #f0e8e4;
     margin: 40px 0;
+  }
+
+  /* ── 関連記事 ── */
+  .related-posts {
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid #f0e8e4;
+  }
+  .related-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    letter-spacing: 0.04em;
+    border-left: none;
+    padding-left: 0;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 600px) {
+    .related-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .related-card {
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #f0e8e4;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .related-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+  }
+  .related-thumb {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: #fdf0ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .related-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .related-emoji { font-size: 2rem; }
+  .related-card-title {
+    font-size: 0.78rem;
+    color: #555;
+    padding: 8px 10px 10px;
+    line-height: 1.5;
   }
 
   /* ── フッター ── */
