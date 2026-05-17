@@ -7,10 +7,10 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<Layout title="四コマ漫画 | ラーメン、それから。" description="ぽんのラーメン四コマ日誌。東京在住OLぽんのラーメンあるあるを四コマ漫画で毎日更新。">
+<Layout title="四コマ漫画 | ラーメン、それから。" description="ぽんのラーメン四コマ日誌。東京在住OLぽんのラーメンあるあるを四コマ漫画で不定期更新。">
   <div class="koma-page">
     <h1>四コマ漫画</h1>
-    <p class="koma-desc">ぽんのラーメン四コマ日誌 — ラーメンあるあるを毎日1本更新中</p>
+    <p class="koma-desc">ぽんのラーメン四コマ日誌 — ラーメンあるあるを不定期更新中</p>
 
     <div class="koma-list">
       {posts.map(post => (
