@@ -49,7 +49,7 @@ const breadcrumbSchema = {
 };
 ---
 
-<Layout title={`${post.data.title} | ラーメン、それから。`} description={post.data.description}>
+<Layout title={`${post.data.title} | ラーメン、それから。`} description={post.data.description} noindex={is4koma}>
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <nav class="breadcrumb" aria-label="パンくずリスト">

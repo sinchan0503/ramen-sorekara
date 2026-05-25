@@ -2,8 +2,9 @@
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
-const { title = 'ラーメンブログ｜ラーメン、それから。', description = '東京のラーメンブログ。ラーメンがモンブランにしか見えないOLが食べて書く、東京ラーメンレビュー。' } = Astro.props;
+const { title = 'ラーメンブログ｜ラーメン、それから。', description = '東京のラーメンブログ。ラーメンがモンブランにしか見えないOLが食べて書く、東京ラーメンレビュー。', noindex = false } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, 'https://ramen-sorekara.com');
 ---
 <!doctype html>
@@ -12,6 +13,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://ramen-sorekara.com');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonicalURL} />
     <!-- OGP -->
     <meta property="og:type" content="website" />
