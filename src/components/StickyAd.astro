@@ -1,0 +1,52 @@
+---
+// スロットIDをAdSenseで取得して XXXXXXXXXX を差し替える
+const adSlot = "8195761770";
+const adClient = "ca-pub-9288807135824382";
+---
+
+<div class="sticky-ad-wrap" id="sticky-ad">
+  <button class="sticky-ad-close" aria-label="広告を閉じる" onclick="document.getElementById('sticky-ad').style.display='none'">✕</button>
+  <ins
+    class="adsbygoogle"
+    style="display:inline-block;width:320px;height:50px"
+    data-ad-client={adClient}
+    data-ad-slot={adSlot}
+  ></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<style>
+  .sticky-ad-wrap {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid #f0e8e4;
+    padding: 8px 0 env(safe-area-inset-bottom, 8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sticky-ad-close {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 0.7rem;
+    color: #bbb;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+  }
+  .sticky-ad-close:hover { color: #888; }
+
+  /* PCでは非表示 */
+  @media (min-width: 601px) {
+    .sticky-ad-wrap { display: none !important; }
+  }
+</style>
