@@ -3,8 +3,9 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths({ paginate }) {
+  const now = new Date();
   const posts = (await getCollection('blog'))
-    .filter(p => !p.data.title.startsWith('【四コマ】'))
+    .filter(p => !p.data.title.startsWith('【四コマ】') && p.data.pubDate <= now)
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   return paginate(posts, { pageSize: 30 });
 }

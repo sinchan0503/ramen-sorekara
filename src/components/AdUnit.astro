@@ -1,0 +1,28 @@
+---
+interface Props {
+  slot: string;
+  format?: 'auto' | 'rectangle' | 'horizontal';
+  style?: string;
+}
+const { slot, format = 'auto', style = 'display:block' } = Astro.props;
+const client = 'ca-pub-9288807135824382';
+---
+
+<ins
+  class="adsbygoogle"
+  style={style}
+  data-ad-client={client}
+  data-ad-slot={slot}
+  data-ad-format={format}
+  data-full-width-responsive="true"
+></ins>
+<script>
+  (window.adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<style>
+  ins {
+    margin: 40px 0;
+    display: block;
+  }
+</style>

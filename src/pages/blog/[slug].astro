@@ -2,9 +2,12 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CommentSection from '../../components/CommentSection.astro';
+import AdUnit from '../../components/AdUnit.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const now = new Date();
+  const posts = (await getCollection('blog'))
+    .filter(p => p.data.pubDate <= now);
   return posts.map(post => ({
     params: { slug: post.id.replace(/\.md$/, '') },
     props: { post },
@@ -14,7 +17,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-const allPosts = await getCollection('blog');
+const allPosts = (await getCollection('blog')).filter(p => p.data.pubDate <= new Date());
 const is4komaPost = post.id.includes('4koma');
 const relatedPosts = allPosts
   .filter(p => p.id !== post.id && p.id.includes('4koma') === is4komaPost)
@@ -69,6 +72,7 @@ const breadcrumbSchema = {
       <div class="post-content">
         <Content />
       </div>
+      {!is4koma && <AdUnit slot="XXXXXXXXXX" />}
       {relatedPosts.length > 0 && (
         <div class="related-posts">
           <h2 class="related-title">{is4koma ? 'ほかの四コマ' : 'ほかの記事'}</h2>
