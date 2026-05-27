@@ -48,4 +48,9 @@ const adClient = "ca-pub-9288807135824382";
   @media (min-width: 601px) {
     .sticky-ad-wrap { display: none !important; }
   }
+
+  /* 広告が埋まらなかった時は非表示 */
+  .sticky-ad-wrap:has(.adsbygoogle[data-ad-status="unfilled"]) {
+    display: none !important;
+  }
 </style>
