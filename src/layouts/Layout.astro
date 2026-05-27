@@ -1,5 +1,4 @@
 ---
-import StickyAd from '../components/StickyAd.astro';
 interface Props {
   title?: string;
   description?: string;
@@ -190,6 +189,5 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://ramen-sorekara.com');
       <p>© 2026 ラーメン、それから。</p>
       <p style="margin-top: 8px;"><a href="/privacy" style="color: #bbb; text-decoration: none;">プライバシーポリシー</a></p>
     </footer>
-    <StickyAd />
   </body>
 </html>
