@@ -1,37 +1,37 @@
 {
-  "episode_title": "GW明けの反動",
-  "story_summary": "GW中にラーメン遠征を満喫したぽんが、土曜日にもう一杯行こうとするが、体重計という現実に直面する。",
+  "episode_title": "水曜の誘惑",
+  "story_summary": "週の折り返し水曜日、午後の仕事中にラーメンのことしか考えられなくなるぽん。「ご褒美」の定義がどんどん緩くなっていく。",
   "panels": [
     {
       "panel": 1,
-      "scene": "土曜の朝、ぽんが自宅のソファでスマホを見ながらGW中に巡ったラーメン店の写真を振り返っている。背景にカレンダー（5月）と窓の外に新緑。テーブルの上にラーメン店のスタンプカードが散乱。",
-      "pon_expression": "満足げにニヤニヤ、頬に手を当てて幸せそう",
-      "dialogue": "GW5日間で8杯…最高の連休だった…✨",
-      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, wearing a casual light pink t-shirt and grey sweatpants (weekend clothes). She is sitting on a cozy sofa looking at her smartphone with a blissful dreamy smile, one hand on her cheek. On the coffee table, several ramen shop stamp cards are scattered. A May calendar on the wall, fresh green leaves visible through the window, late spring morning light. 4-panel manga, panel 1 of 4"
+      "scene": "オフィスのデスクでPCに向かうぽん。壁掛けカレンダーの水曜日に赤丸がついている。窓の外には新緑が見える。時計は14時を指している。",
+      "pon_expression": "真剣な顔でPCを見つめている、仕事モード",
+      "dialogue": "水曜日…週の折り返し…\nここを乗り越えれば…！",
+      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She is sitting at her office desk staring at a PC monitor with a serious determined expression. A wall calendar showing Wednesday circled in red. Clock showing 2 PM. Fresh green leaves visible through the office window, late spring atmosphere. 4-panel manga, panel 1 of 4"
     },
     {
       "panel": 2,
-      "scene": "ぽんがスマホで地図アプリを開き、「今日も休みだし、隣の県の有名店に遠征しよう！」とやる気満々で立ち上がっている。窓の外は晴れた春の空。",
-      "pon_expression": "目をキラキラさせて拳を握り、立ち上がるポーズ",
-      "dialogue": "せっかくの土曜だし！\n隣町の新店に遠征するぞ〜！🍜",
-      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, wearing a casual light pink t-shirt and grey sweatpants. She is standing up energetically from the sofa with sparkling eyes and a pumped fist, holding her smartphone showing a map app in the other hand. Bright sunny spring sky visible through the window, fresh green trees outside. Energetic and excited pose. 4-panel manga, panel 2 of 4"
+      "scene": "ぽんの頭の中に浮かぶラーメンの妄想。湯気の立つ味噌ラーメンが輝いて見える。PCの画面にはExcelが映っているが、目線は完全に虚空。",
+      "pon_expression": "目がキラキラ、よだれをこらえている、頬が紅潮",
+      "dialogue": "頑張った自分へのご褒美に\n今日はラーメン食べよ…♡",
+      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She is at her desk but her eyes are sparkling and dreamy, slightly drooling, blushing cheeks. A thought bubble shows a glowing bowl of rich miso ramen with steam rising. Excel spreadsheet visible on her monitor but she is clearly not focused. Late spring green trees outside window. 4-panel manga, panel 2 of 4"
     },
     {
       "panel": 3,
-      "scene": "着替えようとして洗面所に行ったぽんが、ふと目に入った体重計に乗ってしまう。体重計の数字を見て、真顔で固まっている。背景に洗面所の鏡。",
-      "pon_expression": "真顔で硬直、目が点になっている、顔が青ざめている",
-      "dialogue": "…………。",
-      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, wearing a casual light pink t-shirt and grey sweatpants. She is standing on a bathroom scale in the washroom, staring down at it with a completely frozen blank expression, face turning pale, eyes as dots. A bathroom mirror behind her. Dramatic shadow over her face. Comedic shock moment. 4-panel manga, panel 3 of 4"
+      "scene": "同僚の女性が呆れた顔でぽんに話しかける。ぽんはハッとした表情。同僚がスマホの画面を見せている（ぽんのSNS投稿履歴）。",
+      "pon_expression": "ギクッとした表情、冷や汗",
+      "dialogue": "同僚「ぽんちゃん…月曜も火曜も\n同じこと言ってたよ？」\n\nぽん「えっ」",
+      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She looks shocked and caught off guard with sweat drops, frozen expression. A female coworker with brown ponytail hair stands next to her showing a smartphone screen with social media posts. The smartphone screen shows multiple ramen photos posted on consecutive days. Office background with fresh green trees outside, late spring Wednesday atmosphere. 4-panel manga, panel 3 of 4"
     },
     {
       "panel": 4,
-      "scene": "結局、隣町のラーメン店の前に並んでいるぽん。行列の中でスマホを見ながら「明日からダイエット」と呟いている。背景に春の青空と新緑の街路樹、人気店の長い行列。",
-      "pon_expression": "若干の罪悪感を滲ませつつも、結局ワクワクが勝っている笑顔",
-      "dialogue": "ま…まあ今日食べた分は\n明日から走って返せばいいし…！\n（走らない）",
-      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, now wearing a light blue button-up shirt and dark navy slacks. She is standing in a long queue outside a popular ramen shop, holding her smartphone with a slightly guilty but mostly excited smile, sweat drop on her forehead. Spring blue sky, fresh green street trees lining the road, other people in the queue. A small narration text at the bottom saying she won't actually run. Comedic ending. 4-panel manga, panel 4 of 4"
+      "scene": "ぽんがキリッとした顔で立ち上がり、指を一本立てて力説している。同僚は完全に呆れている。背景に「月：週始めのご褒美」「火：火曜を乗り越えたご褒美」「水：折り返しのご褒美」とテキストが並ぶ。",
+      "pon_expression": "ドヤ顔、自信満々、キリッとした目",
+      "dialogue": "「毎日が何かしらの\n折り返しだから！！」",
+      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She is standing up proudly from her desk chair with a confident smug expression, pointing one finger up dramatically. Her coworker is in the background with a completely exasperated face and slumped shoulders. Background text bubbles listing excuses: Monday reward, Tuesday reward, Wednesday reward. Office setting with late spring greenery visible outside, warm afternoon light. 4-panel manga, panel 4 of 4"
     }
   ],
-  "pub_date": "2026-05-09",
-  "slug": "4koma-2026-05-09",
-  "output": "4koma-2026-05-09.png"
+  "pub_date": "2026-05-27",
+  "slug": "4koma-2026-05-27",
+  "output": "4koma-2026-05-27.png"
 }
