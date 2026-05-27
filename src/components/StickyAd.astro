@@ -23,12 +23,17 @@ const adClient = "ca-pub-9288807135824382";
     z-index: 9999;
     background: #fff;
     border-top: 1px solid #e8e0dc;
-    display: flex;
+    display: none; /* 広告が埋まるまで非表示 */
     align-items: center;
     justify-content: center;
     padding: 4px 0;
     padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
     box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+  }
+
+  /* 広告が埋まったときだけ表示 */
+  .sticky-ad-wrap:has(.adsbygoogle[data-ad-status="filled"]) {
+    display: flex !important;
   }
   .sticky-ad-close {
     position: absolute;
@@ -49,8 +54,4 @@ const adClient = "ca-pub-9288807135824382";
     .sticky-ad-wrap { display: none !important; }
   }
 
-  /* 広告が埋まらなかった時は非表示 */
-  .sticky-ad-wrap:has(.adsbygoogle[data-ad-status="unfilled"]) {
-    display: none !important;
-  }
 </style>
