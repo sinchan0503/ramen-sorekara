@@ -6,8 +6,8 @@ const adClient = "ca-pub-9288807135824382";
 <div class="sticky-ad-wrap" id="sticky-ad">
   <button class="sticky-ad-close" aria-label="広告を閉じる" onclick="document.getElementById('sticky-ad').style.display='none'">✕</button>
   <ins
-    class="adsbygoogle sticky-ad-ins"
-    style="display:inline-block;"
+    class="adsbygoogle"
+    style="display:inline-block;width:320px;height:50px;"
     data-ad-client={adClient}
     data-ad-slot={adSlot}
   ></ins>
@@ -15,25 +15,28 @@ const adClient = "ca-pub-9288807135824382";
 </div>
 
 <style>
+  /* モバイルのみ表示、デフォルト非表示 */
   .sticky-ad-wrap {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    background: #fff;
-    border-top: 1px solid #e8e0dc;
-    display: none; /* 広告が埋まるまで非表示 */
-    align-items: center;
-    justify-content: center;
-    padding: 4px 0;
-    padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+    display: none;
   }
 
-  /* 広告が埋まったときだけ表示（全デバイス共通） */
-  .sticky-ad-wrap:has(.adsbygoogle[data-ad-status="filled"]) {
-    display: flex !important;
+  /* 広告が埋まったときだけモバイルで表示（アニメーションなし） */
+  @media (max-width: 600px) {
+    .sticky-ad-wrap:has(.adsbygoogle[data-ad-status="filled"]) {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      background: #fff;
+      border-top: 1px solid #e8e0dc;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 0;
+      padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+    }
   }
 
   .sticky-ad-close {
@@ -48,19 +51,5 @@ const adClient = "ca-pub-9288807135824382";
     padding: 4px;
     line-height: 1;
     z-index: 1;
-  }
-
-  /* モバイル: 320×50 */
-  .sticky-ad-ins {
-    width: 320px;
-    height: 50px;
-  }
-
-  /* デスクトップ: 728×90 リーダーボード */
-  @media (min-width: 768px) {
-    .sticky-ad-ins {
-      width: 728px;
-      height: 90px;
-    }
   }
 </style>
