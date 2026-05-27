@@ -6,8 +6,8 @@ const adClient = "ca-pub-9288807135824382";
 <div class="sticky-ad-wrap" id="sticky-ad">
   <button class="sticky-ad-close" aria-label="広告を閉じる" onclick="document.getElementById('sticky-ad').style.display='none'">✕</button>
   <ins
-    class="adsbygoogle"
-    style="display:inline-block;width:320px;height:50px;"
+    class="adsbygoogle sticky-ad-ins"
+    style="display:inline-block;"
     data-ad-client={adClient}
     data-ad-slot={adSlot}
   ></ins>
@@ -31,10 +31,11 @@ const adClient = "ca-pub-9288807135824382";
     box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
   }
 
-  /* 広告が埋まったときだけ表示 */
+  /* 広告が埋まったときだけ表示（全デバイス共通） */
   .sticky-ad-wrap:has(.adsbygoogle[data-ad-status="filled"]) {
     display: flex !important;
   }
+
   .sticky-ad-close {
     position: absolute;
     top: 2px;
@@ -49,9 +50,17 @@ const adClient = "ca-pub-9288807135824382";
     z-index: 1;
   }
 
-  /* PCでは非表示 */
-  @media (min-width: 601px) {
-    .sticky-ad-wrap { display: none !important; }
+  /* モバイル: 320×50 */
+  .sticky-ad-ins {
+    width: 320px;
+    height: 50px;
   }
 
+  /* デスクトップ: 728×90 リーダーボード */
+  @media (min-width: 768px) {
+    .sticky-ad-ins {
+      width: 728px;
+      height: 90px;
+    }
+  }
 </style>
