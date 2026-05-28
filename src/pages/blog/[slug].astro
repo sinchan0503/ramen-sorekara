@@ -52,7 +52,13 @@ const breadcrumbSchema = {
 };
 ---
 
-<Layout title={`${post.data.title} | ラーメン、それから。`} description={post.data.description} noindex={is4koma}>
+<Layout
+  title={`${post.data.title} | ラーメン、それから。`}
+  description={post.data.description}
+  noindex={is4koma}
+  image={post.data.image ?? undefined}
+  ogType="article"
+>
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <nav class="breadcrumb" aria-label="パンくずリスト">
@@ -81,7 +87,7 @@ const breadcrumbSchema = {
               <a href={`/blog/${p.id.replace(/\.md$/, '')}`} class="related-card">
                 <div class="related-thumb">
                   {p.data.image
-                    ? <img src={p.data.image} alt={p.data.title} />
+                    ? <img src={p.data.image} alt={p.data.title} loading="lazy" decoding="async" />
                     : <span class="related-emoji">{p.data.emoji ?? '🍜'}</span>
                   }
                 </div>
