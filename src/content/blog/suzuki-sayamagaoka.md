@@ -6,7 +6,7 @@ emoji: "🍜"
 image: "/images/suzuki-sayamagaoka.jpg"
 ---
 
-三鷹で並んでいるとき、張り紙が貼ってあった。
+[三鷹](/blog/suzuki-mitaka)で並んでいるとき、張り紙が貼ってあった。
 
 ![すず鬼 狭山ヶ丘分店 スタミナラーメン まさおトッピング](/images/suzuki-sayamagaoka.jpg)
 
