@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CommentSection from '../../components/CommentSection.astro';
-import AdUnit from '../../components/AdUnit.astro';
 
 export async function getStaticPaths() {
   const now = new Date();
@@ -78,7 +77,7 @@ const breadcrumbSchema = {
       <div class="post-content">
         <Content />
       </div>
-      {!is4koma && <AdUnit />}
+
       {relatedPosts.length > 0 && (
         <div class="related-posts">
           <h2 class="related-title">{is4koma ? 'ほかの四コマ' : 'ほかの記事'}</h2>
