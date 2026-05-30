@@ -3,24 +3,24 @@ import Layout from '../layouts/Layout.astro';
 
 const shops = [
   { name: 'らーめん護什番',              area: '雑司ヶ谷',  slug: 'gojuban-zoshigaya',        x: 636, y: 240 },
-  { name: '伍福軒',                      area: '池袋',      slug: 'gofukuken-ikebukuro',       x: 618, y: 224 },
+  { name: '伍福軒',                      area: '池袋',      slug: 'gofukuken-ikebukuro',       x: 618, y: 226 },
   { name: 'ラーメン富士丸 神谷本店',      area: '神谷',      slug: 'fujimaru-kamiya',           x: 684, y: 137 },
-  { name: 'ひろちゃんラーメン',           area: '池袋',      slug: 'hirochan-ramen-ikebukuro',  x: 634, y: 214 },
-  { name: '麺処 haggy',                 area: '調布',      slug: 'haggy-chofu',               x: 402, y: 399 },
-  { name: '寿限無 担々麺',               area: '上野',      slug: 'jugemu-tantanmen-ueno',     x: 734, y: 266 },
-  { name: 'MEN-EIJI maruq',            area: '練馬',      slug: 'maruq-nerima',              x: 550, y: 197 },
-  { name: '中華そば 麒麟',               area: '池袋',      slug: 'kirin-ikebukuro',           x: 649, y: 222 },
+  { name: 'ひろちゃんラーメン',           area: '池袋',      slug: 'hirochan-ramen-ikebukuro',  x: 648, y: 214 },
+  { name: '麺処 haggy',                 area: '調布',      slug: 'haggy-chofu',               x: 400, y: 390 },
+  { name: '寿限無 担々麺',               area: '上野',      slug: 'jugemu-tantanmen-ueno',     x: 736, y: 264 },
+  { name: 'MEN-EIJI maruq',            area: '練馬',      slug: 'maruq-nerima',              x: 552, y: 197 },
+  { name: '中華そば 麒麟',               area: '池袋',      slug: 'kirin-ikebukuro',           x: 638, y: 212 },
   { name: '溝口屋',                      area: '東十条',    slug: 'mizoguchiya-higashijujo',   x: 676, y: 127 },
   { name: 'ろく月',                      area: '浅草橋',    slug: 'rokugatu-asakusabashi',     x: 753, y: 290 },
-  { name: 'すず鬼 狭山ヶ丘分店',         area: '狭山ヶ丘',  slug: 'suzuki-sayamagaoka',        x: 189, y:  99 },
-  { name: 'すず鬼 三鷹',                area: '三鷹',      slug: 'suzuki-mitaka',             x: 418, y: 323 },
-  { name: '屋台ラーメン しゅんやっちゃん', area: '高尾',      slug: 'shunyacchan-takao',         x:  59, y: 416 },
-  { name: 'つじ田',                      area: '飯田橋',    slug: 'tsujita-asa-iidabashi',     x: 690, y: 283 },
-  { name: 'たたみ',                      area: '日本橋',    slug: 'tatami-nihonbashi',         x: 742, y: 312 },
-  { name: '麺家たいせい',                area: '中野坂上',  slug: 'taisei-nakano',             x: 570, y: 286 },
-  { name: 'スタミナラーメン鬼山',         area: '渋谷',      slug: 'stamina-oniyama-shibuya',   x: 620, y: 386 },
-  { name: '新宿シンちゃんラーメン',       area: '新宿',      slug: 'shinchan-shinjuku',         x: 630, y: 310 },
-  { name: 'Ramen にじゅうぶんのいち',    area: '東尾久',    slug: 'nijubun-no-ichi-higashogu', x: 724, y: 156 },
+  { name: 'すず鬼 狭山ヶ丘分店',         area: '狭山ヶ丘',  slug: 'suzuki-sayamagaoka',        x: 189, y:  97 },
+  { name: 'すず鬼 三鷹',                area: '三鷹',      slug: 'suzuki-mitaka',             x: 418, y: 318 },
+  { name: '屋台ラーメン しゅんやっちゃん', area: '高尾',      slug: 'shunyacchan-takao',         x:  56, y: 408 },
+  { name: 'つじ田',                      area: '飯田橋',    slug: 'tsujita-asa-iidabashi',     x: 690, y: 280 },
+  { name: 'たたみ',                      area: '日本橋',    slug: 'tatami-nihonbashi',         x: 742, y: 310 },
+  { name: '麺家たいせい',                area: '中野坂上',  slug: 'taisei-nakano',             x: 568, y: 282 },
+  { name: 'スタミナラーメン鬼山',         area: '渋谷',      slug: 'stamina-oniyama-shibuya',   x: 622, y: 380 },
+  { name: '新宿シンちゃんラーメン',       area: '新宿',      slug: 'shinchan-shinjuku',         x: 628, y: 306 },
+  { name: 'Ramen にじゅうぶんのいち',    area: '東尾久',    slug: 'nijubun-no-ichi-higashogu', x: 722, y: 154 },
 ];
 ---
 
@@ -32,41 +32,40 @@ const shops = [
   <style>
     .map-header { margin-bottom: 1rem; }
     .map-header h1 { font-family: 'Klee One', cursive; font-size: 1.4rem; color: #b5352a; margin-bottom: 0.2rem; }
-    .map-header p { color: #aaa; font-size: 0.82rem; }
+    .map-header p  { color: #aaa; font-size: 0.82rem; }
 
     .map-wrap { position: relative; margin-bottom: 2rem; }
-    #ramen-svg { width: 100%; height: auto; display: block; border-radius: 16px; border: 1px solid #f0e8e4; cursor: default; }
+    #ramen-svg { width: 100%; height: auto; display: block; border-radius: 16px; border: 1px solid #ede0d8; }
 
-    .shop-pin { cursor: pointer; transition: transform 0.1s; }
-    .shop-pin:hover .pin-circle { filter: brightness(1.15); }
-    .shop-pin:hover { transform-origin: center; transform: scale(1.25); }
+    /* SVG内テキストのハロー */
+    .map-label { paint-order: stroke fill; }
 
+    /* ピンのホバーアニメ */
+    .shop-pin { cursor: pointer; }
+    .shop-pin .pin-bg { transition: r 0.12s; }
+    .shop-pin:hover .pin-bg { r: 10; }
+
+    /* ツールチップ */
     #map-tooltip {
-      display: none;
-      position: absolute;
-      background: #fff;
-      border: 1px solid #f0e8e4;
-      border-radius: 10px;
-      padding: 8px 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      pointer-events: none;
-      z-index: 10;
-      white-space: nowrap;
+      display: none; position: absolute; pointer-events: none; z-index: 20;
+      background: #fff; border: 1px solid #ede0d8; border-radius: 10px;
+      padding: 8px 13px; box-shadow: 0 4px 16px rgba(0,0,0,.1); white-space: nowrap;
     }
-    #tooltip-name { font-weight: 600; font-size: 0.88rem; color: #2a2a2a; }
-    #tooltip-area { font-size: 0.75rem; color: #aaa; margin-top: 1px; }
-    #tooltip-hint { font-size: 0.72rem; color: #b5352a; margin-top: 4px; }
+    #tooltip-name { font-weight: 600; font-size: .88rem; color: #2a2a2a; }
+    #tooltip-area { font-size: .75rem; color: #bbb; margin-top: 1px; }
+    #tooltip-hint { font-size: .72rem; color: #b5352a; margin-top: 4px; }
 
-    .section-label { font-size: 0.78rem; color: #bbb; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
-    .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 0.55rem; }
-    .shop-card { background: #fff; border: 1px solid #f0e8e4; border-radius: 10px; padding: 0.6rem 0.85rem; transition: border-color 0.15s; }
+    /* 店舗リスト */
+    .section-label { font-size: .78rem; color: #ccc; margin-bottom: .75rem; letter-spacing: .05em; }
+    .shop-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(155px,1fr)); gap: .55rem; }
+    .shop-card { background: #fff; border: 1px solid #f0e8e4; border-radius: 10px; padding: .6rem .85rem; transition: border-color .15s; }
     .shop-card:hover { border-color: #b5352a; }
-    .shop-card a { text-decoration: none; color: #2a2a2a; font-size: 0.83rem; font-weight: 500; }
+    .shop-card a { text-decoration: none; color: #2a2a2a; font-size: .83rem; font-weight: 500; }
     .shop-card a:hover { color: #b5352a; }
-    .shop-card-area { color: #ccc; font-size: 0.72rem; margin-top: 2px; }
+    .shop-card-area { color: #ccc; font-size: .72rem; margin-top: 2px; }
 
-    @media (max-width: 600px) {
-      .shop-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    @media(max-width:600px){
+      .shop-grid { grid-template-columns: repeat(auto-fill,minmax(130px,1fr)); }
     }
   </style>
 
@@ -78,80 +77,128 @@ const shops = [
   <div class="map-wrap">
     <svg id="ramen-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <!-- 手書き風フィルター -->
-        <filter id="rough">
-          <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" result="noise" seed="5"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" xChannelSelector="R" yChannelSelector="G"/>
+        <!-- ドットグリッド背景 -->
+        <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+          <circle cx="12" cy="12" r="0.9" fill="#c8a898" opacity="0.35"/>
+        </pattern>
+        <!-- ピン用シャドウ -->
+        <filter id="pshadow" x="-40%" y="-40%" width="180%" height="180%">
+          <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#00000028"/>
         </filter>
-        <!-- ピンのドロップシャドウ -->
-        <filter id="pin-shadow" x="-30%" y="-30%" width="160%" height="160%">
-          <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#00000033"/>
+        <!-- 路線用シャドウ（立体感） -->
+        <filter id="lshadow" x="-5%" y="-5%" width="110%" height="110%">
+          <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#00000015"/>
         </filter>
       </defs>
 
-      <!-- 背景 -->
+      <!-- ベース背景 -->
       <rect width="800" height="500" fill="#fdf8f3" rx="16"/>
+      <!-- ドットテクスチャ -->
+      <rect width="800" height="500" fill="url(#dots)" rx="16"/>
 
-      <!-- 高尾山エリア装飾 -->
-      <text x="32" y="390" font-size="28" opacity="0.12">🏔</text>
-      <text x="14" y="472" font-family="'Noto Sans JP', sans-serif" font-size="9" fill="#ccc">高尾山</text>
+      <!-- 東京湾エリア（右下） -->
+      <path d="M 760 420 Q 800 380 800 500 L 760 500 Z" fill="#c8dce8" opacity="0.35"/>
+      <path d="M 800 370 L 800 500 L 770 500 Q 795 420 800 370Z" fill="#c8dce8" opacity="0.2"/>
 
-      <!-- 路線：中央線（新宿→三鷹→高尾、青） -->
-      <path d="M 624 311 Q 510 318 418 323 Q 240 368 59 416"
-        fill="none" stroke="#7ab5d8" stroke-width="3.5" stroke-linecap="round" opacity="0.75" filter="url(#rough)"/>
-      <text x="320" y="355" font-family="'Noto Sans JP', sans-serif" font-size="8" fill="#7ab5d8" opacity="0.9" transform="rotate(-4 320 355)">中央線</text>
+      <!-- 多摩・西部エリア（左） -->
+      <path d="M 0 0 L 280 0 L 220 500 L 0 500 Z" fill="#d8e4c8" opacity="0.12"/>
 
-      <!-- 路線：西武池袋線（池袋→練馬→狭山ヶ丘、黄） -->
-      <path d="M 639 215 L 550 197 L 189 99"
-        fill="none" stroke="#d4a800" stroke-width="3.5" stroke-linecap="round" opacity="0.7" filter="url(#rough)"/>
-      <text x="360" y="155" font-family="'Noto Sans JP', sans-serif" font-size="8" fill="#c09800" opacity="0.9" transform="rotate(-16 360 155)">西武池袋線</text>
+      <!-- ====== 路線 ====== -->
 
-      <!-- 路線：北上ライン（上野→東十条→神谷方面、グレー） -->
-      <path d="M 737 252 Q 715 195 684 137"
-        fill="none" stroke="#c0a899" stroke-width="2.5" stroke-linecap="round" opacity="0.8" filter="url(#rough)"/>
+      <!-- 西武池袋線（ゴールド）: 池袋→練馬→所沢→狭山ヶ丘 -->
+      <path d="M 639 213 C 610 205 580 200 552 197 C 420 175 300 140 189 97"
+        fill="none" stroke="#c8a020" stroke-width="4" stroke-linecap="round"
+        filter="url(#lshadow)" opacity="0.85"/>
 
-      <!-- 山手線（サーモン色のループ） -->
-      <path d="M 680 432 L 664 452 L 656 438 L 645 422 L 638 393 L 625 368 L 627 342 L 626 315 L 624 302 L 624 278 L 628 251 L 633 230 L 639 213 L 665 207 L 682 202 L 694 195 L 712 191 L 722 204 L 728 216 L 738 230 L 737 249 L 732 264 L 730 282 L 726 298 L 721 322 L 715 336 L 708 358 L 706 382 L 693 400 Z"
-        fill="none" stroke="#e8906a" stroke-width="8" stroke-linejoin="round" stroke-linecap="round" opacity="0.55" filter="url(#rough)"/>
+      <!-- 中央線（ブルー）: 新宿→中野→三鷹→高尾 -->
+      <path d="M 627 306 C 600 306 585 295 568 282 C 510 305 460 315 418 318 C 280 340 160 375 56 408"
+        fill="none" stroke="#4a8fc0" stroke-width="4" stroke-linecap="round"
+        filter="url(#lshadow)" opacity="0.82"/>
 
-      <!-- 山手線ラベル -->
-      <text x="598" y="163" font-family="'Noto Sans JP', sans-serif" font-size="8" fill="#e0804a" opacity="0.85" transform="rotate(-78 598 163)">山手線</text>
+      <!-- 京浜東北・北上（ウォームグレー）: 上野→東十条→溝口屋→神谷 -->
+      <path d="M 736 264 C 722 240 706 195 684 137"
+        fill="none" stroke="#9a8078" stroke-width="3" stroke-linecap="round"
+        filter="url(#lshadow)" opacity="0.75"/>
 
-      <!-- エリアラベル -->
-      <text x="597" y="194" font-family="'Klee One', cursive" font-size="13" fill="#7a5c4e" opacity="0.55" font-weight="600">池袋</text>
-      <text x="584" y="308" font-family="'Klee One', cursive" font-size="13" fill="#7a5c4e" opacity="0.55" font-weight="600">新宿</text>
-      <text x="594" y="388" font-family="'Klee One', cursive" font-size="12" fill="#7a5c4e" opacity="0.55">渋谷</text>
-      <text x="746" y="244" font-family="'Klee One', cursive" font-size="12" fill="#7a5c4e" opacity="0.55">上野</text>
-      <text x="705" y="332" font-family="'Klee One', cursive" font-size="11" fill="#7a5c4e" opacity="0.45">東京</text>
-      <text x="516" y="215" font-family="'Klee One', cursive" font-size="11" fill="#7a5c4e" opacity="0.45">練馬</text>
-      <text x="385" y="340" font-family="'Klee One', cursive" font-size="11" fill="#7a5c4e" opacity="0.45">三鷹</text>
-      <text x="160" y="115" font-family="'Klee One', cursive" font-size="10" fill="#7a5c4e" opacity="0.45">狭山ヶ丘</text>
-      <text x="36" y="432" font-family="'Klee One', cursive" font-size="10" fill="#7a5c4e" opacity="0.45">高尾</text>
+      <!-- 山手線（テラコッタ楕円） ※回り道のため2段表示 -->
+      <!-- 外側（白いフチ） -->
+      <ellipse cx="678" cy="320" rx="62" ry="128"
+        fill="none" stroke="#fff" stroke-width="12" opacity="0.6"/>
+      <!-- 内側（テラコッタ） -->
+      <ellipse cx="678" cy="320" rx="62" ry="128"
+        fill="none" stroke="#d97848" stroke-width="6" opacity="0.7"
+        filter="url(#lshadow)"/>
 
-      <!-- ショップピン（JavaScriptで制御） -->
+      <!-- ====== エリアラベル ====== -->
+      <!-- white halo + colored text via paint-order -->
+      <text x="597" y="194" font-family="'Klee One',cursive" font-size="15" fill="#6a4030" font-weight="600"
+        class="map-label" stroke="#fdf8f3" stroke-width="5">池袋</text>
+
+      <text x="582" y="310" font-family="'Klee One',cursive" font-size="14" fill="#6a4030" font-weight="600"
+        class="map-label" stroke="#fdf8f3" stroke-width="5">新宿</text>
+
+      <text x="590" y="395" font-family="'Klee One',cursive" font-size="13" fill="#6a4030"
+        class="map-label" stroke="#fdf8f3" stroke-width="4">渋谷</text>
+
+      <text x="744" y="248" font-family="'Klee One',cursive" font-size="13" fill="#6a4030"
+        class="map-label" stroke="#fdf8f3" stroke-width="4">上野</text>
+
+      <text x="708" y="340" font-family="'Klee One',cursive" font-size="12" fill="#6a4030"
+        class="map-label" stroke="#fdf8f3" stroke-width="4">東京</text>
+
+      <text x="519" y="215" font-family="'Klee One',cursive" font-size="12" fill="#6a4030"
+        class="map-label" stroke="#fdf8f3" stroke-width="4">練馬</text>
+
+      <text x="380" y="338" font-family="'Klee One',cursive" font-size="12" fill="#6a4030"
+        class="map-label" stroke="#fdf8f3" stroke-width="4">三鷹</text>
+
+      <text x="145" y="115" font-family="'Klee One',cursive" font-size="11" fill="#6a4030"
+        class="map-label" stroke="#fdf8f3" stroke-width="4">狭山ヶ丘</text>
+
+      <text x="22" y="428" font-family="'Klee One',cursive" font-size="11" fill="#6a4030"
+        class="map-label" stroke="#fdf8f3" stroke-width="4">高尾</text>
+
+      <text x="640" y="148" font-family="'Klee One',cursive" font-size="11" fill="#6a4030"
+        class="map-label" stroke="#fdf8f3" stroke-width="4">東十条</text>
+
+      <!-- 路線凡例 -->
+      <g transform="translate(20, 448)">
+        <rect x="0" y="0" width="190" height="46" rx="8" fill="#fff" opacity="0.7"/>
+        <line x1="10" y1="12" x2="30" y2="12" stroke="#d97848" stroke-width="4" stroke-linecap="round"/>
+        <text x="35" y="16" font-family="'Noto Sans JP',sans-serif" font-size="9" fill="#6a4030">山手線</text>
+        <line x1="10" y1="28" x2="30" y2="28" stroke="#4a8fc0" stroke-width="3" stroke-linecap="round"/>
+        <text x="35" y="32" font-family="'Noto Sans JP',sans-serif" font-size="9" fill="#6a4030">中央線</text>
+        <line x1="90" y1="12" x2="110" y2="12" stroke="#c8a020" stroke-width="3" stroke-linecap="round"/>
+        <text x="115" y="16" font-family="'Noto Sans JP',sans-serif" font-size="9" fill="#6a4030">西武池袋線</text>
+        <line x1="90" y1="28" x2="110" y2="28" stroke="#9a8078" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="115" y="32" font-family="'Noto Sans JP',sans-serif" font-size="9" fill="#6a4030">京浜東北線</text>
+      </g>
+
+      <!-- タイトル -->
+      <text x="22" y="32" font-family="'Klee One',cursive" font-size="17" fill="#b5352a" opacity="0.75"
+        class="map-label" stroke="#fdf8f3" stroke-width="4">ぽんのらーめん地図</text>
+      <text x="22" y="46" font-family="'Noto Sans JP',sans-serif" font-size="8.5" fill="#aaa">{shops.length} shops</text>
+
+      <!-- ====== ショップピン ====== -->
       {shops.map(shop => (
         <g
           class="shop-pin"
           data-name={shop.name}
           data-area={shop.area}
           data-slug={shop.slug}
-          transform={`translate(${shop.x}, ${shop.y})`}
-          filter="url(#pin-shadow)"
+          transform={`translate(${shop.x},${shop.y})`}
+          filter="url(#pshadow)"
         >
-          <circle class="pin-circle" r="7" fill="#b5352a" stroke="#fff" stroke-width="2"/>
-          <circle r="2.5" fill="#fff"/>
+          <circle class="pin-bg" r="8" fill="#b5352a" stroke="#fff" stroke-width="2.5"/>
+          <circle r="3" fill="#fff" opacity="0.9"/>
         </g>
       ))}
-
-      <!-- タイトル装飾 -->
-      <text x="48" y="36" font-family="'Klee One', cursive" font-size="16" fill="#b5352a" opacity="0.6">ぽんのらーめん地図</text>
     </svg>
 
-    <!-- ツールチップ -->
     <div id="map-tooltip">
       <div id="tooltip-name"></div>
       <div id="tooltip-area"></div>
-      <div id="tooltip-hint">タップで記事へ →</div>
+      <div id="tooltip-hint">クリックで記事へ →</div>
     </div>
   </div>
 
@@ -166,23 +213,24 @@ const shops = [
   </div>
 
   <script is:inline define:vars={{ shops }}>
-    const svg    = document.getElementById('ramen-svg');
-    const tip    = document.getElementById('map-tooltip');
-    const tipName = document.getElementById('tooltip-name');
-    const tipArea = document.getElementById('tooltip-area');
+    var svg  = document.getElementById('ramen-svg');
+    var tip  = document.getElementById('map-tooltip');
+    var tipN = document.getElementById('tooltip-name');
+    var tipA = document.getElementById('tooltip-area');
 
     document.querySelectorAll('.shop-pin').forEach(function(pin) {
-      pin.addEventListener('mouseenter', function(e) {
-        tipName.textContent = pin.dataset.name;
-        tipArea.textContent = pin.dataset.area;
+      pin.addEventListener('mouseenter', function() {
+        tipN.textContent = pin.dataset.name;
+        tipA.textContent = pin.dataset.area;
         tip.style.display = 'block';
       });
       pin.addEventListener('mousemove', function(e) {
-        var rect = svg.parentElement.getBoundingClientRect();
-        var x = e.clientX - rect.left + 14;
-        var y = e.clientY - rect.top  - 10;
-        // はみ出し防止
-        if (x + 180 > rect.width) x = e.clientX - rect.left - 170;
+        var r   = svg.parentElement.getBoundingClientRect();
+        var svgW = svg.getBoundingClientRect().width;
+        var scaleX = svgW / 800;
+        var x = e.clientX - r.left + 16;
+        var y = e.clientY - r.top  - 8;
+        if (x + 200 > r.width) x = e.clientX - r.left - 210;
         tip.style.left = x + 'px';
         tip.style.top  = y + 'px';
       });
