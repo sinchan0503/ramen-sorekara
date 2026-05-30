@@ -6,21 +6,21 @@ const shops = [
   { name: '伍福軒',                      area: '池袋',      slug: 'gofukuken-ikebukuro',       x: 618, y: 226 },
   { name: 'ラーメン富士丸 神谷本店',      area: '神谷',      slug: 'fujimaru-kamiya',           x: 684, y: 137 },
   { name: 'ひろちゃんラーメン',           area: '池袋',      slug: 'hirochan-ramen-ikebukuro',  x: 648, y: 214 },
-  { name: '麺処 haggy',                 area: '調布',      slug: 'haggy-chofu',               x: 400, y: 390 },
+  { name: 'らーめん HAGGY',              area: '調布',      slug: 'haggy-chofu',               x: 400, y: 390 },
   { name: '寿限無 担々麺',               area: '上野',      slug: 'jugemu-tantanmen-ueno',     x: 736, y: 264 },
-  { name: 'MEN-EIJI maruq',            area: '練馬',      slug: 'maruq-nerima',              x: 552, y: 197 },
+  { name: 'ラーメンショップ マルQ',       area: '練馬',      slug: 'maruq-nerima',              x: 552, y: 197 },
   { name: '中華そば 麒麟',               area: '池袋',      slug: 'kirin-ikebukuro',           x: 638, y: 212 },
-  { name: '溝口屋',                      area: '東十条',    slug: 'mizoguchiya-higashijujo',   x: 676, y: 127 },
+  { name: 'ミゾグチヤ',                   area: '東十条',    slug: 'mizoguchiya-higashijujo',   x: 676, y: 127 },
   { name: 'ろく月',                      area: '浅草橋',    slug: 'rokugatu-asakusabashi',     x: 753, y: 290 },
   { name: 'すず鬼 狭山ヶ丘分店',         area: '狭山ヶ丘',  slug: 'suzuki-sayamagaoka',        x: 189, y:  97 },
   { name: 'すず鬼 三鷹',                area: '三鷹',      slug: 'suzuki-mitaka',             x: 418, y: 318 },
   { name: '屋台ラーメン しゅんやっちゃん', area: '高尾',      slug: 'shunyacchan-takao',         x:  56, y: 408 },
   { name: 'つじ田',                      area: '飯田橋',    slug: 'tsujita-asa-iidabashi',     x: 690, y: 280 },
-  { name: 'たたみ',                      area: '日本橋',    slug: 'tatami-nihonbashi',         x: 742, y: 310 },
+  { name: 'たた味',                       area: '日本橋',    slug: 'tatami-nihonbashi',         x: 742, y: 310 },
   { name: '麺家たいせい',                area: '中野坂上',  slug: 'taisei-nakano',             x: 568, y: 282 },
   { name: 'スタミナラーメン鬼山',         area: '渋谷',      slug: 'stamina-oniyama-shibuya',   x: 622, y: 380 },
   { name: '新宿シンちゃんラーメン',       area: '新宿',      slug: 'shinchan-shinjuku',         x: 628, y: 306 },
-  { name: 'Ramen にじゅうぶんのいち',    area: '東尾久',    slug: 'nijubun-no-ichi-higashogu', x: 722, y: 154 },
+  { name: 'にじゅうぶんのいち',           area: '東尾久',    slug: 'nijubun-no-ichi-higashogu', x: 722, y: 154 },
 ];
 ---
 
@@ -131,12 +131,12 @@ const shops = [
 
       <!-- ====== ランドマークイラスト ====== -->
 
-      <!-- 富士山（西方向）-->
-      <g transform="translate(240,472)" opacity="0.22">
-        <polygon points="0,-32 -30,0 30,0" fill="#d8c8bc" stroke="#9a7868" stroke-width="1.5"/>
-        <polygon points="0,-32 -8,-14 8,-14" fill="#fff" stroke="none" opacity="0.85"/>
+      <!-- 富士山（高尾の先、西南方向）-->
+      <g transform="translate(86,435)" opacity="0.22">
+        <polygon points="0,-24 -20,0 20,0" fill="#d8c8bc" stroke="#9a7868" stroke-width="1.5"/>
+        <polygon points="0,-24 -6,-10 6,-10" fill="#fff" stroke="none" opacity="0.85"/>
       </g>
-      <text x="240" y="482" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="7.5" fill="#9a7868" opacity="0.5">富士山</text>
+      <text x="86" y="443" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="7.5" fill="#9a7868" opacity="0.5">富士山</text>
 
       <!-- 東京タワー（港区方向）-->
       <g transform="translate(700,452)" opacity="0.2" stroke="#c86040" stroke-width="1.8" stroke-linecap="round" fill="none">
@@ -157,6 +157,14 @@ const shops = [
         <line x1="-5" y1="-18" x2="5" y2="-18" stroke="#4878a8" stroke-width="2.5" stroke-linecap="round"/>
       </g>
       <text x="780" y="356" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="7.5" fill="#4878a8" opacity="0.5">スカイツリー</text>
+
+      <!-- 東京駅（山手線内側・中央）-->
+      <g transform="translate(716,350)" opacity="0.22" stroke="#b07040" fill="none">
+        <circle r="7" stroke-width="1.5"/>
+        <line x1="-5" y1="0" x2="5" y2="0" stroke-width="1.5"/>
+        <line x1="0" y1="-5" x2="0" y2="5" stroke-width="1.5"/>
+      </g>
+      <text x="716" y="363" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="7.5" fill="#b07040" opacity="0.5">東京駅</text>
 
       <!-- ====== エリアラベル ====== -->
       <!-- white halo + colored text via paint-order -->
