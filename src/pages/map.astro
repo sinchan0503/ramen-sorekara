@@ -2,25 +2,25 @@
 import Layout from '../layouts/Layout.astro';
 
 const shops = [
-  { name: 'らーめん護什番',              area: '雑司ヶ谷',  slug: 'gojuban-zoshigaya',        x: 636, y: 240 },
-  { name: '伍福軒',                      area: '池袋',      slug: 'gofukuken-ikebukuro',       x: 618, y: 226 },
-  { name: 'ラーメン富士丸 神谷本店',      area: '神谷',      slug: 'fujimaru-kamiya',           x: 684, y: 137 },
-  { name: 'ひろちゃんラーメン',           area: '池袋',      slug: 'hirochan-ramen-ikebukuro',  x: 648, y: 214 },
-  { name: 'らーめん HAGGY',              area: '調布',      slug: 'haggy-chofu',               x: 400, y: 390 },
-  { name: '寿限無 担々麺',               area: '上野',      slug: 'jugemu-tantanmen-ueno',     x: 736, y: 264 },
-  { name: 'ラーメンショップ マルQ',       area: '練馬',      slug: 'maruq-nerima',              x: 552, y: 197 },
-  { name: '中華そば 麒麟',               area: '池袋',      slug: 'kirin-ikebukuro',           x: 638, y: 212 },
-  { name: 'ミゾグチヤ',                   area: '東十条',    slug: 'mizoguchiya-higashijujo',   x: 676, y: 127 },
-  { name: 'ろく月',                      area: '浅草橋',    slug: 'rokugatu-asakusabashi',     x: 753, y: 290 },
-  { name: 'すず鬼 狭山ヶ丘分店',         area: '狭山ヶ丘',  slug: 'suzuki-sayamagaoka',        x: 189, y:  97 },
-  { name: 'すず鬼 三鷹',                area: '三鷹',      slug: 'suzuki-mitaka',             x: 418, y: 318 },
-  { name: '屋台ラーメン しゅんやっちゃん', area: '高尾',      slug: 'shunyacchan-takao',         x:  56, y: 408 },
-  { name: 'つじ田',                      area: '飯田橋',    slug: 'tsujita-asa-iidabashi',     x: 690, y: 280 },
-  { name: 'たた味',                       area: '日本橋',    slug: 'tatami-nihonbashi',         x: 742, y: 310 },
-  { name: '麺家たいせい',                area: '中野坂上',  slug: 'taisei-nakano',             x: 568, y: 282 },
-  { name: 'スタミナラーメン鬼山',         area: '渋谷',      slug: 'stamina-oniyama-shibuya',   x: 622, y: 380 },
-  { name: '新宿シンちゃんラーメン',       area: '新宿',      slug: 'shinchan-shinjuku',         x: 628, y: 306 },
-  { name: 'にじゅうぶんのいち',           area: '東尾久',    slug: 'nijubun-no-ichi-higashogu', x: 722, y: 154 },
+  { name: 'らーめん護什番',              area: '雑司ヶ谷',  slug: 'gojuban-zoshigaya',        image: '/images/gojuban-01.jpg',             x: 636, y: 240 },
+  { name: '伍福軒',                      area: '池袋',      slug: 'gofukuken-ikebukuro',       image: '/images/gofukuken-01.jpg',           x: 618, y: 226 },
+  { name: 'ラーメン富士丸 神谷本店',      area: '神谷',      slug: 'fujimaru-kamiya',           image: '/images/fujimaru-01.jpg',            x: 684, y: 137 },
+  { name: 'ひろちゃんラーメン',           area: '池袋',      slug: 'hirochan-ramen-ikebukuro',  image: '/images/hirochan-ramen-ikebukuro.jpg',x: 648, y: 214 },
+  { name: 'らーめん HAGGY',              area: '調布',      slug: 'haggy-chofu',               image: '/images/haggy-chofu-1.jpg',          x: 400, y: 390 },
+  { name: '寿限無 担々麺',               area: '上野',      slug: 'jugemu-tantanmen-ueno',     image: '/images/jugemu-tantanmen-ueno.jpg',  x: 736, y: 264 },
+  { name: 'ラーメンショップ マルQ',       area: '練馬',      slug: 'maruq-nerima',              image: '/images/maruq-nerima-01.jpg',        x: 552, y: 197 },
+  { name: '中華そば 麒麟',               area: '池袋',      slug: 'kirin-ikebukuro',           image: '/images/kirin-ikebukuro-1.jpg',      x: 638, y: 212 },
+  { name: 'ミゾグチヤ',                   area: '東十条',    slug: 'mizoguchiya-higashijujo',   image: '/images/mizoguchiya-01.jpg',         x: 676, y: 127 },
+  { name: 'ろく月',                      area: '浅草橋',    slug: 'rokugatu-asakusabashi',     image: '/images/rokugatu-1.jpg',             x: 753, y: 290 },
+  { name: 'すず鬼 狭山ヶ丘分店',         area: '狭山ヶ丘',  slug: 'suzuki-sayamagaoka',        image: '/images/suzuki-sayamagaoka.jpg',     x: 189, y:  97 },
+  { name: 'すず鬼 三鷹',                area: '三鷹',      slug: 'suzuki-mitaka',             image: '/images/suzuki-mitaka.jpg',          x: 418, y: 318 },
+  { name: '屋台ラーメン しゅんやっちゃん', area: '高尾',      slug: 'shunyacchan-takao',         image: '/images/shunyacchan-takao-2.jpg',    x:  56, y: 408 },
+  { name: 'つじ田',                      area: '飯田橋',    slug: 'tsujita-asa-iidabashi',     image: '/images/tsujita-asa-iidabashi.jpg',  x: 690, y: 280 },
+  { name: 'たた味',                       area: '日本橋',    slug: 'tatami-nihonbashi',         image: '/images/tatami-nihonbashi.jpg',      x: 742, y: 310 },
+  { name: '麺家たいせい',                area: '中野坂上',  slug: 'taisei-nakano',             image: '/images/taisei-nakano-02.jpg',       x: 568, y: 282 },
+  { name: 'スタミナラーメン鬼山',         area: '渋谷',      slug: 'stamina-oniyama-shibuya',   image: '/images/stamina-oniyama-1.jpg',      x: 622, y: 380 },
+  { name: '新宿シンちゃんラーメン',       area: '新宿',      slug: 'shinchan-shinjuku',         image: '/images/shinchan-shinjuku-01.jpg',   x: 628, y: 306 },
+  { name: 'にじゅうぶんのいち',           area: '東尾久',    slug: 'nijubun-no-ichi-higashogu', image: '/images/nijubun-no-ichi-01.jpg',     x: 722, y: 154 },
 ];
 ---
 
@@ -63,6 +63,7 @@ const shops = [
     .shop-card a { text-decoration: none; color: #2a2a2a; font-size: .83rem; font-weight: 500; }
     .shop-card a:hover { color: #b5352a; }
     .shop-card-area { color: #ccc; font-size: .72rem; margin-top: 2px; }
+    .shop-card-img { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; margin-top: 7px; display: block; }
 
     @media(max-width:600px){
       .shop-grid { grid-template-columns: repeat(auto-fill,minmax(130px,1fr)); }
@@ -245,6 +246,7 @@ const shops = [
       <div class="shop-card">
         <a href={`/blog/${shop.slug}`}>{shop.name}</a>
         <div class="shop-card-area">{shop.area}</div>
+        <img class="shop-card-img" src={shop.image} alt={shop.name} loading="lazy" />
       </div>
     ))}
   </div>
