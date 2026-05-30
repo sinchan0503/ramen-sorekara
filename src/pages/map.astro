@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const shops = [
+  { name: 'らーめん護什番',           area: '雑司ヶ谷',  lat: 35.7218, lng: 139.7127, slug: 'gojuban-zoshigaya' },
+  { name: '伍福軒',                   area: '池袋',      lat: 35.7285, lng: 139.7096, slug: 'gofukuken-ikebukuro' },
+  { name: 'ラーメン富士丸 神谷本店',   area: '神谷',      lat: 35.7627, lng: 139.7430, slug: 'fujimaru-kamiya' },
+  { name: 'ひろちゃんラーメン',        area: '池袋',      lat: 35.7291, lng: 139.7092, slug: 'hirochan-ramen-ikebukuro' },
+  { name: '麺処 haggy',              area: '調布',      lat: 35.6530, lng: 139.5490, slug: 'haggy-chofu' },
+  { name: '寿限無 担々麺',            area: '上野',      lat: 35.7082, lng: 139.7748, slug: 'jugemu-tantanmen-ueno' },
+  { name: 'MEN-EIJI maruq',         area: '練馬',      lat: 35.7358, lng: 139.6524, slug: 'maruq-nerima' },
+  { name: '中華そば 麒麟',            area: '池袋',      lat: 35.7317, lng: 139.7114, slug: 'kirin-ikebukuro' },
+  { name: '溝口屋',                   area: '東十条',    lat: 35.7671, lng: 139.7366, slug: 'mizoguchiya-higashijujo' },
+  { name: 'ろく月',                   area: '浅草橋',    lat: 35.6986, lng: 139.7882, slug: 'rokugatu-asakusabashi' },
+  { name: 'すず鬼 狭山ヶ丘分店',      area: '狭山ヶ丘',  lat: 35.7784, lng: 139.4073, slug: 'suzuki-sayamagaoka' },
+  { name: 'すず鬼 三鷹',             area: '三鷹',      lat: 35.6840, lng: 139.5597, slug: 'suzuki-mitaka' },
+  { name: '屋台ラーメン しゅんやっちゃん', area: '高尾', lat: 35.6460, lng: 139.3195, slug: 'shunyacchan-takao' },
+  { name: 'つじ田',                   area: '飯田橋',    lat: 35.7022, lng: 139.7440, slug: 'tsujita-asa-iidabashi' },
+  { name: 'たたみ',                   area: '日本橋',    lat: 35.6877, lng: 139.7813, slug: 'tatami-nihonbashi' },
+  { name: '麺家たいせい',             area: '中野坂上',  lat: 35.7007, lng: 139.6649, slug: 'taisei-nakano' },
+  { name: 'スタミナラーメン鬼山',      area: '渋谷',      lat: 35.6579, lng: 139.6980, slug: 'stamina-oniyama-shibuya' },
+  { name: '新宿シンちゃんラーメン',    area: '新宿',      lat: 35.6893, lng: 139.7055, slug: 'shinchan-shinjuku' },
+  { name: 'Ramen にじゅうぶんのいち', area: '東尾久',    lat: 35.7555, lng: 139.7696, slug: 'nijubun-no-ichi-higashogu' },
+];
+---
+
+<Layout
+  title="らーめんマップ | ラーメン、それから。"
+  description={`ぽんが行ったラーメン店の地図。${shops.length}店舗掲載中。`}
+  ogType="website"
+>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    .map-header { margin-bottom: 1.25rem; }
+    .map-header h1 { font-family: 'Klee One', cursive; font-size: 1.4rem; color: #b5352a; margin-bottom: 0.25rem; }
+    .map-header p { color: #999; font-size: 0.85rem; }
+    #ramen-map {
+      height: 480px;
+      border-radius: 14px;
+      border: 1px solid #f0e8e4;
+      margin-bottom: 2rem;
+      z-index: 0;
+    }
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+    .shop-card {
+      background: #fff;
+      border: 1px solid #f0e8e4;
+      border-radius: 10px;
+      padding: 0.6rem 0.85rem;
+      transition: border-color 0.15s;
+    }
+    .shop-card:hover { border-color: #b5352a; }
+    .shop-card a { text-decoration: none; color: #2a2a2a; font-size: 0.85rem; font-weight: 500; }
+    .shop-card a:hover { color: #b5352a; }
+    .shop-area { color: #bbb; font-size: 0.75rem; margin-top: 2px; }
+    .section-label { font-size: 0.8rem; color: #aaa; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+    .leaflet-popup-content a { color: #b5352a; }
+    .ramen-pin {
+      background: #b5352a;
+      color: #fff;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      border: 2px solid #fff;
+    }
+    @media (max-width: 600px) {
+      #ramen-map { height: 360px; }
+      .shop-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    }
+  </style>
+
+  <div class="map-header">
+    <h1>らーめんマップ</h1>
+    <p>ぽんが行ったラーメン店 — {shops.length}店舗</p>
+  </div>
+
+  <div id="ramen-map"></div>
+
+  <p class="section-label">▼ 全店舗リスト</p>
+  <div class="shop-grid">
+    {shops.map(shop => (
+      <div class="shop-card">
+        <a href={`/blog/${shop.slug}`}>{shop.name}</a>
+        <div class="shop-area">{shop.area}</div>
+      </div>
+    ))}
+  </div>
+
+  <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script is:inline define:vars={{ shops }}>
+    const map = L.map('ramen-map').setView([35.70, 139.68], 11);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(map);
+
+    const pinIcon = L.divIcon({
+      html: '<div class="ramen-pin">🍜</div>',
+      className: '',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+      popupAnchor: [0, -16],
+    });
+
+    shops.forEach(function(shop) {
+      L.marker([shop.lat, shop.lng], { icon: pinIcon })
+        .addTo(map)
+        .bindPopup(
+          '<strong>' + shop.name + '</strong><br>' +
+          '<span style="color:#aaa;font-size:0.82em">' + shop.area + '</span><br>' +
+          '<a href="/blog/' + shop.slug + '" style="color:#b5352a;font-size:0.85em">記事を読む →</a>'
+        );
+    });
+  </script>
+</Layout>
