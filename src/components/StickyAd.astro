@@ -3,12 +3,7 @@ const adClient = "ca-pub-9288807135824382";
 const adSlot   = "8195761770";
 ---
 
-<div class="sticky-ad-wrap" id="sticky-ad">
-  <button
-    class="sticky-ad-close"
-    aria-label="広告を閉じる"
-    onclick="document.getElementById('sticky-ad').style.display='none'"
-  >✕</button>
+<div class="sticky-ad-wrap">
   <ins
     class="adsbygoogle"
     style="display:inline-block;width:320px;height:50px;"
@@ -19,11 +14,7 @@ const adSlot   = "8195761770";
 </div>
 
 <style>
-  /* 広告が埋まったときだけ表示（モバイル・PC両対応） */
   .sticky-ad-wrap {
-    display: none;
-  }
-  .sticky-ad-wrap:has(.adsbygoogle[data-ad-status="filled"]) {
     display: flex;
     position: fixed;
     bottom: 0;
@@ -37,19 +28,6 @@ const adSlot   = "8195761770";
     justify-content: center;
     padding: 4px 0;
     padding-bottom: calc(4px + env(safe-area-inset-bottom, 0px));
-  }
-
-  .sticky-ad-close {
-    position: absolute;
-    top: 2px;
-    right: 8px;
-    background: none;
-    border: none;
-    font-size: 0.65rem;
-    color: #ccc;
-    cursor: pointer;
-    padding: 4px;
-    line-height: 1;
-    z-index: 1;
+    min-height: 58px;
   }
 </style>
