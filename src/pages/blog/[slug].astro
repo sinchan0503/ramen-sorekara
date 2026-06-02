@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import CommentSection from '../../components/CommentSection.astro';
+import AdUnit from '../../components/AdUnit.astro';
 
 export async function getStaticPaths() {
   const now = new Date();
@@ -77,6 +78,8 @@ const breadcrumbSchema = {
       <div class="post-content">
         <Content />
       </div>
+
+      <AdUnit />
 
       {relatedPosts.length > 0 && (
         <div class="related-posts">
