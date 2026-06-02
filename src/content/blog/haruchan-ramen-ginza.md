@@ -1,7 +1,7 @@
 ---
 title: "ちゃん系3店舗目、なんか品が違った"
 description: "銀座はるちゃんラーメン。ちゃん系3店舗目、雰囲気がほかとちょっと違う品のある綺麗さだった。また来たいと思えた一杯。"
-pubDate: 2026-06-03
+pubDate: 2026-06-03T00:00:00+09:00
 emoji: "🌸"
 image: "/images/haruchan-ramen-ginza-03.jpg"
 ---
