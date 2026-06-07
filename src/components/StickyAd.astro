@@ -6,16 +6,17 @@ const adSlot   = "8195761770";
 <div class="sticky-ad-wrap">
   <ins
     class="adsbygoogle sticky-ad-ins"
-    style="display:inline-block;width:320px;height:50px;"
+    style="display:block;"
     data-ad-client={adClient}
     data-ad-slot={adSlot}
+    data-ad-format="auto"
+    data-full-width-responsive="true"
   ></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
 <style>
   .sticky-ad-wrap {
-    display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -23,16 +24,12 @@ const adSlot   = "8195761770";
     z-index: 9999;
     background: #fff;
     border-top: 1px solid #e0d8d4;
-    align-items: center;
-    justify-content: center;
     padding: 6px 0;
     padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
   }
 
-  @media (min-width: 768px) {
-    .sticky-ad-ins {
-      width: 728px !important;
-      height: 90px !important;
-    }
+  .sticky-ad-ins {
+    width: 100%;
+    min-height: 50px;
   }
 </style>
