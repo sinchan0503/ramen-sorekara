@@ -15,20 +15,23 @@ const adSlot   = "8195761770";
 
 <style>
   .sticky-ad-wrap {
-    display: flex;
-    justify-content: center;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 9999;
     background: #fff;
-    border-top: 1px solid #e0d8d4;
-    padding: 2px 0;
-    padding-bottom: calc(2px + env(safe-area-inset-bottom, 0px));
+    border: 1px solid #e0d8d4;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    padding: 2px;
+    width: 336px;
   }
 
   @media (min-width: 768px) {
+    .sticky-ad-wrap {
+      width: 730px;
+    }
     .sticky-ad-ins {
       width: 728px !important;
       height: 90px !important;
