@@ -9,6 +9,7 @@ const blog = defineCollection({
     pubDate: z.date(),
     emoji: z.string().default('🍜'),
     image: z.string().optional(),
+    tags: z.array(z.string()).optional().default([]),
   }),
 });
 

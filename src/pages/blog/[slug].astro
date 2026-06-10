@@ -80,6 +80,13 @@ const breadcrumbSchema = {
         <time>{post.data.pubDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
         <h1>{post.data.title}</h1>
         <p class="post-desc">{post.data.description}</p>
+        {post.data.tags && post.data.tags.length > 0 && (
+          <div class="post-tags">
+            {post.data.tags.map(tag => (
+              <a href={`/blog/tag/${tag}`} class="tag-chip">#{tag}</a>
+            ))}
+          </div>
+        )}
       </header>
       <div class="post-content">
         <Content />
@@ -128,6 +135,28 @@ const breadcrumbSchema = {
       </div>
     </article>
     <aside class="post-sidebar">
+      <div class="sidebar-recent">
+        <h2 class="sidebar-title">最新記事</h2>
+        <ul class="sidebar-list">
+          {allPosts
+            .filter(p => p.id !== post.id && !p.id.includes('4koma'))
+            .slice(0, 5)
+            .map(p => (
+              <li>
+                <a href={`/blog/${p.id.replace(/\.md$/, '')}`} class="sidebar-item">
+                  <div class="sidebar-thumb">
+                    {p.data.image
+                      ? <img src={p.data.image} alt={p.data.title} loading="lazy" decoding="async" />
+                      : <span class="sidebar-emoji">{p.data.emoji ?? '🍜'}</span>
+                    }
+                  </div>
+                  <span class="sidebar-item-title">{p.data.title}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
       <CommentSection slug={post.id.replace(/\.md$/, '')} />
     </aside>
   </div>
@@ -199,6 +228,88 @@ const breadcrumbSchema = {
     font-size: 1rem;
     color: #999;
     line-height: 1.8;
+  }
+
+  /* ── タグ ── */
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .tag-chip {
+    display: inline-block;
+    background: #fdf0ed;
+    color: #b5352a;
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .tag-chip:hover { background: #f5ddd8; }
+
+  /* ── サイドバー最新記事 ── */
+  .sidebar-recent {
+    margin-bottom: 40px;
+    position: sticky;
+    top: 24px;
+  }
+  .sidebar-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0e8e4;
+  }
+  .sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 10px;
+    transition: background 0.15s;
+    padding: 4px;
+  }
+  .sidebar-item:hover { background: #fdf8f5; }
+  .sidebar-thumb {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fdf0ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sidebar-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sidebar-emoji { font-size: 1.4rem; }
+  .sidebar-item-title {
+    font-size: 0.8rem;
+    color: #333;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   /* ── 本文 ── */
