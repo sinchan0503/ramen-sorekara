@@ -149,6 +149,7 @@ const breadcrumbSchema = {
       <div class="post-footer">
         <a href={is4koma ? '/4koma' : '/blog'}>{is4koma ? '← 四コマ一覧に戻る' : '← 記事一覧に戻る'}</a>
       </div>
+      <CommentSection slug={post.id.replace(/\.md$/, '')} />
     </article>
     <aside class="post-sidebar">
       <div class="sidebar-recent">
@@ -173,7 +174,6 @@ const breadcrumbSchema = {
           }
         </ul>
       </div>
-      <CommentSection slug={post.id.replace(/\.md$/, '')} />
     </aside>
   </div>
 </Layout>
@@ -524,14 +524,6 @@ const breadcrumbSchema = {
 </style>
 
 <style is:global>
-  /* サイドバー内のコメント欄リセット */
-  .post-sidebar .comments {
-    max-width: 100%;
-    margin: 0;
-    padding-top: 0;
-    border-top: none;
-  }
-
   /* 記事内の画像 */
   .post-content img {
     display: block;
