@@ -19,6 +19,12 @@ const { Content } = await render(post);
 
 const allPosts = (await getCollection('blog')).filter(p => p.data.pubDate <= new Date());
 const is4komaPost = post.id.includes('4koma');
+const sameCategoryPosts = allPosts
+  .filter(p => p.id.includes('4koma') === is4komaPost)
+  .sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
+const currentIndex = sameCategoryPosts.findIndex(p => p.id === post.id);
+const prevPost = currentIndex > 0 ? sameCategoryPosts[currentIndex - 1] : null;
+const nextPost = currentIndex < sameCategoryPosts.length - 1 ? sameCategoryPosts[currentIndex + 1] : null;
 const relatedPosts = allPosts
   .filter(p => p.id !== post.id && p.id.includes('4koma') === is4komaPost)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -99,6 +105,24 @@ const breadcrumbSchema = {
           </div>
         </div>
       )}
+      <nav class="post-nav">
+        <div class="post-nav-item post-nav-prev">
+          {prevPost && (
+            <a href={`/blog/${prevPost.id.replace(/\.md$/, '')}`}>
+              <span class="post-nav-label">← 前の記事</span>
+              <span class="post-nav-title">{prevPost.data.title}</span>
+            </a>
+          )}
+        </div>
+        <div class="post-nav-item post-nav-next">
+          {nextPost && (
+            <a href={`/blog/${nextPost.id.replace(/\.md$/, '')}`}>
+              <span class="post-nav-label">次の記事 →</span>
+              <span class="post-nav-title">{nextPost.data.title}</span>
+            </a>
+          )}
+        </div>
+      </nav>
       <div class="post-footer">
         <a href={is4koma ? '/4koma' : '/blog'}>{is4koma ? '← 四コマ一覧に戻る' : '← 記事一覧に戻る'}</a>
       </div>
@@ -285,6 +309,49 @@ const breadcrumbSchema = {
     color: #555;
     padding: 8px 10px 10px;
     line-height: 1.5;
+  }
+
+  /* ── 前後ナビ ── */
+  .post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid #f0e8e4;
+  }
+  .post-nav-item a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 20px;
+    border: 1px solid #f0e8e4;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+  }
+  .post-nav-item a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+  }
+  .post-nav-next a { text-align: right; }
+  .post-nav-label {
+    font-size: 0.75rem;
+    color: #b5352a;
+    font-weight: 500;
+  }
+  .post-nav-title {
+    font-size: 0.85rem;
+    color: #333;
+    line-height: 1.5;
+    font-family: 'Shippori Mincho', serif;
+  }
+  @media (max-width: 600px) {
+    .post-nav { grid-template-columns: 1fr; }
+    .post-nav-next a { text-align: left; }
   }
 
   /* ── フッター ── */
