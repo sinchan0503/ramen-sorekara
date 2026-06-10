@@ -6,7 +6,6 @@ const adSlot   = "8195761770";
 <div class="sticky-ad-wrap">
   <ins
     class="adsbygoogle sticky-ad-ins"
-    style="display:block;width:320px;height:100px;"
     data-ad-client={adClient}
     data-ad-slot={adSlot}
   ></ins>
@@ -23,9 +22,22 @@ const adSlot   = "8195761770";
     z-index: 9999;
     background: #fff;
     border: 1px solid #e0d8d4;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.10);
     padding: 2px;
   }
 
+  .sticky-ad-ins {
+    display: block;
+    width: 320px;
+    height: 50px;
+  }
+
+  @media (min-width: 768px) {
+    .sticky-ad-ins {
+      width: 728px;
+      height: 90px;
+    }
+  }
 </style>
