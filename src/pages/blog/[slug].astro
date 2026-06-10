@@ -116,16 +116,32 @@ const breadcrumbSchema = {
         <div class="post-nav-item post-nav-prev">
           {prevPost && (
             <a href={`/blog/${prevPost.id.replace(/\.md$/, '')}`}>
-              <span class="post-nav-label">← 前の記事</span>
-              <span class="post-nav-title">{prevPost.data.title}</span>
+              <div class="post-nav-thumb">
+                {prevPost.data.image
+                  ? <img src={prevPost.data.image} alt={prevPost.data.title} loading="lazy" decoding="async" />
+                  : <span class="post-nav-emoji">{prevPost.data.emoji ?? '🍜'}</span>
+                }
+              </div>
+              <div class="post-nav-text">
+                <span class="post-nav-label">← 前の記事</span>
+                <span class="post-nav-title">{prevPost.data.title}</span>
+              </div>
             </a>
           )}
         </div>
         <div class="post-nav-item post-nav-next">
           {nextPost && (
             <a href={`/blog/${nextPost.id.replace(/\.md$/, '')}`}>
-              <span class="post-nav-label">次の記事 →</span>
-              <span class="post-nav-title">{nextPost.data.title}</span>
+              <div class="post-nav-thumb">
+                {nextPost.data.image
+                  ? <img src={nextPost.data.image} alt={nextPost.data.title} loading="lazy" decoding="async" />
+                  : <span class="post-nav-emoji">{nextPost.data.emoji ?? '🍜'}</span>
+                }
+              </div>
+              <div class="post-nav-text">
+                <span class="post-nav-label">次の記事 →</span>
+                <span class="post-nav-title">{nextPost.data.title}</span>
+              </div>
             </a>
           )}
         </div>
@@ -433,9 +449,9 @@ const breadcrumbSchema = {
   }
   .post-nav-item a {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 16px 20px;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
     border: 1px solid #f0e8e4;
     border-radius: 12px;
     text-decoration: none;
@@ -448,21 +464,50 @@ const breadcrumbSchema = {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(0,0,0,0.07);
   }
-  .post-nav-next a { text-align: right; }
+  .post-nav-next a { flex-direction: row-reverse; }
+  .post-nav-thumb {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fdf0ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .post-nav-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .post-nav-emoji { font-size: 1.6rem; }
+  .post-nav-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .post-nav-next .post-nav-text { text-align: right; }
   .post-nav-label {
     font-size: 0.75rem;
     color: #b5352a;
     font-weight: 500;
   }
   .post-nav-title {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: #333;
     line-height: 1.5;
     font-family: 'Shippori Mincho', serif;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   @media (max-width: 600px) {
     .post-nav { grid-template-columns: 1fr; }
-    .post-nav-next a { text-align: left; }
+    .post-nav-next a { flex-direction: row; }
+    .post-nav-next .post-nav-text { text-align: left; }
   }
 
   /* ── フッター ── */
