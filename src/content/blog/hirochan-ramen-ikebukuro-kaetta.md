@@ -4,6 +4,7 @@ description: "ひろちゃんラーメン（池袋）に久しぶりに行った
 pubDate: 2026-05-21
 emoji: "🍜"
 image: "/images/hirochan-ramen-ikebukuro-2-01.jpg"
+tags: ["ちゃん系", "池袋"]
 ---
 
 久しぶりにちゃん系が食べたくなった。

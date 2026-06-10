@@ -4,6 +4,7 @@ description: "伍福軒 池袋西口店レビュー。真っ黒な背脂醤油�
 pubDate: 2026-04-30
 emoji: "🖤"
 image: "/images/gofukuken-01.jpg"
+tags: ["池袋"]
 ---
 
 池袋の西口って、なんか独特の空気があると思う。

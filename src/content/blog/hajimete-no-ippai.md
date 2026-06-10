@@ -4,6 +4,7 @@ description: "このブログを始めたきっかけと、わたしのラーメ
 pubDate: 2026-04-21
 emoji: "🍥"
 image: "/images/hajimete-no-ippai.png"
+tags: ["コラム"]
 ---
 
 ラーメンが好きだ。

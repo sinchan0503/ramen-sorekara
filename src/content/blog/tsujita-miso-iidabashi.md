@@ -4,6 +4,7 @@ description: "飯田橋のつじ田 味噌の章。辛味噌二種、どっち�
 pubDate: 2026-04-22
 emoji: "🌶️"
 image: "/images/tsujita-miso-iidabashi.jpg"
+tags: ["飯田橋", "味噌"]
 ---
 
 飯田橋に来る用があって、せっかくだからと入ってみた。つじ田が運営する、味噌専門店。

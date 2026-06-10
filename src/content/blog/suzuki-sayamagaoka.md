@@ -4,6 +4,7 @@ description: "すず鬼の系列店、狭山ヶ丘分店のレビュー。三鷹
 pubDate: 2026-05-28
 emoji: "🍜"
 image: "/images/suzuki-sayamagaoka.jpg"
+tags: ["狭山ヶ丘", "二郎系"]
 ---
 
 [三鷹](/blog/suzuki-mitaka)で並んでいるとき、張り紙が貼ってあった。

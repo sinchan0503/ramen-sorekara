@@ -4,6 +4,7 @@ description: "日本橋小伝馬町のたた味。スタミナ中華、初めて
 pubDate: 2026-04-22
 emoji: "🥩"
 image: "/images/tatami-nihonbashi.jpg"
+tags: ["日本橋"]
 ---
 
 日本橋の小伝馬町に、スタミナラーメンの店がある。

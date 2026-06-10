@@ -4,6 +4,7 @@ description: "麺家たいせい（中野坂上）の家系ラーメンレビュ
 pubDate: 2026-04-29T00:10:00+09:00
 emoji: "🍖"
 image: "/images/taisei-nakano-02.jpg"
+tags: ["中野"]
 ---
 
 YouTubeで見て、気になってた。

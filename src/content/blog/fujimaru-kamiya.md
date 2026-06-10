@@ -4,6 +4,7 @@ description: "ラーメン富士丸 神谷本店レビュー。二郎系の有�
 pubDate: 2026-04-30
 emoji: "🥚"
 image: "/images/fujimaru-01.jpg"
+tags: ["神谷", "二郎系"]
 ---
 
 二郎系ファンの間ではかなり有名なお店らしい。

@@ -4,6 +4,7 @@ description: "杉並の豚骨蒼翔。ネオ家系というジャンルらしい
 pubDate: 2026-05-30
 emoji: "🍜"
 image: "/images/sosho-suginami-01.jpg"
+tags: ["杉並", "担々麺"]
 ---
 
 ネオ家系、というジャンルがあるらしい。

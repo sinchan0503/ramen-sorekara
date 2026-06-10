@@ -4,6 +4,7 @@ description: "銀座はるちゃんラーメン。ちゃん系3店舗目、雰�
 pubDate: 2026-06-03T00:00:00+09:00
 emoji: "🌸"
 image: "/images/haruchan-ramen-ginza-03.jpg"
+tags: ["ちゃん系", "銀座"]
 ---
 
 銀座に、ちゃん系があると知って来た。

@@ -4,6 +4,7 @@ description: "パイコー担々麺、想像よりずっと本格的だった。
 pubDate: 2026-05-18
 emoji: "🥜"
 image: "/images/jugemu-tantanmen-ueno.jpg"
+tags: ["上野", "担々麺"]
 ---
 
 急に担々麺の気分になる日って、ない？なんかもう無性に食べたくなって、上野まで来てしまった。

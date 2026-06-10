@@ -4,6 +4,7 @@ description: "東尾久のにじゅうぶんのいち。特製醤油そばを頼
 pubDate: 2026-05-26
 emoji: "🥢"
 image: "/images/nijubun-no-ichi-01.jpg"
+tags: ["東尾久"]
 ---
 
 Xで見つけた店って、なんか外れないんだよね。見た目がいいラーメンってだいたい美味しいから。

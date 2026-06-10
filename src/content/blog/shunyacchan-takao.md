@@ -4,6 +4,7 @@ description: "高尾にある屋台ラーメン しゅんやっちゃん。ず�
 pubDate: 2026-05-26
 emoji: "🏮"
 image: "/images/shunyacchan-takao-2.jpg"
+tags: ["高尾", "行列"]
 ---
 
 屋台ラーメン、ってずっと憧れてた。

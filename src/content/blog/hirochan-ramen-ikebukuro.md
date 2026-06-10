@@ -4,6 +4,7 @@ description: "ひろちゃんラーメン（池袋西口）のレビュー。ち
 pubDate: 2026-04-22
 emoji: "🍜"
 image: "/images/hirochan-ramen-ikebukuro.jpg"
+tags: ["ちゃん系", "池袋"]
 ---
 
 池袋に、なんかいい感じのラーメン屋がある。

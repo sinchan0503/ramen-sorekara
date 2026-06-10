@@ -4,6 +4,7 @@ description: "ミゾグチヤ東十条店のネパル麺レビュー。二郎系
 pubDate: 2026-04-30
 emoji: "🍜"
 image: "/images/mizoguchiya-01.jpg"
+tags: ["東十条", "二郎系"]
 ---
 
 ネパール、って言葉をラーメン屋で見るとは思ってなかった。

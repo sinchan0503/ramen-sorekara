@@ -4,6 +4,7 @@ description: "たた味に再訪。今度は特製辛スタミナ中華。辛く
 pubDate: 2026-04-29T00:05:00+09:00
 emoji: "🥚"
 image: "/images/tatami-karai-01.jpg"
+tags: ["日本橋", "担々麺"]
 ---
 
 また来てしまった。
