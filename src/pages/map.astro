@@ -1,7 +1,16 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
-const shops = [
+// lat/lng → SVG座標変換（東京エリアに合わせたキャリブレーション済み定数）
+function project(lat: number, lng: number) {
+  return {
+    x: Math.round(56 + 1374 * (lng - 139.2826)),
+    y: Math.round(408 - 1998 * (lat - 35.6424)),
+  };
+}
+
+const hardcodedShops = [
   { name: 'らーめん護什番',              area: '雑司ヶ谷',  slug: 'gojuban-zoshigaya',        image: '/images/gojuban-01.jpg',             x: 636, y: 240 },
   { name: '伍福軒',                      area: '池袋',      slug: 'gofukuken-ikebukuro',       image: '/images/gofukuken-01.jpg',           x: 618, y: 226 },
   { name: 'ラーメン富士丸 神谷本店',      area: '神谷',      slug: 'fujimaru-kamiya',           image: '/images/fujimaru-01.jpg',            x: 684, y: 137 },
@@ -24,6 +33,27 @@ const shops = [
   { name: '新宿シンちゃんラーメン',       area: '新宿',      slug: 'shinchan-shinjuku',         image: '/images/shinchan-shinjuku-01.jpg',   x: 628, y: 306 },
   { name: 'にじゅうぶんのいち',           area: '東尾久',    slug: 'nijubun-no-ichi-higashogu', image: '/images/nijubun-no-ichi-01.jpg',     x: 722, y: 154 },
 ];
+
+// lat/lng を持つ記事を動的に追加（ハードコード済みスラグは除外して重複回避）
+const hardcodedSlugs = new Set(hardcodedShops.map(s => s.slug));
+const posts = await getCollection('blog');
+const dynamicShops = posts
+  .filter(p => p.data.lat != null && p.data.lng != null)
+  .map(p => {
+    const slug = p.id.replace(/\.md$/, '');
+    const { x, y } = project(p.data.lat!, p.data.lng!);
+    return {
+      name: p.data.shopName || p.data.title,
+      area: p.data.tags?.[0] || '',
+      slug,
+      image: p.data.image || '',
+      x,
+      y,
+    };
+  })
+  .filter(s => !hardcodedSlugs.has(s.slug));
+
+const shops = [...hardcodedShops, ...dynamicShops];
 ---
 
 <Layout

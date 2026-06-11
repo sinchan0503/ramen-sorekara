@@ -10,6 +10,9 @@ const blog = defineCollection({
     emoji: z.string().default('🍜'),
     image: z.string().optional(),
     tags: z.array(z.string()).optional().default([]),
+    lat: z.number().optional(),
+    lng: z.number().optional(),
+    shopName: z.string().optional(),
   }),
 });
 
