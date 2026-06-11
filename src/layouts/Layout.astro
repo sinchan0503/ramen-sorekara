@@ -67,6 +67,35 @@ const ogImage = image
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       })(window, document, "clarity", "script", "wsl4uer3g7");
     </script>
+    <!-- 構造化データ -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": `${siteUrl}/#website`,
+          "url": siteUrl,
+          "name": "ラーメン、それから。",
+          "description": "東京のラーメンブログ。ラーメンがモンブランにしか見えないOLが食べて書く、東京ラーメンレビュー。",
+          "inLanguage": "ja",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": { "@type": "EntryPoint", "urlTemplate": `${siteUrl}/blog?q={search_term_string}` },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "ItemList",
+          "name": "メインナビゲーション",
+          "itemListElement": [
+            { "@type": "SiteNavigationElement", "position": 1, "name": "記事一覧", "url": `${siteUrl}/blog` },
+            { "@type": "SiteNavigationElement", "position": 2, "name": "らーめんマップ", "url": `${siteUrl}/map` },
+            { "@type": "SiteNavigationElement", "position": 3, "name": "四コマ", "url": `${siteUrl}/4koma` },
+            { "@type": "SiteNavigationElement", "position": 4, "name": "このブログについて", "url": `${siteUrl}/about` }
+          ]
+        }
+      ]
+    })} />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BHSV274KR6"></script>
     <script>
