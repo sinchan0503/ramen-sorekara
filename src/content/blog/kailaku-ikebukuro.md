@@ -5,6 +5,9 @@ pubDate: 2026-06-08
 emoji: "🥟"
 image: "/images/kailaku-ikebukuro-03.jpg"
 tags: ["池袋", "老舗"]
+lat: 35.7289
+lng: 139.7175
+shopName: "開楽本店"
 ---
 
 別の用事で池袋に来てたんだけど、せっかくだからとふらっと入ってしまった。
