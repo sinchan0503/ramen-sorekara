@@ -7,6 +7,8 @@ image: "/images/suzuki-mitaka.jpg"
 tags: ["三鷹", "二郎系", "行列"]
 ---
 
+## すず鬼（三鷹）
+
 YouTubeで見かけたとき、「いつか絶対行く」と思った。
 
 ![すず鬼のスタミナラーメン](/images/suzuki-mitaka.jpg)

@@ -7,6 +7,8 @@ image: "/images/suzuki-sayamagaoka.jpg"
 tags: ["狭山ヶ丘", "二郎系"]
 ---
 
+## すず鬼 狭山ヶ丘分店
+
 [三鷹](/blog/suzuki-mitaka)で並んでいるとき、張り紙が貼ってあった。
 
 ![すず鬼 狭山ヶ丘分店 スタミナラーメン まさおトッピング](/images/suzuki-sayamagaoka.jpg)

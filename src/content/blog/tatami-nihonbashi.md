@@ -7,6 +7,8 @@ image: "/images/tatami-nihonbashi.jpg"
 tags: ["日本橋"]
 ---
 
+## たた味（日本橋小伝馬町）
+
 日本橋の小伝馬町に、スタミナラーメンの店がある。
 
 ![たた味 スタミナ中華](/images/tatami-nihonbashi.jpg)

@@ -7,6 +7,8 @@ image: "/images/shion-takadanobaba-01.jpg"
 tags: ["高田馬場"]
 ---
 
+## RAMEN紫苑（高田馬場）
+
 高田馬場に、ちゃんとした中華そばを食べに行った。
 
 RAMEN 紫苑。

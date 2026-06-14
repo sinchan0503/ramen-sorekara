@@ -7,6 +7,8 @@ image: "/images/nijubun-no-ichi-01.jpg"
 tags: ["東尾久"]
 ---
 
+## にじゅうぶんのいち（東尾久）
+
 Xで見つけた店って、なんか外れないんだよね。見た目がいいラーメンってだいたい美味しいから。
 
 ![にじゅうぶんのいち 特製醤油そば](/images/nijubun-no-ichi-01.jpg)

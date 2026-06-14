@@ -7,6 +7,8 @@ image: "/images/mizoguchiya-01.jpg"
 tags: ["東十条", "二郎系"]
 ---
 
+## ミゾグチヤ東十条店
+
 ネパール、って言葉をラーメン屋で見るとは思ってなかった。
 
 ![ミゾグチヤのネパル麺](/images/mizoguchiya-01.jpg)

@@ -7,6 +7,8 @@ image: "/images/shinchan-shinjuku-01.jpg"
 tags: ["ちゃん系", "新宿"]
 ---
 
+## シンちゃんラーメン（新宿）
+
 ちゃん系、2軒目。
 
 ![新宿シンちゃんラーメン チャーシュー麺メンマトッピング](/images/shinchan-shinjuku-01.jpg)

@@ -7,6 +7,8 @@ image: "/images/gofukuken-01.jpg"
 tags: ["池袋"]
 ---
 
+## 伍福軒 池袋西口店
+
 池袋の西口って、なんか独特の空気があると思う。
 
 ![伍福軒の黒醤油ラーメンとチャーハン](/images/gofukuken-01.jpg)

@@ -7,6 +7,8 @@ image: "/images/taisei-nakano-02.jpg"
 tags: ["中野"]
 ---
 
+## 麺家たいせい（中野坂上）
+
 YouTubeで見て、気になってた。
 
 ![麺家たいせい](/images/taisei-nakano-01.jpg)

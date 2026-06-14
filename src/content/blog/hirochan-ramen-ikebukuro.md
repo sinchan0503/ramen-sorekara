@@ -7,6 +7,8 @@ image: "/images/hirochan-ramen-ikebukuro.jpg"
 tags: ["ちゃん系", "池袋"]
 ---
 
+## ひろちゃんラーメン（池袋西口）
+
 池袋に、なんかいい感じのラーメン屋がある。
 
 ![ひろちゃんラーメン](/images/hirochan-ramen-ikebukuro.jpg)

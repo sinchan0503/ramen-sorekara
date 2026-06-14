@@ -7,6 +7,8 @@ image: "/images/jugemu-tantanmen-ueno.jpg"
 tags: ["上野", "担々麺"]
 ---
 
+## 寿限無 担々麺（上野）
+
 急に担々麺の気分になる日って、ない？なんかもう無性に食べたくなって、上野まで来てしまった。
 
 ![寿限無 担々麺 上野 パイコー担々麺](/images/jugemu-tantanmen-ueno.jpg)

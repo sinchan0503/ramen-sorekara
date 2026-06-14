@@ -7,6 +7,8 @@ image: "/images/maruq-nerima-01.jpg"
 tags: ["練馬"]
 ---
 
+## ラーメンショップ マルQ（練馬）
+
 上司がうまいって言ってたから、行ってみた。
 
 ![ラーメンショップ マルQ 辛ねぎラーメン](/images/maruq-nerima-01.jpg)

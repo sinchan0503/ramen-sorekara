@@ -7,6 +7,8 @@ image: "/images/anzawaya-nerima-01.jpg"
 tags: ["練馬"]
 ---
 
+## 安ざわ家（練馬）
+
 チャーシューを食べに行ったのに、ラーメンの方がおいしかった。
 
 ![Heart Restaurant 安ざわ家 練馬店 新潟長岡生姜醤油らーめん](/images/anzawaya-nerima-01.jpg)

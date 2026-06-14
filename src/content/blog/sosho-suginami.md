@@ -7,6 +7,8 @@ image: "/images/sosho-suginami-01.jpg"
 tags: ["杉並", "担々麺"]
 ---
 
+## 豚骨蒼翔（杉並）
+
 ネオ家系、というジャンルがあるらしい。
 
 ![豚骨蒼翔 ネオ家系ラーメン](/images/sosho-suginami-01.jpg)

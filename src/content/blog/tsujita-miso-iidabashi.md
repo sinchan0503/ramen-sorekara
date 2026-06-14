@@ -7,6 +7,8 @@ image: "/images/tsujita-miso-iidabashi.jpg"
 tags: ["飯田橋", "味噌"]
 ---
 
+## つじ田 味噌の章（飯田橋）
+
 飯田橋に来る用があって、せっかくだからと入ってみた。つじ田が運営する、味噌専門店。
 
 ![つじ田 味噌の章 辛味噌らーめん](/images/tsujita-miso-iidabashi.jpg)

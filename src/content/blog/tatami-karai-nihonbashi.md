@@ -7,6 +7,8 @@ image: "/images/tatami-karai-01.jpg"
 tags: ["日本橋", "担々麺"]
 ---
 
+## たた味（日本橋）
+
 また来てしまった。
 
 ![特製辛スタミナ中華](/images/tatami-karai-01.jpg)

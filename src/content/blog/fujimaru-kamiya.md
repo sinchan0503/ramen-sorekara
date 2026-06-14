@@ -7,6 +7,8 @@ image: "/images/fujimaru-01.jpg"
 tags: ["神谷", "二郎系"]
 ---
 
+## ラーメン富士丸 神谷本店
+
 二郎系ファンの間ではかなり有名なお店らしい。
 
 ![ラーメン富士丸 神谷本店](/images/fujimaru-01.jpg)
