@@ -7,7 +7,7 @@ export async function getStaticPaths({ paginate }) {
   const posts = (await getCollection('blog'))
     .filter(p => !p.data.title.startsWith('【四コマ】') && p.data.pubDate <= now)
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-  return paginate(posts, { pageSize: 30 });
+  return paginate(posts, { pageSize: 1000 });
 }
 
 const { page } = Astro.props;
