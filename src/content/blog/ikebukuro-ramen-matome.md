@@ -1,7 +1,7 @@
 ---
 title: "池袋でラーメン食べ歩き、わたしが行った5店まとめ"
 description: "池袋ラーメンのおすすめ5店を実食レビューでまとめ。ちゃん系・老舗醤油・昆布水つけ麺・背脂黒醤油と、バリエーション豊かな街。"
-pubDate: 2026-06-14
+pubDate: 2026-06-15
 emoji: "🗺️"
 image: "/images/hirochan-ramen-ikebukuro.jpg"
 tags: ["池袋", "まとめ"]
