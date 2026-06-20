@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="らーめん探し | ラーメン、それから。"
+  description="食べたい気分を教えてくれたら、ぽんのAIアシスタントがおすすめのラーメン店を提案します。"
+>
+  <style>
+    .page-header { margin-bottom: 2rem; }
+    .page-header h1 { font-family: 'Klee One', cursive; font-size: 1.5rem; color: #b5352a; margin-bottom: 0.4rem; }
+    .page-header p { color: #888; font-size: 0.85rem; line-height: 1.7; }
+
+    .chat-wrap {
+      max-width: 640px;
+    }
+
+    .suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .suggestion-btn {
+      background: #fff;
+      border: 1px solid #ede0d8;
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      font-size: 0.82rem;
+      color: #555;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .suggestion-btn:hover {
+      border-color: #b5352a;
+      color: #b5352a;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .input-row input {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border: 1px solid #ede0d8;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .input-row input:focus { border-color: #b5352a; }
+    .input-row button {
+      padding: 0.65rem 1.2rem;
+      background: #b5352a;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .input-row button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .result-box {
+      background: #fff;
+      border: 1px solid #ede0d8;
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      line-height: 1.85;
+      font-size: 0.9rem;
+      color: #2a2a2a;
+      white-space: pre-wrap;
+      display: none;
+    }
+    .result-box.visible { display: block; }
+    .result-box a { color: #b5352a; text-decoration: underline; }
+
+    .loading { color: #bbb; font-size: 0.85rem; margin-bottom: 1rem; display: none; }
+    .loading.visible { display: block; }
+
+    .disclaimer {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: #bbb;
+      line-height: 1.6;
+    }
+  </style>
+
+  <div class="page-header">
+    <h1>🍜 らーめん探し</h1>
+    <p>食べたい気分やエリアを入力すると、AIがおすすめのラーメン店を提案します。<br>ブログで紹介したお店が含まれていたら記事リンクもお知らせします。</p>
+  </div>
+
+  <div class="chat-wrap">
+    <div class="suggestions">
+      <button class="suggestion-btn" data-q="池袋で食べたい">池袋で食べたい</button>
+      <button class="suggestion-btn" data-q="辛いラーメンが食べたい">辛いラーメン</button>
+      <button class="suggestion-btn" data-q="二郎系が食べたい">二郎系</button>
+      <button class="suggestion-btn" data-q="女性一人でも入りやすいおしゃれなお店">おしゃれ系</button>
+      <button class="suggestion-btn" data-q="こってり背脂系が食べたい">こってり背脂</button>
+      <button class="suggestion-btn" data-q="担々麺が食べたい">担々麺</button>
+    </div>
+
+    <div class="input-row">
+      <input id="query-input" type="text" placeholder="例：渋谷でつけ麺が食べたい" maxlength="200" />
+      <button id="send-btn">探す</button>
+    </div>
+
+    <div class="loading" id="loading">考え中...</div>
+    <div class="result-box" id="result-box"></div>
+    <p class="disclaimer">※ AIの回答は情報が古い・不正確な場合があります。訪問前に公式情報をご確認ください。</p>
+  </div>
+
+  <script>
+    const input = document.getElementById('query-input') as HTMLInputElement;
+    const btn = document.getElementById('send-btn') as HTMLButtonElement;
+    const loading = document.getElementById('loading')!;
+    const resultBox = document.getElementById('result-box')!;
+
+    async function ask(query: string) {
+      if (!query.trim()) return;
+      btn.disabled = true;
+      loading.classList.add('visible');
+      resultBox.classList.remove('visible');
+      resultBox.textContent = '';
+
+      try {
+        const res = await fetch('/api/recommend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: query }),
+        });
+        const data = await res.json();
+
+        if (data.error) {
+          resultBox.textContent = data.error;
+        } else {
+          // /blog/slug 形式のリンクをアンカータグに変換
+          const html = data.response
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/(→\s*)(\/blog\/[\w-]+)/g, (_, arrow: string, path: string) =>
+              `${arrow}<a href="${path}">${path}</a>`
+            );
+          resultBox.innerHTML = html;
+        }
+        resultBox.classList.add('visible');
+      } catch {
+        resultBox.textContent = 'エラーが発生しました。しばらく待ってから試してください。';
+        resultBox.classList.add('visible');
+      } finally {
+        btn.disabled = false;
+        loading.classList.remove('visible');
+      }
+    }
+
+    btn.addEventListener('click', () => ask(input.value));
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') ask(input.value); });
+
+    document.querySelectorAll('.suggestion-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        const q = (b as HTMLElement).dataset.q || '';
+        input.value = q;
+        ask(q);
+      });
+    });
+  </script>
+</Layout>
