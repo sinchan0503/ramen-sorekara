@@ -3,7 +3,7 @@ title: "ラーメンが、添え物になった日。"
 description: "高田馬場のなぎちゃんラーメン。江古田店が忘れられなくてまた来た。チャーシュータバマヨ紅生姜丼が主役すぎて、ラーメンが物足りなくなった。"
 pubDate: 2026-06-21
 emoji: "🍚"
-image: "/images/nagichan-takadanobaba-3.jpg"
+image: "/images/nagichan-takadanobaba-1.jpg"
 tags: ["ちゃん系", "高田馬場"]
 ---
 
