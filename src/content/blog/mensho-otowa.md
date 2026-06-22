@@ -4,10 +4,10 @@ description: "文京区音羽のMENSHO。和牛って書いてあるからイン
 pubDate: 2026-06-22T12:00:00+09:00
 emoji: "🥚"
 image: "/images/mensho-otowa-5.jpg"
-tags: ["音羽", "文京区"]
+tags: ["護国寺", "文京区"]
 ---
 
-## MENSHO（音羽）
+## MENSHO（護国寺）
 
 最近、こういう系にはまってる。
 
