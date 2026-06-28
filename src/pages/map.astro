@@ -2,65 +2,55 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
-// lat/lng → SVG座標変換（東京エリアに合わせたキャリブレーション済み定数）
-function project(lat: number, lng: number) {
-  return {
-    x: Math.round(56 + 1374 * (lng - 139.2826)),
-    y: Math.round(408 - 1998 * (lat - 35.6424)),
-  };
-}
+const MAPS_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_KEY;
 
 const hardcodedShops = [
-  { name: 'らーめん護什番',              area: '雑司ヶ谷',  slug: 'gojuban-zoshigaya',        image: '/images/gojuban-01.jpg',             x: 636, y: 240 },
-  { name: '伍福軒',                      area: '池袋',      slug: 'gofukuken-ikebukuro',       image: '/images/gofukuken-01.jpg',           x: 618, y: 226 },
-  { name: 'ラーメン富士丸 神谷本店',      area: '志茂',      slug: 'fujimaru-kamiya',           image: '/images/fujimaru-01.jpg',            x: 684, y: 137 },
-  { name: 'ひろちゃんラーメン',           area: '池袋',      slug: 'hirochan-ramen-ikebukuro',  image: '/images/hirochan-ramen-ikebukuro.jpg',x: 648, y: 214 },
-  { name: 'らーめん HAGGY',              area: '調布',      slug: 'haggy-chofu',               image: '/images/haggy-chofu-1.jpg',          x: 400, y: 390 },
-  { name: '寿限無 担々麺',               area: '上野',      slug: 'jugemu-tantanmen-ueno',     image: '/images/jugemu-tantanmen-ueno.jpg',  x: 736, y: 264 },
-  { name: 'ラーメンショップ マルQ',       area: '練馬',      slug: 'maruq-nerima',              image: '/images/maruq-nerima-01.jpg',        x: 552, y: 197 },
-  { name: '安ざわ家',                    area: '練馬',      slug: 'anzawaya-nerima',           image: '/images/anzawaya-nerima-01.jpg',     x: 538, y: 210 },
-  { name: '中華そば 麒麟',               area: '池袋',      slug: 'kirin-ikebukuro',           image: '/images/kirin-ikebukuro-1.jpg',      x: 638, y: 212 },
-  { name: 'ミゾグチヤ',                   area: '東十条',    slug: 'mizoguchiya-higashijujo',   image: '/images/mizoguchiya-01.jpg',         x: 676, y: 127 },
-  { name: 'ろく月',                      area: '浅草橋',    slug: 'rokugatu-asakusabashi',     image: '/images/rokugatu-1.jpg',             x: 753, y: 290 },
-  { name: 'すず鬼 狭山ヶ丘分店',         area: '狭山ヶ丘',  slug: 'suzuki-sayamagaoka',        image: '/images/suzuki-sayamagaoka.jpg',     x: 189, y:  97 },
-  { name: 'すず鬼 三鷹',                area: '三鷹',      slug: 'suzuki-mitaka',             image: '/images/suzuki-mitaka.jpg',          x: 418, y: 318 },
-  { name: '屋台ラーメン しゅんやっちゃん', area: '高尾',      slug: 'shunyacchan-takao',         image: '/images/shunyacchan-takao-2.jpg',    x:  56, y: 408 },
-  { name: 'つじ田',                      area: '飯田橋',    slug: 'tsujita-asa-iidabashi',     image: '/images/tsujita-asa-iidabashi.jpg',  x: 690, y: 280 },
-  { name: 'たた味',                       area: '日本橋',    slug: 'tatami-nihonbashi',         image: '/images/tatami-nihonbashi.jpg',      x: 742, y: 310 },
-  { name: '麺家たいせい',                area: '中野坂上',  slug: 'taisei-nakano',             image: '/images/taisei-nakano-02.jpg',       x: 568, y: 282 },
-  { name: '豚骨蒼翔',                   area: '杉並',      slug: 'sosho-suginami',            image: '/images/sosho-suginami-01.jpg',      x: 555, y: 322 },
-  { name: 'スタミナラーメン鬼山',         area: '渋谷',      slug: 'stamina-oniyama-shibuya',   image: '/images/stamina-oniyama-1.jpg',      x: 622, y: 380 },
-  { name: '新宿シンちゃんラーメン',       area: '新宿',      slug: 'shinchan-shinjuku',         image: '/images/shinchan-shinjuku-01.jpg',   x: 628, y: 306 },
-  { name: 'にじゅうぶんのいち',           area: '東尾久',    slug: 'nijubun-no-ichi-higashogu', image: '/images/nijubun-no-ichi-01.jpg',     x: 722, y: 154 },
-  { name: '超ごってり麺 ごっつ',          area: '秋葉原',    slug: 'gottsu-akihabara',          image: '/images/gottsu-akihabara.jpg',       x: 731, y: 292 },
-  { name: '銀座はるちゃんラーメン',        area: '銀座',      slug: 'haruchan-ramen-ginza',      image: '/images/haruchan-ramen-ginza-03.jpg',x: 719, y: 352 },
-  { name: 'らぁ麺 はやし田',              area: '池袋',      slug: 'hayashida-ramen-ikebukuro', image: '/images/hayashida-ikebukuro-1.jpg',  x: 662, y: 228 },
-  { name: 'RAMEN紫苑',                   area: '高田馬場',  slug: 'shion-takadanobaba',        image: '/images/shion-takadanobaba-01.jpg',  x: 635, y: 269 },
-  { name: 'SUPER MEN',                  area: '飯田橋',    slug: 'supermen-iidabashi',        image: '/images/supermen-iidabashi-1.jpg',   x: 696, y: 290 },
-  { name: 'なぎちゃんラーメン 高田馬場', area: '高田馬場',  slug: 'nagichan-ramen-takadanobaba', image: '/images/nagichan-takadanobaba-1.jpg', x: 628, y: 262 },
-  { name: 'MENSHO',                     area: '護国寺',      slug: 'mensho-otowa',               image: '/images/mensho-otowa-1.jpg',         x: 681, y: 254 },
-  { name: 'RaMen TOMO TOKYO',           area: '九段下',      slug: 'tomo-tokyo-kudanshita',      image: '/images/tomo-tokyo-kudanshita-1.jpg', x: 698, y: 301 },
-  { name: '支那麺はしご 本店',           area: '銀座',        slug: 'hashigo-ginza',              image: '/images/hashigo-ginza-1.jpg',         x: 726, y: 356 },
-  { name: '自家製麺No11',               area: '志茂',        slug: 'jikaseimen-no11-oyama',      image: '/images/jikaseimen-no11-1.jpg',       x: 678, y: 143 },
+  { name: 'らーめん護什番',              area: '雑司ヶ谷',  slug: 'gojuban-zoshigaya',          image: '/images/gojuban-01.jpg',              lat: 35.7265, lng: 139.7098 },
+  { name: '伍福軒',                      area: '池袋',      slug: 'gofukuken-ikebukuro',         image: '/images/gofukuken-01.jpg',            lat: 35.7300, lng: 139.7100 },
+  { name: 'ラーメン富士丸 神谷本店',      area: '志茂',      slug: 'fujimaru-kamiya',             image: '/images/fujimaru-01.jpg',             lat: 35.7690, lng: 139.7330 },
+  { name: 'ひろちゃんラーメン',           area: '池袋',      slug: 'hirochan-ramen-ikebukuro',    image: '/images/hirochan-ramen-ikebukuro.jpg',lat: 35.7320, lng: 139.7115 },
+  { name: 'らーめん HAGGY',              area: '調布',      slug: 'haggy-chofu',                 image: '/images/haggy-chofu-1.jpg',           lat: 35.6506, lng: 139.5418 },
+  { name: '寿限無 担々麺',               area: '上野',      slug: 'jugemu-tantanmen-ueno',       image: '/images/jugemu-tantanmen-ueno.jpg',   lat: 35.7128, lng: 139.7740 },
+  { name: 'ラーメンショップ マルQ',       area: '練馬',      slug: 'maruq-nerima',                image: '/images/maruq-nerima-01.jpg',         lat: 35.7380, lng: 139.6530 },
+  { name: '安ざわ家',                    area: '練馬',      slug: 'anzawaya-nerima',             image: '/images/anzawaya-nerima-01.jpg',      lat: 35.7350, lng: 139.6510 },
+  { name: '中華そば 麒麟',               area: '池袋',      slug: 'kirin-ikebukuro',             image: '/images/kirin-ikebukuro-1.jpg',       lat: 35.7310, lng: 139.7103 },
+  { name: 'ミゾグチヤ',                   area: '東十条',    slug: 'mizoguchiya-higashijujo',     image: '/images/mizoguchiya-01.jpg',          lat: 35.7740, lng: 139.7280 },
+  { name: 'ろく月',                      area: '浅草橋',    slug: 'rokugatu-asakusabashi',       image: '/images/rokugatu-1.jpg',              lat: 35.6980, lng: 139.7875 },
+  { name: 'すず鬼 狭山ヶ丘分店',         area: '狭山ヶ丘',  slug: 'suzuki-sayamagaoka',          image: '/images/suzuki-sayamagaoka.jpg',      lat: 35.8020, lng: 139.3950 },
+  { name: 'すず鬼 三鷹',                area: '三鷹',      slug: 'suzuki-mitaka',               image: '/images/suzuki-mitaka.jpg',           lat: 35.6833, lng: 139.5600 },
+  { name: '屋台ラーメン しゅんやっちゃん', area: '高尾',      slug: 'shunyacchan-takao',           image: '/images/shunyacchan-takao-2.jpg',     lat: 35.6426, lng: 139.2826 },
+  { name: 'つじ田',                      area: '飯田橋',    slug: 'tsujita-asa-iidabashi',       image: '/images/tsujita-asa-iidabashi.jpg',   lat: 35.7020, lng: 139.7430 },
+  { name: 'たた味',                       area: '日本橋',    slug: 'tatami-nihonbashi',           image: '/images/tatami-nihonbashi.jpg',       lat: 35.6830, lng: 139.7745 },
+  { name: '麺家たいせい',                area: '中野坂上',  slug: 'taisei-nakano',               image: '/images/taisei-nakano-02.jpg',        lat: 35.6958, lng: 139.6680 },
+  { name: '豚骨蒼翔',                   area: '杉並',      slug: 'sosho-suginami',              image: '/images/sosho-suginami-01.jpg',       lat: 35.6890, lng: 139.6550 },
+  { name: 'スタミナラーメン鬼山',         area: '渋谷',      slug: 'stamina-oniyama-shibuya',     image: '/images/stamina-oniyama-1.jpg',       lat: 35.6580, lng: 139.7016 },
+  { name: '新宿シンちゃんラーメン',       area: '新宿',      slug: 'shinchan-shinjuku',           image: '/images/shinchan-shinjuku-01.jpg',    lat: 35.6900, lng: 139.7006 },
+  { name: 'にじゅうぶんのいち',           area: '東尾久',    slug: 'nijubun-no-ichi-higashogu',   image: '/images/nijubun-no-ichi-01.jpg',      lat: 35.7530, lng: 139.7580 },
+  { name: '超ごってり麺 ごっつ',          area: '秋葉原',    slug: 'gottsu-akihabara',            image: '/images/gottsu-akihabara.jpg',        lat: 35.6985, lng: 139.7731 },
+  { name: '銀座はるちゃんラーメン',        area: '銀座',      slug: 'haruchan-ramen-ginza',        image: '/images/haruchan-ramen-ginza-03.jpg', lat: 35.6717, lng: 139.7648 },
+  { name: 'らぁ麺 はやし田',              area: '池袋',      slug: 'hayashida-ramen-ikebukuro',   image: '/images/hayashida-ikebukuro-1.jpg',   lat: 35.7295, lng: 139.7120 },
+  { name: 'RAMEN紫苑',                   area: '高田馬場',  slug: 'shion-takadanobaba',          image: '/images/shion-takadanobaba-01.jpg',   lat: 35.7125, lng: 139.7025 },
+  { name: 'SUPER MEN',                  area: '飯田橋',    slug: 'supermen-iidabashi',          image: '/images/supermen-iidabashi-1.jpg',    lat: 35.7028, lng: 139.7440 },
+  { name: 'なぎちゃんラーメン 高田馬場',  area: '高田馬場',  slug: 'nagichan-ramen-takadanobaba', image: '/images/nagichan-takadanobaba-1.jpg', lat: 35.7120, lng: 139.7018 },
+  { name: 'MENSHO',                     area: '護国寺',    slug: 'mensho-otowa',                image: '/images/mensho-otowa-1.jpg',          lat: 35.7190, lng: 139.7320 },
+  { name: 'RaMen TOMO TOKYO',           area: '九段下',    slug: 'tomo-tokyo-kudanshita',       image: '/images/tomo-tokyo-kudanshita-1.jpg', lat: 35.6952, lng: 139.7493 },
+  { name: '支那麺はしご 本店',           area: '銀座',      slug: 'hashigo-ginza',               image: '/images/hashigo-ginza-1.jpg',         lat: 35.6705, lng: 139.7668 },
+  { name: '自家製麺No11',               area: '志茂',      slug: 'jikaseimen-no11-oyama',       image: '/images/jikaseimen-no11-1.jpg',       lat: 35.7700, lng: 139.7310 },
+  { name: 'Heart Restaurant 安ざわ家 本店', area: '上板橋', slug: 'anzawaya-itabashi-honten',    image: '/images/anzawaya-itabashi-1.jpg',     lat: 35.7530, lng: 139.6850 },
 ];
 
-// lat/lng を持つ記事を動的に追加（ハードコード済みスラグは除外して重複回避）
 const hardcodedSlugs = new Set(hardcodedShops.map(s => s.slug));
 const posts = await getCollection('blog');
 const dynamicShops = posts
   .filter(p => p.data.lat != null && p.data.lng != null)
-  .map(p => {
-    const slug = p.id.replace(/\.md$/, '');
-    const { x, y } = project(p.data.lat!, p.data.lng!);
-    return {
-      name: p.data.shopName || p.data.title,
-      area: p.data.tags?.[0] || '',
-      slug,
-      image: p.data.image || '',
-      x,
-      y,
-    };
-  })
+  .map(p => ({
+    name: p.data.shopName || p.data.title,
+    area: p.data.tags?.[0] || '',
+    slug: p.id.replace(/\.md$/, ''),
+    image: p.data.image || '',
+    lat: p.data.lat!,
+    lng: p.data.lng!,
+  }))
   .filter(s => !hardcodedSlugs.has(s.slug));
 
 const shops = [...hardcodedShops, ...dynamicShops];
@@ -76,28 +66,18 @@ const shops = [...hardcodedShops, ...dynamicShops];
     .map-header h1 { font-family: 'Klee One', cursive; font-size: 1.4rem; color: #b5352a; margin-bottom: 0.2rem; }
     .map-header p  { color: #aaa; font-size: 0.82rem; }
 
-    .map-wrap { position: relative; margin-bottom: 2rem; }
-    #ramen-svg { width: 100%; height: auto; display: block; border-radius: 16px; border: 1px solid #ede0d8; }
-
-    /* SVG内テキストのハロー */
-    .map-label { paint-order: stroke fill; }
-
-    /* ピンのホバーアニメ */
-    .shop-pin { cursor: pointer; }
-    .shop-pin .pin-bg { transition: r 0.12s; }
-    .shop-pin:hover .pin-bg { r: 10; }
-
-    /* ツールチップ */
-    #map-tooltip {
-      display: none; position: absolute; pointer-events: none; z-index: 20;
-      background: #fff; border: 1px solid #ede0d8; border-radius: 10px;
-      padding: 8px 13px; box-shadow: 0 4px 16px rgba(0,0,0,.1); white-space: nowrap;
+    #google-map {
+      width: 100%;
+      height: 520px;
+      border-radius: 16px;
+      border: 1px solid #ede0d8;
+      margin-bottom: 2rem;
     }
-    #tooltip-name { font-weight: 600; font-size: .88rem; color: #2a2a2a; }
-    #tooltip-area { font-size: .75rem; color: #bbb; margin-top: 1px; }
-    #tooltip-hint { font-size: .72rem; color: #b5352a; margin-top: 4px; }
 
-    /* 店舗リスト */
+    @media (max-width: 600px) {
+      #google-map { height: 380px; }
+    }
+
     .section-label { font-size: .78rem; color: #ccc; margin-bottom: .75rem; letter-spacing: .05em; }
     .shop-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(155px,1fr)); gap: .55rem; }
     .shop-card { background: #fff; border: 1px solid #f0e8e4; border-radius: 10px; padding: .6rem .85rem; transition: border-color .15s; display: block; text-decoration: none; color: #2a2a2a; font-size: .83rem; font-weight: 500; }
@@ -108,6 +88,13 @@ const shops = [...hardcodedShops, ...dynamicShops];
     @media(max-width:600px){
       .shop-grid { grid-template-columns: repeat(auto-fill,minmax(130px,1fr)); }
     }
+
+    /* カスタム吹き出し */
+    .gm-info-window img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 6px; }
+    .gm-info-window-name { font-weight: 600; font-size: .88rem; color: #2a2a2a; margin-bottom: 2px; }
+    .gm-info-window-area { font-size: .75rem; color: #bbb; margin-bottom: 6px; }
+    .gm-info-window-link { font-size: .78rem; color: #b5352a; text-decoration: none; font-weight: 500; }
+    .gm-info-window-link:hover { text-decoration: underline; }
   </style>
 
   <div class="map-header">
@@ -115,170 +102,7 @@ const shops = [...hardcodedShops, ...dynamicShops];
     <p>ぽんが行ったラーメン店 — {shops.length}店舗</p>
   </div>
 
-  <div class="map-wrap">
-    <svg id="ramen-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <!-- ドットグリッド背景 -->
-        <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
-          <circle cx="12" cy="12" r="0.9" fill="#c8a898" opacity="0.35"/>
-        </pattern>
-        <!-- ピン用シャドウ -->
-        <filter id="pshadow" x="-40%" y="-40%" width="180%" height="180%">
-          <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-color="#00000028"/>
-        </filter>
-        <!-- 路線用シャドウ（立体感） -->
-        <filter id="lshadow" x="-5%" y="-5%" width="110%" height="110%">
-          <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#00000015"/>
-        </filter>
-      </defs>
-
-      <!-- ベース背景 -->
-      <rect width="800" height="500" fill="#fdf8f3" rx="16"/>
-      <!-- ドットテクスチャ -->
-      <rect width="800" height="500" fill="url(#dots)" rx="16"/>
-
-      <!-- 東京湾エリア（右下） -->
-      <path d="M 760 420 Q 800 380 800 500 L 760 500 Z" fill="#c8dce8" opacity="0.35"/>
-      <path d="M 800 370 L 800 500 L 770 500 Q 795 420 800 370Z" fill="#c8dce8" opacity="0.2"/>
-
-      <!-- 多摩・西部エリア（左） -->
-      <path d="M 0 0 L 280 0 L 220 500 L 0 500 Z" fill="#d8e4c8" opacity="0.12"/>
-
-      <!-- ====== 路線 ====== -->
-
-      <!-- 西武池袋線（ゴールド）: 池袋→練馬→所沢→狭山ヶ丘 -->
-      <path d="M 639 213 C 610 205 580 200 552 197 C 420 175 300 140 189 97"
-        fill="none" stroke="#c8a020" stroke-width="4" stroke-linecap="round"
-        filter="url(#lshadow)" opacity="0.85"/>
-
-      <!-- 中央線（ブルー）: 新宿→中野→三鷹→高尾 -->
-      <path d="M 627 306 C 600 306 585 295 568 282 C 510 305 460 315 418 318 C 280 340 160 375 56 408"
-        fill="none" stroke="#4a8fc0" stroke-width="4" stroke-linecap="round"
-        filter="url(#lshadow)" opacity="0.82"/>
-
-      <!-- 京浜東北・北上（ウォームグレー）: 上野→東十条→溝口屋→神谷 -->
-      <path d="M 736 264 C 722 240 706 195 684 137"
-        fill="none" stroke="#9a8078" stroke-width="3" stroke-linecap="round"
-        filter="url(#lshadow)" opacity="0.75"/>
-
-      <!-- 山手線（テラコッタ楕円） ※回り道のため2段表示 -->
-      <!-- 外側（白いフチ） -->
-      <ellipse cx="678" cy="320" rx="62" ry="128"
-        fill="none" stroke="#fff" stroke-width="12" opacity="0.6"/>
-      <!-- 内側（テラコッタ） -->
-      <ellipse cx="678" cy="320" rx="62" ry="128"
-        fill="none" stroke="#d97848" stroke-width="6" opacity="0.7"
-        filter="url(#lshadow)"/>
-
-      <!-- ====== ランドマークイラスト ====== -->
-
-      <!-- 高尾山 -->
-      <g transform="translate(86,435)" opacity="0.22">
-        <polygon points="0,-24 -20,0 20,0" fill="#d8c8bc" stroke="#9a7868" stroke-width="1.5"/>
-        <polygon points="0,-24 -6,-10 6,-10" fill="#fff" stroke="none" opacity="0.85"/>
-      </g>
-      <text x="86" y="443" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="7.5" fill="#9a7868" opacity="0.5">高尾山</text>
-
-      <!-- 東京タワー（港区方向）-->
-      <g transform="translate(700,452)" opacity="0.2" stroke="#c86040" stroke-width="1.8" stroke-linecap="round" fill="none">
-        <line x1="0" y1="-42" x2="0" y2="-32"/>
-        <line x1="-5" y1="-32" x2="5" y2="-32"/>
-        <line x1="0" y1="-32" x2="-13" y2="0"/>
-        <line x1="0" y1="-32" x2="13" y2="0"/>
-        <line x1="-13" y1="0" x2="13" y2="0"/>
-        <line x1="-8" y1="-18" x2="8" y2="-18"/>
-      </g>
-      <text x="700" y="464" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="7.5" fill="#c86040" opacity="0.5">東京タワー</text>
-
-      <!-- スカイツリー（墨田方向）-->
-      <g transform="translate(780,343)" opacity="0.18">
-        <line x1="0" y1="-50" x2="0" y2="-40" stroke="#4878a8" stroke-width="1.5" stroke-linecap="round"/>
-        <polygon points="0,-40 -7,0 7,0" fill="none" stroke="#4878a8" stroke-width="1.5"/>
-        <line x1="-3.5" y1="-28" x2="3.5" y2="-28" stroke="#4878a8" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="-5" y1="-18" x2="5" y2="-18" stroke="#4878a8" stroke-width="2.5" stroke-linecap="round"/>
-      </g>
-      <text x="780" y="356" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="7.5" fill="#4878a8" opacity="0.5">スカイツリー</text>
-
-      <!-- 東京駅（山手線内側・中央）-->
-      <g transform="translate(716,350)" opacity="0.22" stroke="#b07040" fill="none">
-        <circle r="7" stroke-width="1.5"/>
-        <line x1="-5" y1="0" x2="5" y2="0" stroke-width="1.5"/>
-        <line x1="0" y1="-5" x2="0" y2="5" stroke-width="1.5"/>
-      </g>
-      <text x="716" y="363" text-anchor="middle" font-family="'Noto Sans JP',sans-serif" font-size="7.5" fill="#b07040" opacity="0.5">東京駅</text>
-
-      <!-- ====== エリアラベル ====== -->
-      <!-- white halo + colored text via paint-order -->
-      <text x="597" y="194" font-family="'Klee One',cursive" font-size="15" fill="#6a4030" font-weight="600"
-        class="map-label" stroke="#fdf8f3" stroke-width="5">池袋</text>
-
-      <text x="582" y="310" font-family="'Klee One',cursive" font-size="14" fill="#6a4030" font-weight="600"
-        class="map-label" stroke="#fdf8f3" stroke-width="5">新宿</text>
-
-      <text x="590" y="395" font-family="'Klee One',cursive" font-size="13" fill="#6a4030"
-        class="map-label" stroke="#fdf8f3" stroke-width="4">渋谷</text>
-
-      <text x="744" y="248" font-family="'Klee One',cursive" font-size="13" fill="#6a4030"
-        class="map-label" stroke="#fdf8f3" stroke-width="4">上野</text>
-
-      <text x="708" y="340" font-family="'Klee One',cursive" font-size="12" fill="#6a4030"
-        class="map-label" stroke="#fdf8f3" stroke-width="4">東京</text>
-
-      <text x="519" y="215" font-family="'Klee One',cursive" font-size="12" fill="#6a4030"
-        class="map-label" stroke="#fdf8f3" stroke-width="4">練馬</text>
-
-      <text x="380" y="338" font-family="'Klee One',cursive" font-size="12" fill="#6a4030"
-        class="map-label" stroke="#fdf8f3" stroke-width="4">三鷹</text>
-
-      <text x="145" y="115" font-family="'Klee One',cursive" font-size="11" fill="#6a4030"
-        class="map-label" stroke="#fdf8f3" stroke-width="4">狭山ヶ丘</text>
-
-      <text x="22" y="428" font-family="'Klee One',cursive" font-size="11" fill="#6a4030"
-        class="map-label" stroke="#fdf8f3" stroke-width="4">高尾</text>
-
-      <text x="640" y="148" font-family="'Klee One',cursive" font-size="11" fill="#6a4030"
-        class="map-label" stroke="#fdf8f3" stroke-width="4">東十条</text>
-
-      <!-- 路線凡例 -->
-      <g transform="translate(20, 448)">
-        <rect x="0" y="0" width="190" height="46" rx="8" fill="#fff" opacity="0.7"/>
-        <line x1="10" y1="12" x2="30" y2="12" stroke="#d97848" stroke-width="4" stroke-linecap="round"/>
-        <text x="35" y="16" font-family="'Noto Sans JP',sans-serif" font-size="9" fill="#6a4030">山手線</text>
-        <line x1="10" y1="28" x2="30" y2="28" stroke="#4a8fc0" stroke-width="3" stroke-linecap="round"/>
-        <text x="35" y="32" font-family="'Noto Sans JP',sans-serif" font-size="9" fill="#6a4030">中央線</text>
-        <line x1="90" y1="12" x2="110" y2="12" stroke="#c8a020" stroke-width="3" stroke-linecap="round"/>
-        <text x="115" y="16" font-family="'Noto Sans JP',sans-serif" font-size="9" fill="#6a4030">西武池袋線</text>
-        <line x1="90" y1="28" x2="110" y2="28" stroke="#9a8078" stroke-width="2.5" stroke-linecap="round"/>
-        <text x="115" y="32" font-family="'Noto Sans JP',sans-serif" font-size="9" fill="#6a4030">京浜東北線</text>
-      </g>
-
-      <!-- タイトル -->
-      <text x="22" y="32" font-family="'Klee One',cursive" font-size="17" fill="#b5352a" opacity="0.75"
-        class="map-label" stroke="#fdf8f3" stroke-width="4">ぽんのらーめん地図</text>
-      <text x="22" y="46" font-family="'Noto Sans JP',sans-serif" font-size="8.5" fill="#aaa">{shops.length} shops</text>
-
-      <!-- ====== ショップピン ====== -->
-      {shops.map(shop => (
-        <g
-          class="shop-pin"
-          data-name={shop.name}
-          data-area={shop.area}
-          data-slug={shop.slug}
-          transform={`translate(${shop.x},${shop.y})`}
-          filter="url(#pshadow)"
-        >
-          <circle class="pin-bg" r="8" fill="#b5352a" stroke="#fff" stroke-width="2.5"/>
-          <circle r="3" fill="#fff" opacity="0.9"/>
-        </g>
-      ))}
-    </svg>
-
-    <div id="map-tooltip">
-      <div id="tooltip-name"></div>
-      <div id="tooltip-area"></div>
-      <div id="tooltip-hint">クリックで記事へ →</div>
-    </div>
-  </div>
+  <div id="google-map"></div>
 
   <p class="section-label">▼ 全{shops.length}店舗</p>
   <div class="shop-grid">
@@ -291,34 +115,56 @@ const shops = [...hardcodedShops, ...dynamicShops];
     ))}
   </div>
 
-  <script is:inline define:vars={{ shops }}>
-    var svg  = document.getElementById('ramen-svg');
-    var tip  = document.getElementById('map-tooltip');
-    var tipN = document.getElementById('tooltip-name');
-    var tipA = document.getElementById('tooltip-area');
+  <script
+    src={`https://maps.googleapis.com/maps/api/js?key=${MAPS_KEY}&callback=initMap`}
+    async
+    defer
+    is:inline
+  ></script>
 
-    document.querySelectorAll('.shop-pin').forEach(function(pin) {
-      pin.addEventListener('mouseenter', function() {
-        tipN.textContent = pin.dataset.name;
-        tipA.textContent = pin.dataset.area;
-        tip.style.display = 'block';
+  <script is:inline define:vars={{ shops }}>
+    window.initMap = function () {
+      var map = new google.maps.Map(document.getElementById('google-map'), {
+        center: { lat: 35.710, lng: 139.700 },
+        zoom: 11,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+        styles: [
+          { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] },
+          { featureType: 'transit', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+        ],
       });
-      pin.addEventListener('mousemove', function(e) {
-        var r   = svg.parentElement.getBoundingClientRect();
-        var svgW = svg.getBoundingClientRect().width;
-        var scaleX = svgW / 800;
-        var x = e.clientX - r.left + 16;
-        var y = e.clientY - r.top  - 8;
-        if (x + 200 > r.width) x = e.clientX - r.left - 210;
-        tip.style.left = x + 'px';
-        tip.style.top  = y + 'px';
+
+      var infoWindow = new google.maps.InfoWindow();
+
+      shops.forEach(function (shop) {
+        var marker = new google.maps.Marker({
+          position: { lat: shop.lat, lng: shop.lng },
+          map: map,
+          title: shop.name,
+          icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 9,
+            fillColor: '#b5352a',
+            fillOpacity: 1,
+            strokeColor: '#fff',
+            strokeWeight: 2.5,
+          },
+        });
+
+        marker.addListener('click', function () {
+          var content =
+            '<div style="width:140px">' +
+            (shop.image ? '<img src="' + shop.image + '" alt="' + shop.name + '" style="width:100%;height:80px;object-fit:cover;border-radius:8px;display:block;margin-bottom:6px">' : '') +
+            '<div style="font-weight:600;font-size:.88rem;color:#2a2a2a;margin-bottom:2px">' + shop.name + '</div>' +
+            '<div style="font-size:.75rem;color:#bbb;margin-bottom:6px">' + shop.area + '</div>' +
+            '<a href="/blog/' + shop.slug + '" style="font-size:.78rem;color:#b5352a;font-weight:500">記事を読む →</a>' +
+            '</div>';
+          infoWindow.setContent(content);
+          infoWindow.open(map, marker);
+        });
       });
-      pin.addEventListener('mouseleave', function() {
-        tip.style.display = 'none';
-      });
-      pin.addEventListener('click', function() {
-        window.location.href = '/blog/' + pin.dataset.slug;
-      });
-    });
+    };
   </script>
 </Layout>
