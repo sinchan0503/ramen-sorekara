@@ -115,13 +115,6 @@ const shops = [...hardcodedShops, ...dynamicShops];
     ))}
   </div>
 
-  <script
-    src={`https://maps.googleapis.com/maps/api/js?key=${MAPS_KEY}&callback=initMap`}
-    async
-    defer
-    is:inline
-  ></script>
-
   <script is:inline define:vars={{ shops }}>
     window.initMap = function () {
       var map = new google.maps.Map(document.getElementById('google-map'), {
@@ -167,4 +160,11 @@ const shops = [...hardcodedShops, ...dynamicShops];
       });
     };
   </script>
+
+  <script
+    src={`https://maps.googleapis.com/maps/api/js?key=${MAPS_KEY}&callback=initMap`}
+    async
+    defer
+    is:inline
+  ></script>
 </Layout>
