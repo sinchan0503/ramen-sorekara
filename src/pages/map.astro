@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 
-const MAPS_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_KEY;
+const MAPS_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_KEY ?? 'AIzaSyBGTnyVaOpnFnWHyyM1_lm7zcRs2jnwQsw';
 
 const hardcodedShops = [
   { name: 'らーめん護什番',              area: '雑司ヶ谷',  slug: 'gojuban-zoshigaya',          image: '/images/gojuban-01.jpg',              lat: 35.7265, lng: 139.7098 },
