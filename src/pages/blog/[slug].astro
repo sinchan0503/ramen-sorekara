@@ -42,6 +42,46 @@ const recentPosts = allPosts
   .slice(0, 5);
 const is4koma = post.id.includes('4koma');
 
+const MAPS_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_KEY ?? 'AIzaSyBGTnyVaOpnFnWHyyM1_lm7zcRs2jnwQsw';
+
+const shopCoords: Record<string, { lat: number; lng: number }> = {
+  'gojuban-zoshigaya':          { lat: 35.718925, lng: 139.721954 },
+  'gofukuken-ikebukuro':        { lat: 35.732609, lng: 139.710251 },
+  'fujimaru-kamiya':            { lat: 35.772289, lng: 139.733139 },
+  'hirochan-ramen-ikebukuro':   { lat: 35.732677, lng: 139.709732 },
+  'haggy-chofu':                { lat: 35.654694, lng: 139.567017 },
+  'jugemu-tantanmen-ueno':      { lat: 35.708279, lng: 139.775787 },
+  'maruq-nerima':               { lat: 35.737572, lng: 139.653061 },
+  'anzawaya-nerima':            { lat: 35.736214, lng: 139.655533 },
+  'kirin-ikebukuro':            { lat: 35.732422, lng: 139.707642 },
+  'mizoguchiya-higashijujo':    { lat: 35.765549, lng: 139.726501 },
+  'rokugatu-asakusabashi':      { lat: 35.698879, lng: 139.785263 },
+  'suzuki-sayamagaoka':         { lat: 35.811855, lng: 139.415298 },
+  'suzuki-mitaka':              { lat: 35.699482, lng: 139.561157 },
+  'shunyacchan-takao':          { lat: 35.641136, lng: 139.285461 },
+  'tsujita-asa-iidabashi':      { lat: 35.701359, lng: 139.746323 },
+  'tatami-nihonbashi':          { lat: 35.691578, lng: 139.779663 },
+  'taisei-nakano':              { lat: 35.697205, lng: 139.682175 },
+  'sosho-suginami':             { lat: 35.697590, lng: 139.660141 },
+  'stamina-oniyama-shibuya':    { lat: 35.659397, lng: 139.698318 },
+  'shinchan-shinjuku':          { lat: 35.693890, lng: 139.703613 },
+  'nijubun-no-ichi-higashogu':  { lat: 35.739967, lng: 139.771347 },
+  'gottsu-akihabara':           { lat: 35.700535, lng: 139.775192 },
+  'haruchan-ramen-ginza':       { lat: 35.670845, lng: 139.768890 },
+  'hayashida-ramen-ikebukuro':  { lat: 35.732231, lng: 139.713882 },
+  'shion-takadanobaba':         { lat: 35.713444, lng: 139.708908 },
+  'supermen-iidabashi':         { lat: 35.699883, lng: 139.748215 },
+  'nagichan-ramen-takadanobaba':{ lat: 35.713657, lng: 139.703613 },
+  'mensho-otowa':               { lat: 35.716312, lng: 139.728668 },
+  'tomo-tokyo-kudanshita':      { lat: 35.697521, lng: 139.751099 },
+  'hashigo-ginza':              { lat: 35.671589, lng: 139.761459 },
+  'jikaseimen-no11-oyama':      { lat: 35.781151, lng: 139.729279 },
+  'anzawaya-itabashi-honten':   { lat: 35.766113, lng: 139.672302 },
+};
+
+const postSlug = post.id.replace(/\.md$/, '');
+const shopCoord = shopCoords[postSlug] ?? null;
+
 const siteUrl = 'https://ramen-sorekara.com';
 const postUrl = `${siteUrl}/blog/${post.id.replace(/\.md$/, '')}`;
 const pubDate = post.data.pubDate.toISOString();
@@ -102,6 +142,42 @@ const breadcrumbSchema = {
       <div class="post-content">
         <Content />
       </div>
+
+      {!is4koma && shopCoord && (
+        <div class="shop-map-section">
+          <p class="shop-map-label">お店の場所</p>
+          <div id="shop-map"></div>
+          <a href="/map" class="shop-map-link">全店舗マップを見る →</a>
+          <script is:inline define:vars={{ shopCoord, MAPS_KEY }}>
+            window.__initShopMap = function () {
+              var map = new google.maps.Map(document.getElementById('shop-map'), {
+                center: { lat: shopCoord.lat, lng: shopCoord.lng },
+                zoom: 16,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false,
+                styles: [
+                  { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] },
+                  { featureType: 'transit', elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
+                ],
+              });
+              new google.maps.Marker({
+                position: { lat: shopCoord.lat, lng: shopCoord.lng },
+                map: map,
+                icon: {
+                  path: google.maps.SymbolPath.CIRCLE,
+                  scale: 10,
+                  fillColor: '#b5352a',
+                  fillOpacity: 1,
+                  strokeColor: '#fff',
+                  strokeWeight: 2.5,
+                },
+              });
+            };
+          </script>
+          <script src={`https://maps.googleapis.com/maps/api/js?key=${MAPS_KEY}&callback=__initShopMap`} async defer is:inline></script>
+        </div>
+      )}
 
       <AdUnit />
 
@@ -435,6 +511,34 @@ const breadcrumbSchema = {
     border-top: 1px solid #f0e8e4;
     margin: 40px 0;
   }
+
+  /* ── 店舗マップ ── */
+  .shop-map-section {
+    margin-top: 48px;
+    padding-top: 36px;
+    border-top: 1px solid #f0e8e4;
+  }
+  .shop-map-label {
+    font-size: 0.78rem;
+    color: #bbb;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+  #shop-map {
+    width: 100%;
+    height: 240px;
+    border-radius: 12px;
+    border: 1px solid #ede0d8;
+  }
+  .shop-map-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #b5352a;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .shop-map-link:hover { text-decoration: underline; }
 
   /* ── 関連記事 ── */
   .related-posts {
