@@ -4,6 +4,7 @@ description: "秋葉原のごっつで人生最こってりを体験した話。
 pubDate: 2026-06-13
 emoji: "🫙"
 image: "/images/gottsu-akihabara.jpg"
+imagePosition: "center 50%"
 tags: ["秋葉原", "こってり", "背脂"]
 ---
 

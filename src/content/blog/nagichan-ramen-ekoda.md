@@ -4,6 +4,7 @@ description: "なぎちゃんラーメン江古田練馬旭丘店。リーズナ
 pubDate: 2026-06-10T00:00:00+09:00
 emoji: "🍜"
 image: "/images/nagichan-ramen-ekoda-01.jpg"
+imagePosition: "center 40%"
 tags: ["ちゃん系", "江古田", "練馬"]
 lat: 35.7351
 lng: 139.6642

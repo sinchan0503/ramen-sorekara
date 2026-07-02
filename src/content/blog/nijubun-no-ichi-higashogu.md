@@ -4,6 +4,7 @@ description: "東尾久のにじゅうぶんのいち。特製醤油そばを頼
 pubDate: 2026-05-26
 emoji: "🥢"
 image: "/images/nijubun-no-ichi-01.jpg"
+imagePosition: "center 40%"
 tags: ["東尾久"]
 ---
 

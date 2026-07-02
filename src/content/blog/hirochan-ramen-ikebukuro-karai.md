@@ -4,6 +4,7 @@ description: "ひろちゃんラーメン（池袋）で辛チャーシュー麺
 pubDate: 2026-05-23
 emoji: "🌶️"
 image: "/images/hirochan-ramen-ikebukuro-karami-1.jpg"
+imagePosition: "center 45%"
 tags: ["ちゃん系", "池袋"]
 ---
 

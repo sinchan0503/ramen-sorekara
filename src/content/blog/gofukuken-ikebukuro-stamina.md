@@ -4,6 +4,7 @@ description: "伍福軒 池袋西口店、今回はスタミナらーめんに�
 pubDate: 2026-05-19
 emoji: "🥢"
 image: "/images/gofukuken-stamina-1.jpg"
+imagePosition: "center 50%"
 tags: ["池袋", "スタミナ系"]
 ---
 

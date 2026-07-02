@@ -4,6 +4,7 @@ description: "練馬・安ざわ家。目的はチャーシューのはずだっ
 pubDate: 2026-06-07
 emoji: "🥢"
 image: "/images/anzawaya-nerima-01.jpg"
+imagePosition: "center 45%"
 tags: ["練馬"]
 ---
 

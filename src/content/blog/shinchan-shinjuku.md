@@ -4,6 +4,7 @@ description: "新宿のシンちゃんラーメン。ちゃん系2軒目。近�
 pubDate: 2026-04-29T00:17:00+09:00
 emoji: "🍥"
 image: "/images/shinchan-shinjuku-01.jpg"
+imagePosition: "center 50%"
 tags: ["ちゃん系", "新宿"]
 ---
 

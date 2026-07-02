@@ -4,6 +4,7 @@ description: "飯田橋のSUPER MEN。帽子みたいな器のフレンチラー
 pubDate: 2026-06-20
 emoji: "🎩"
 image: "/images/supermen-iidabashi-1.jpg"
+imagePosition: "center 45%"
 tags: ["飯田橋", "フレンチラーメン"]
 ---
 

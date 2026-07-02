@@ -4,6 +4,7 @@ description: "練馬のラーメンショップ マルQ。移動中にふらっ�
 pubDate: 2026-04-29T00:27:00+09:00
 emoji: "🌶️"
 image: "/images/maruq-nerima-01.jpg"
+imagePosition: "center 40%"
 tags: ["練馬"]
 ---
 

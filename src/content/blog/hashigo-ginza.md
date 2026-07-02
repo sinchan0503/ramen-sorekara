@@ -4,6 +4,7 @@ description: "銀座の支那麺はしごで排骨担々麺（ぱいこうだん
 pubDate: 2026-06-25T12:00:00+09:00
 emoji: "🥢"
 image: "/images/hashigo-ginza-1.jpg"
+imagePosition: "center 50%"
 tags: ["銀座"]
 ---
 

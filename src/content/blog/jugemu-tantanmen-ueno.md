@@ -4,6 +4,7 @@ description: "パイコー担々麺、想像よりずっと本格的だった。
 pubDate: 2026-05-18
 emoji: "🥜"
 image: "/images/jugemu-tantanmen-ueno.jpg"
+imagePosition: "center 45%"
 tags: ["上野", "担々麺"]
 ---
 

@@ -4,6 +4,7 @@ description: "らーめん護什番（雑司ヶ谷）の旨辛痺麺レビュー
 pubDate: 2026-04-28
 emoji: "🌶️"
 image: "/images/gojuban-01.jpg"
+imagePosition: "center 40%"
 tags: ["雑司ヶ谷", "麻婆系"]
 ---
 

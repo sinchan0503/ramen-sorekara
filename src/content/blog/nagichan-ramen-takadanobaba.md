@@ -4,6 +4,7 @@ description: "高田馬場のなぎちゃんラーメン。江古田店が忘れ
 pubDate: 2026-06-21
 emoji: "🍚"
 image: "/images/nagichan-takadanobaba-1.jpg"
+imagePosition: "center 55%"
 tags: ["ちゃん系", "高田馬場"]
 ---
 

@@ -4,6 +4,7 @@ description: "開楽本店（池袋）の東京醤油らーめん。1954年創�
 pubDate: 2026-06-08
 emoji: "🥟"
 image: "/images/kailaku-ikebukuro-03.jpg"
+imagePosition: "center 50%"
 tags: ["池袋", "老舗"]
 lat: 35.7289
 lng: 139.7175

@@ -4,6 +4,7 @@ description: "渋谷・道玄坂のスタミナラーメン鬼山。黒くてず
 pubDate: 2026-05-15
 emoji: "🖤"
 image: "/images/stamina-oniyama-1.jpg"
+imagePosition: "center 65%"
 tags: ["渋谷", "スタミナ系"]
 ---
 

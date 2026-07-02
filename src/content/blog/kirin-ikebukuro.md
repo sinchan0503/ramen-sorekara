@@ -4,6 +4,7 @@ description: "中華そば 麒麟（池袋）の昆布水つけ麺レビュー�
 pubDate: 2026-05-22
 emoji: "🍋"
 image: "/images/kirin-ikebukuro-1.jpg"
+imagePosition: "center 45%"
 tags: ["池袋"]
 ---
 

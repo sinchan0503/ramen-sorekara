@@ -4,6 +4,7 @@ description: "つじ田 味噌の章 飯田橋店の夏季限定・味噌つけ�
 pubDate: 2026-06-11
 emoji: "🍜"
 image: "/images/tsujida-miso-tsukemen-iidabashi.jpg"
+imagePosition: "center 45%"
 tags: ["飯田橋", "限定", "味噌", "つけ麺"]
 lat: 35.7004
 lng: 139.7448

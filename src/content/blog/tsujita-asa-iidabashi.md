@@ -4,6 +4,7 @@ description: "つじ田飯田橋店の朝ラーメン。ご飯・卵つきで600
 pubDate: 2026-04-29T00:33:00+09:00
 emoji: "🌅"
 image: "/images/tsujita-asa-iidabashi.jpg"
+imagePosition: "center 50%"
 tags: ["飯田橋"]
 ---
 

@@ -4,6 +4,7 @@ description: "志茂の自家製麺No11で二郎系らーめん1,300円＋油入
 pubDate: 2026-06-27T12:00:00+09:00
 emoji: "💀"
 image: "/images/jikaseimen-no11-1.jpg"
+imagePosition: "center 50%"
 tags: ["志茂"]
 ---
 

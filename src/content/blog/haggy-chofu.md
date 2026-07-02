@@ -4,6 +4,7 @@ description: "調布のらーめん HAGGY。狙ってたわけじゃないのに
 pubDate: 2026-05-10
 emoji: "🌶️"
 image: "/images/haggy-chofu-1.jpg"
+imagePosition: "center 45%"
 tags: ["調布"]
 ---
 

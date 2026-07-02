@@ -4,6 +4,7 @@ description: "らぁ麺 はやし田（池袋）の特製醤油らぁ麺レビ�
 pubDate: 2026-06-14
 emoji: "🍜"
 image: "/images/hayashida-ikebukuro-1.jpg"
+imagePosition: "center 55%"
 tags: ["池袋"]
 ---
 

@@ -4,6 +4,7 @@ description: "すず鬼（三鷹）のレビュー。21時40分に到着して�
 pubDate: 2026-05-06
 emoji: "🍜"
 image: "/images/suzuki-mitaka.jpg"
+imagePosition: "center 60%"
 tags: ["三鷹", "二郎系", "行列"]
 ---
 
