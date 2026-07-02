@@ -17,6 +17,7 @@ const allPosts = page.data.map(post => ({
   title: post.data.title,
   description: post.data.description,
   image: post.data.image || null,
+  imagePosition: post.data.imagePosition ?? 'center 30%',
   pubDate: post.data.pubDate.toLocaleDateString('ja-JP'),
 }));
 ---
@@ -38,7 +39,7 @@ const allPosts = page.data.map(post => ({
       <a href={`/blog/${post.id}`} class="post-card">
         <div class="card-thumb">
           {post.image
-            ? <img src={post.image} alt={post.title} />
+            ? <img src={post.image} alt={post.title} style={`object-position: ${post.imagePosition}`} />
             : <img src="/images/pon-eating.png" alt={post.title} />
           }
         </div>

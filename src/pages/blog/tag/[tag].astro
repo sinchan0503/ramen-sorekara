@@ -32,7 +32,7 @@ const allPosts = (await getCollection('blog'))
       <a href={`/blog/${post.id.replace(/\.md$/, '')}`} class="post-card">
         <div class="card-thumb">
           {post.data.image
-            ? <img src={post.data.image} alt={post.data.title} loading="lazy" decoding="async" />
+            ? <img src={post.data.image} alt={post.data.title} loading="lazy" decoding="async" style={`object-position: ${post.data.imagePosition ?? 'center 30%'}`} />
             : <span class="card-emoji">{post.data.emoji ?? '🍜'}</span>
           }
         </div>

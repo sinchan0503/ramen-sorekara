@@ -13,6 +13,7 @@ const blog = defineCollection({
     lat: z.number().optional(),
     lng: z.number().optional(),
     shopName: z.string().optional(),
+    imagePosition: z.string().optional(),
   }),
 });
 

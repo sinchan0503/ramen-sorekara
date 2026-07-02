@@ -4,6 +4,7 @@ description: "板橋・上板橋にある安ざわ家本店。練馬店に続い
 pubDate: 2026-06-24T12:00:00+09:00
 emoji: "🍖"
 image: "/images/anzawaya-itabashi-1.jpg"
+imagePosition: "center 50%"
 tags: ["上板橋", "板橋区", "醤油ラーメン", "チャーシュー"]
 ---
 
