@@ -1,37 +1,38 @@
 {
-  "episode_title": "水曜の誘惑",
-  "story_summary": "猛暑の水曜日、冷やし中華にしようと決意したぽんが、結局アツアツのラーメンを食べてしまう。",
+  "episode_title": "冷やし中華ジレンマ",
+  "story_summary": "猛暑の土曜日、ラーメン店で「冷やし中華はじめました」の貼り紙を見つけたぽんが、涼しさへの誘惑と熱々ラーメン愛の間で葛藤しつつ、結局いつも通り熱いラーメンを頼んで汗だくになる話。",
   "panels": [
     {
       "panel": 1,
-      "scene": "オフィスの窓から強い日差しが差し込む昼前。ぽんがデスクで汗をぬぐいながら、スマホでランチを検索している。画面には「冷やし中華」の写真が映っている。",
-      "pon_expression": "額の汗をハンカチで拭きながら、真剣な目でスマホを見つめる",
-      "dialogue": "今日は35℃超え…さすがに冷やし中華にしよう。水曜だし折り返し地点のご褒美で！",
-      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She is sitting at her office desk wiping sweat from her forehead with a handkerchief, looking seriously at her smartphone screen showing a photo of cold ramen (hiyashi chuka). Bright harsh sunlight streaming through the office window, summer heat haze visible outside, small desk fan blowing. 4-panel manga, panel 1 of 4"
+      "scene": "猛暑の土曜日、ラーメン店の前で「冷やし中華はじめました」の貼り紙を見つけて思わず足を止めるぽん。汗だくでハンカチを首元にあてている。",
+      "pon_expression": "目を輝かせて驚く、ハンカチで汗を拭きながら貼り紙を二度見",
+      "dialogue": "え…冷やし中華\nはじめました…!?\n涼しそう…惹かれる…",
+      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She stands outside a ramen shop entrance on a scorching Saturday, wiping sweat from her neck with a handkerchief, staring wide-eyed at a handwritten sign that reads 'Hiyashi Chuka started' in Japanese. Intense summer heat haze rising from the pavement, harsh bright sunlight, cicada sounds implied by small cicada silhouette on a tree. 4-panel manga, panel 1 of 4"
     },
     {
       "panel": 2,
-      "scene": "炎天下の街を歩くぽん。陽炎が立つアスファルトの道を、日傘をさしながら冷やし中華の店に向かっている。途中にラーメン屋があり、店先から豚骨スープの湯気と香りが漂ってくる。",
-      "pon_expression": "歩きながらふとラーメン屋の方を見て、鼻をひくひくさせている。目がキラッと光りかけている",
-      "dialogue": "（…ん？　この匂い…）いやいや、今日は冷やし中華って決めたから…！",
-      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She is walking on a scorching hot street under a parasol, glancing sideways at a ramen shop with steam and delicious aroma wafting out from the entrance. Her nose is twitching and her eyes are sparkling slightly. Heat haze rising from the asphalt, intense summer sun, cicadas on nearby trees, Japanese urban street scene. 4-panel manga, panel 2 of 4"
+      "scene": "店内の券売機の前で、冷やし中華ボタンといつもの特製らーめんボタンの間で指が行ったり来たりして固まっているぽん。",
+      "pon_expression": "眉を寄せて真剣に葛藤、指が宙で迷っている",
+      "dialogue": "でも…冷房効いた店内で\n熱いラーメン食べるのが\n私のスタイルだったような…",
+      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She stands in front of a ramen ticket vending machine, finger hovering indecisively between a 'cold ramen' button and her usual 'special ramen' button, brow furrowed in genuine conflict, small sweat drop on her temple. Air-conditioned ramen shop interior, summer light glowing through the door behind her. 4-panel manga, panel 2 of 4"
     },
     {
       "panel": 3,
-      "scene": "ぽんの脳内イメージ。天使ぽんと悪魔ぽんが両肩に現れている。天使ぽんが「冷やし中華！体に優しい！」と言い、悪魔ぽんが「水曜日のストレスには…濃厚豚骨でしょ？」とささやいている。背景は猛暑の空。",
-      "pon_expression": "両手で頭を抱えて葛藤している。目がぐるぐるしている",
-      "dialogue": "天使「冷やし中華！ヘルシー！」\n悪魔「週の真ん中のストレス…濃厚豚骨で癒されない？」",
-      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She is holding her head with both hands in anguish with spiral eyes showing inner conflict. A tiny angel version of her on her left shoulder pointing to a bowl of cold noodles, and a tiny devil version of her on her right shoulder tempting her with a steaming bowl of rich tonkotsu ramen. Blazing summer sky background with bright sun. 4-panel manga, panel 3 of 4"
+      "scene": "目を閉じて深呼吸し、静かに決意するぽん。背景にはこれまで食べてきた熱々ラーメンの湯気のイメージが淡く浮かんでいる。",
+      "pon_expression": "目を閉じて深呼吸、静かな決意の表情",
+      "dialogue": "……いや。\n私はいつだって、\n熱いのが好き。",
+      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She stands with eyes closed, taking a deep resolute breath, faint nostalgic steam wisps and a translucent ghost image of a hot ramen bowl glowing softly behind her like a memory. Warm diffused lighting, quiet determined mood. 4-panel manga, panel 3 of 4"
     },
     {
       "panel": 4,
-      "scene": "ラーメン屋の中。ぽんが汗だくになりながら、湯気もうもうの特濃豚骨ラーメンを幸せそうにすすっている。額から大量の汗が流れているが、表情は至福。店内の壁掛けカレンダーに「6月」と水曜に丸がついている。",
-      "pon_expression": "汗だくだが満面の笑み。目がハート型になり、箸でラーメンをすすっている",
-      "dialogue": "あっっっつ！！！…最高。\n冷やし中華は木曜の自分に任せた……",
-      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes (heart-shaped eyes showing bliss), light blue button-up shirt, dark navy slacks. She is sitting inside a ramen shop, drenched in sweat but with an ecstatic happy smile, slurping a steaming hot extra-rich tonkotsu ramen with chopsticks. Massive steam rising from the bowl. A wall calendar in the background shows June with Wednesday circled. Summer atmosphere, electric fan spinning in the corner of the shop. 4-panel manga, panel 4 of 4"
+      "scene": "結局いつもの特製らーめんを注文し、汗だくになりながらも幸せそうに食べているぽん。店員がそっと氷水を差し出している。",
+      "pon_expression": "満面の笑み、汗だく、目を細めて幸せそう",
+      "dialogue": "あつっ…！\nでも……うまい！！",
+      "chatgpt_prompt": "watercolor anime style, soft warm colors, manga panel border, clean line art. Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. She sits at the counter happily eating a steaming hot ramen bowl, sweating profusely but grinning with eyes closed in bliss, cheeks flushed from the heat. A shop staff member's hand quietly places a glass of ice water next to her tray. Bright summer sunlight through the window, small electric fan visible in the background. 4-panel manga, panel 4 of 4"
     }
   ],
-  "pub_date": "2026-06-03",
-  "slug": "4koma-2026-06-03",
-  "output": "4koma-2026-06-03.png"
+  "combined_prompt": "Create one vertical 4-panel Japanese manga comic strip image (single image, 4 panels stacked top to bottom, each panel clearly separated by a thin border line), watercolor anime style, soft warm colors, clean line art, consistent character design throughout. Main character 'Pon': Japanese office lady in her early 20s, short black bob hair with a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. Story title: 'Hiyashi Chuka Dilemma' (a hot Saturday in summer). Panel 1: Pon stands outside a ramen shop entrance on a scorching day, wiping sweat from her neck with a handkerchief, staring wide-eyed at a handwritten sign reading 'Hiyashi Chuka started' (in Japanese), heat haze rising from the pavement, bright sunlight. Speech bubble: 'え…冷やし中華はじめました…!? 涼しそう…惹かれる…'. Panel 2: Inside the air-conditioned shop, Pon stands at a ramen ticket vending machine, finger hovering indecisively between a 'cold ramen' button and her usual 'special ramen' button, brow furrowed, small sweat drop on her temple. Speech bubble: 'でも…冷房効いた店内で熱いラーメン食べるのが私のスタイルだったような…'. Panel 3: Pon stands with eyes closed, taking a deep resolute breath, a faint translucent ghost image of a steaming hot ramen bowl glowing softly behind her like a nostalgic memory. Speech bubble: '……いや。私はいつだって、熱いのが好き。'. Panel 4: Pon sits at the counter happily eating a steaming hot ramen bowl, sweating profusely but grinning with eyes closed in bliss, cheeks flushed; a shop staff member's hand quietly places a glass of ice water beside her tray; small electric fan visible in the background. Speech bubble: 'あつっ…！ でも……うまい！！'. Keep Pon's face, hairstyle, and outfit identical and consistent across all 4 panels.",
+  "pub_date": "2026-07-11",
+  "slug": "4koma-2026-07-11",
+  "output": "4koma-2026-07-11.png"
 }
