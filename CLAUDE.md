@@ -147,3 +147,15 @@ git push
 - **写真で確認できない描写は入れない**（調査情報も写真と矛盾する場合は除外）
 - 末尾署名: `ぽん / 店名（エリア）食べたもの`
 - 同じ店への再訪は別記事でOK（スラグにバージョンや特徴を入れて区別）
+
+---
+
+## 四コマ漫画の投稿フロー
+
+1. `python scripts/4koma_generate_prompt.py` でエピソードを考案（`scripts/4koma_staging/current_episode.json` に保存される）
+2. 出力される **`combined_prompt`（1本の統合プロンプト）だけ** をChatGPTに1回貼り付けて、4コマがまとまった画像を1枚生成する
+   - **バラバラに4回（パネルごと）生成させない。必ず1枚の統合画像。** ユーザーから繰り返し指摘された点なので厳守。
+3. 生成された画像を `scripts/4koma_staging/combined.png` として保存
+4. `python scripts/4koma_publish.py` を実行 → `public/images/` へ配置・ブログ記事生成・`git push`まで自動
+
+`4koma_publish.py`は`combined.png`を優先的に探す。見つからない場合のみ旧フロー（`panel1〜4.png`を`compose_4koma.py`で結合）にフォールバックするが、通常は使わない。

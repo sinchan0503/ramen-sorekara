@@ -3,16 +3,16 @@
 四コマ漫画 合成 → ブログ公開スクリプト
 Usage: python scripts/4koma_publish.py
 
-前提:
-  scripts/4koma_staging/ に以下が揃っていること:
-    - panel1.png
-    - panel2.png
-    - panel3.png
-    - panel4.png
-    - current_episode.json  (4koma_generate_prompt.py が生成)
+前提（優先順）:
+  1. combined.png（1枚の統合プロンプトで生成した4コマ画像）※標準フロー
+  2. panel1.png〜panel4.png（旧フロー・個別4枚をcompose_4koma.pyで縦に結合）
+  + current_episode.json（4koma_generate_prompt.py が生成）
+
+どちらも scripts/4koma_staging/ に置く。
 """
 
 import json
+import shutil
 import subprocess
 import sys
 import datetime
@@ -24,17 +24,24 @@ IMAGES_DIR  = BASE_DIR / "public" / "images"
 BLOG_DIR    = BASE_DIR / "src" / "content" / "blog"
 
 
-def check_panels() -> list[Path]:
+def check_images():
+    """combined.png（優先）または panel1〜4.png を探す。戻り値: ("combined", path) or ("panels", [paths])"""
+    combined = STAGING_DIR / "combined.png"
+    if combined.exists():
+        return "combined", combined
+
     panels = [STAGING_DIR / f"panel{i}.png" for i in range(1, 5)]
-    missing = [p for p in panels if not p.exists()]
-    if missing:
-        print("❌ 以下の画像が見つかりません:")
-        for m in missing:
-            print(f"   {m}")
-        print()
-        print("ChatGPTで4枚生成して panel1.png〜panel4.png として保存してください。")
-        sys.exit(1)
-    return panels
+    if all(p.exists() for p in panels):
+        return "panels", panels
+
+    print("❌ 画像が見つかりません。")
+    print(f"   {combined} （1枚の統合プロンプトで生成した画像）")
+    print("   または panel1.png〜panel4.png（旧フロー）")
+    print()
+    print("ChatGPTで combined_prompt を1回貼り付けて1枚生成し、")
+    print(f"  {combined}")
+    print("として保存してください。")
+    sys.exit(1)
 
 
 def load_episode() -> dict:
@@ -52,8 +59,18 @@ def load_episode() -> dict:
         return json.load(f)
 
 
+def place_combined(image: Path, episode: dict) -> Path:
+    """1枚の統合画像をそのままpublic/images/へ配置し、ブログ記事を生成"""
+    output = episode["output"]
+    out_path = IMAGES_DIR / output
+    shutil.copy(image, out_path)
+    print(f"画像: {out_path}")
+    _write_blog_md(episode)
+    return out_path
+
+
 def compose(panels: list[Path], episode: dict) -> Path:
-    """compose_4koma.py を呼び出して縦ストリップ画像を生成"""
+    """（旧フロー）compose_4koma.py を呼び出して縦ストリップ画像を生成"""
     output  = episode["output"]
     title   = episode["episode_title"]
     pub_date = episode["pub_date"]
@@ -74,6 +91,27 @@ def compose(panels: list[Path], episode: dict) -> Path:
         sys.exit(1)
     print(result.stdout.strip())
     return IMAGES_DIR / output
+
+
+def _write_blog_md(episode: dict):
+    slug  = episode["slug"]
+    title = episode["episode_title"]
+    output = episode["output"]
+    pub_date = episode["pub_date"]
+    md_path = BLOG_DIR / f"{slug}.md"
+    md = f"""---
+title: "【四コマ】{title}"
+description: "ぽんのラーメン四コマ日誌"
+pubDate: {pub_date}
+emoji: "🍜"
+image: "/images/{output}"
+---
+
+![{title}](/images/{output})
+"""
+    with open(md_path, "w", encoding="utf-8") as f:
+        f.write(md)
+    print(f"記事:  {md_path}")
 
 
 def git_push(episode: dict):
@@ -99,6 +137,9 @@ def git_push(episode: dict):
 
 def cleanup():
     """ステージングフォルダの画像をクリア"""
+    combined = STAGING_DIR / "combined.png"
+    if combined.exists():
+        combined.unlink()
     for f in STAGING_DIR.glob("panel*.png"):
         f.unlink()
     ep = STAGING_DIR / "current_episode.json"
@@ -112,14 +153,19 @@ def main():
     print("  四コマ公開スクリプト")
     print("=" * 50)
 
-    panels  = check_panels()
+    kind, images = check_images()
     episode = load_episode()
 
     print(f"  タイトル: {episode['episode_title']}")
     print(f"  公開日:   {episode['pub_date']}")
+    print(f"  方式:     {'統合1枚画像' if kind == 'combined' else '旧・4枚結合'}")
     print()
 
-    compose(panels, episode)
+    if kind == "combined":
+        place_combined(images, episode)
+    else:
+        compose(images, episode)
+
     git_push(episode)
     cleanup()
 
