@@ -18,7 +18,7 @@ const recentPosts = (await getCollection('blog'))
         <a href="/blog" class="btn">記事一覧を見る</a>
       </div>
       <div class="hero-illust">
-        <img src="/images/pon-hero.png" alt="ぽん" fetchpriority="high" loading="eager" decoding="sync" />
+        <img src="/images/pon-hero.jpg" alt="ぽん" fetchpriority="high" loading="eager" decoding="sync" />
       </div>
     </div>
   </section>
@@ -34,7 +34,7 @@ const recentPosts = (await getCollection('blog'))
           <div class="card-thumb">
             {post.data.image
               ? <img src={post.data.image} alt={post.data.title} loading="lazy" decoding="async" style={`object-position: ${post.data.imagePosition ?? 'center 30%'}`} />
-              : <img src="/images/pon-eating.png" alt={post.data.title} loading="lazy" decoding="async" />
+              : <img src="/images/pon-eating.jpg" alt={post.data.title} loading="lazy" decoding="async" />
             }
           </div>
           <div class="card-body">

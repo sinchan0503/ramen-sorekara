@@ -3,13 +3,13 @@ title: "はじめての一杯、それから。"
 description: "このブログを始めたきっかけと、わたしのラーメン遍歴について。"
 pubDate: 2026-04-21
 emoji: "🍥"
-image: "/images/hajimete-no-ippai.png"
+image: "/images/hajimete-no-ippai.jpg"
 tags: ["コラム"]
 ---
 
 ラーメンが好きだ。
 
-![はじめての一杯](/images/hajimete-no-ippai.png)
+![はじめての一杯](/images/hajimete-no-ippai.jpg)
 
 たぶん、ずっとそうだった。
 

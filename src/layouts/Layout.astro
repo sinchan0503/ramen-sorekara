@@ -18,7 +18,7 @@ const siteUrl = 'https://www.ramen-sorekara.com';
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const ogImage = image
   ? (image.startsWith('http') ? image : `${siteUrl}${image}`)
-  : `${siteUrl}/images/pon-hero.png`;
+  : `${siteUrl}/images/pon-hero.jpg`;
 ---
 <!doctype html>
 <html lang="ja">

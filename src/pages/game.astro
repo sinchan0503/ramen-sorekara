@@ -43,7 +43,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="result-comment-box">
         <p class="result-pon" id="result-pon"></p>
         <div class="result-face-wrap">
-          <img id="result-face" class="result-face" src="/images/pon-normal.png" alt="ぽん" />
+          <img id="result-face" class="result-face" src="/images/pon-normal.jpg" alt="ぽん" />
         </div>
       </div>
       <div id="result-stats" class="result-stats"></div>
@@ -670,15 +670,15 @@ function endGame() {
   const allMM = TOPPING_KEYS.every(k=>(hitCounts[k]||0)>=3);
   const hasAny = Object.values(hitCounts).some(v=>v>0);
   if (!hasAny) {
-    faceImg.src = '/images/pon-confused.png';
+    faceImg.src = '/images/pon-confused.jpg';
   } else if (misses >= 6) {
-    faceImg.src = '/images/pon-sad.png';
+    faceImg.src = '/images/pon-sad.jpg';
   } else if (allMM) {
-    faceImg.src = '/images/pon-excited.png';
+    faceImg.src = '/images/pon-excited.jpg';
   } else if (perfects >= 6 || (hasAny && misses <= 2)) {
-    faceImg.src = '/images/pon-happy.png';
+    faceImg.src = '/images/pon-happy.jpg';
   } else {
-    faceImg.src = '/images/pon-normal.png';
+    faceImg.src = '/images/pon-normal.jpg';
   }
 
   show(screenResult);
