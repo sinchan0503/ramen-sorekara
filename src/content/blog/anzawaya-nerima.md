@@ -3,6 +3,7 @@ title: "ラーメンが、主役を奪った"
 description: "練馬・安ざわ家。目的はチャーシューのはずだった。でもラーメンの方がおいしかった。"
 pubDate: 2026-06-07
 emoji: "🥢"
+rating: 4.0
 image: "/images/anzawaya-nerima-01.jpg"
 imagePosition: "center 45%"
 tags: ["練馬"]

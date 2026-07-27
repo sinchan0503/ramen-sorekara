@@ -3,6 +3,10 @@ title: "スープが飲めなかった日"
 description: "ひろちゃんラーメン（池袋）で辛チャーシュー麺を初注文。いつも飲み干すスープが、今日だけは飲めなかった話。辛さ選択制・1〜5段階。"
 pubDate: 2026-05-23
 emoji: "🌶️"
+rating: 4.0
+shopName: "ひろちゃんラーメン"
+lat: 35.732677
+lng: 139.709732
 image: "/images/hirochan-ramen-ikebukuro-karami-1.jpg"
 imagePosition: "center 45%"
 tags: ["ちゃん系", "池袋"]

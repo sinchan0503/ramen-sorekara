@@ -3,6 +3,7 @@ title: "あの緑のやつ、なんだったんだろう"
 description: "高田馬場のRAMEN紫苑。レアチャーシューと清澄な醤油スープ、ネギの上に乗ってた謎の緑のやつ。台風の日でもラーメンは食べる。"
 pubDate: 2026-06-05T00:00:00+09:00
 emoji: "🍜"
+rating: 4.0
 image: "/images/shion-takadanobaba-01.jpg"
 imagePosition: "center 40%"
 tags: ["高田馬場"]

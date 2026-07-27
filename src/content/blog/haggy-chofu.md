@@ -3,6 +3,7 @@ title: "代打のくせに、上位に食い込んできた"
 description: "調布のらーめん HAGGY。狙ってたわけじゃないのに、チャーシューがやばかった。"
 pubDate: 2026-05-10
 emoji: "🌶️"
+rating: 4.5
 image: "/images/haggy-chofu-1.jpg"
 imagePosition: "center 45%"
 tags: ["調布"]

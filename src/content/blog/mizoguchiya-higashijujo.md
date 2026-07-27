@@ -3,6 +3,7 @@ title: "ネパールと二郎が出会ったら"
 description: "ミゾグチヤ東十条店のネパル麺レビュー。二郎系×南アジア、変態的発想なのにめちゃくちゃおいしい。"
 pubDate: 2026-04-30
 emoji: "🍜"
+rating: 4.5
 image: "/images/mizoguchiya-01.jpg"
 imagePosition: "center 50%"
 tags: ["東十条", "二郎系"]

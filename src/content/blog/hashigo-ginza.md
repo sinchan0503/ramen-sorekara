@@ -3,6 +3,7 @@ title: "一度ドアを閉めた店が、一番好きになった"
 description: "銀座の支那麺はしごで排骨担々麺（ぱいこうだんだんめん）1,200円。さっぱりなのに旨みがちゃんとある担々麺。"
 pubDate: 2026-06-25T12:00:00+09:00
 emoji: "🥢"
+rating: 4.5
 image: "/images/hashigo-ginza-1.jpg"
 imagePosition: "center 50%"
 tags: ["銀座"]

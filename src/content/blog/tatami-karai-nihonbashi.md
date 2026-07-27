@@ -3,6 +3,10 @@ title: "辛くすると、生卵が正解になる"
 description: "たた味に再訪。今度は特製辛スタミナ中華。辛くすると生卵との相性が段違いだった。"
 pubDate: 2026-04-29T00:05:00+09:00
 emoji: "🥚"
+rating: 4.5
+shopName: "たた味"
+lat: 35.691578
+lng: 139.779663
 image: "/images/tatami-karai-01.jpg"
 imagePosition: "center 50%"
 tags: ["日本橋", "担々麺"]

@@ -14,6 +14,7 @@ const blog = defineCollection({
     lng: z.number().optional(),
     shopName: z.string().optional(),
     imagePosition: z.string().optional(),
+    rating: z.number().min(1).max(5).optional(),
   }),
 });
 

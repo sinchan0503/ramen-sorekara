@@ -3,6 +3,7 @@ title: "これ、ラーメンか。油か。"
 description: "秋葉原のごっつで人生最こってりを体験した話。麺は見えないし、お腹には優しくない。"
 pubDate: 2026-06-13
 emoji: "🫙"
+rating: 4.0
 image: "/images/gottsu-akihabara.jpg"
 imagePosition: "center 50%"
 tags: ["秋葉原", "こってり", "背脂"]

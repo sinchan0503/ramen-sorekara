@@ -3,6 +3,7 @@ title: "麻婆豆腐がラーメンになった日"
 description: "らーめん護什番（雑司ヶ谷）の旨辛痺麺レビュー。住宅街にひっそり現れる、麻婆豆腐系ラーメンの衝撃。"
 pubDate: 2026-04-28
 emoji: "🌶️"
+rating: 4.5
 image: "/images/gojuban-01.jpg"
 imagePosition: "center 40%"
 tags: ["雑司ヶ谷", "麻婆系"]

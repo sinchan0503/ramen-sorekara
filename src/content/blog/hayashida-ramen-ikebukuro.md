@@ -3,6 +3,7 @@ title: "きれいなのに、なんか惜しかった"
 description: "らぁ麺 はやし田（池袋）の特製醤油らぁ麺レビュー。見た目は文句なし、整った丼。でもなんか、うまく言えないけど惜しかった。チャーシュー丼の刻み方についても思うことがあった。"
 pubDate: 2026-06-14
 emoji: "🍜"
+rating: 3.0
 image: "/images/hayashida-ikebukuro-1.jpg"
 imagePosition: "center 55%"
 tags: ["池袋"]

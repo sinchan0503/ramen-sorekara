@@ -3,6 +3,7 @@ title: "上野で担々麺食べたら、パイコーが乗ってた"
 description: "パイコー担々麺、想像よりずっと本格的だった。ご飯無料はいいけど、チャーハンはなかった。"
 pubDate: 2026-05-18
 emoji: "🥜"
+rating: 4.0
 image: "/images/jugemu-tantanmen-ueno.jpg"
 imagePosition: "center 45%"
 tags: ["上野", "担々麺"]

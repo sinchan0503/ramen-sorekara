@@ -3,6 +3,10 @@ title: "飽きたって言ったのに。"
 description: "ひろちゃんラーメン（池袋）に久しぶりに行ったら、悔しいくらいうまかった話。チャーシュー麺・野菜トッピング。"
 pubDate: 2026-05-21
 emoji: "🍜"
+rating: 4.5
+shopName: "ひろちゃんラーメン"
+lat: 35.732677
+lng: 139.709732
 image: "/images/hirochan-ramen-ikebukuro-2-01.jpg"
 imagePosition: "center 40%"
 tags: ["ちゃん系", "池袋"]

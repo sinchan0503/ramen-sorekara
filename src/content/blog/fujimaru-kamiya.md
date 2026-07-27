@@ -3,6 +3,7 @@ title: "生卵、必要だったのかな"
 description: "ラーメン富士丸 神谷本店レビュー。二郎系の有名店、生卵との相性問題について真剣に考えた。"
 pubDate: 2026-04-30
 emoji: "🥚"
+rating: 4.0
 image: "/images/fujimaru-01.jpg"
 imagePosition: "center 55%"
 tags: ["神谷", "二郎系"]

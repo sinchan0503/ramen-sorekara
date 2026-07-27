@@ -3,6 +3,7 @@ title: "豆板醤に、格差を感じた。"
 description: "杉並の豚骨蒼翔。ネオ家系というジャンルらしい。綺麗めの見た目で、豆板醤だけなぜか別格だった。"
 pubDate: 2026-05-30
 emoji: "🍜"
+rating: 4.0
 image: "/images/sosho-suginami-01.jpg"
 imagePosition: "center 45%"
 tags: ["杉並", "担々麺"]

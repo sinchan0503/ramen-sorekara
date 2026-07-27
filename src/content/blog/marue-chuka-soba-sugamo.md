@@ -3,6 +3,7 @@ title: "チャーシュー美味しそう系中華そば、巣鴨で見つけた
 description: "まるえ中華そば（巣鴨）でダブルチャーシューメン醤油2,000円。チャーシューは文句なしなのに、麺がちょっと惜しかった話。"
 pubDate: 2026-07-04
 emoji: "🍜"
+rating: 3.5
 image: "/images/marue-chuka-soba-sugamo-1.jpeg"
 imagePosition: "center 50%"
 tags: ["巣鴨"]

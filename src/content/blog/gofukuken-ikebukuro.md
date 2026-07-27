@@ -3,6 +3,7 @@ title: "この黒さ、どこから来るんだろう"
 description: "伍福軒 池袋西口店レビュー。真っ黒な背脂醤油ラーメンとチャーハンのセット、手軽においしいけど会計はそこそこ。"
 pubDate: 2026-04-30
 emoji: "🖤"
+rating: 4.0
 image: "/images/gofukuken-01.jpg"
 imagePosition: "center 50%"
 tags: ["池袋"]

@@ -3,6 +3,7 @@ title: "モツが、やばかった"
 description: "日本橋小伝馬町のたた味。スタミナ中華、初めて食べたけど正解だった。"
 pubDate: 2026-04-22
 emoji: "🥩"
+rating: 4.5
 image: "/images/tatami-nihonbashi.jpg"
 imagePosition: "60% center"
 tags: ["日本橋"]

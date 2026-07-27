@@ -3,6 +3,7 @@ title: "夜来るたびに売り切れてた限定、昼についに食べた"
 description: "つじ田 味噌の章 飯田橋店の夏季限定・味噌つけ麺。一日30杯だから夜じゃ無理だった。"
 pubDate: 2026-06-11
 emoji: "🍜"
+rating: 4.5
 image: "/images/tsujida-miso-tsukemen-iidabashi.jpg"
 imagePosition: "center 45%"
 tags: ["飯田橋", "限定", "味噌", "つけ麺"]

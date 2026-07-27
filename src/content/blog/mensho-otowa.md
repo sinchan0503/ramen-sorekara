@@ -3,6 +3,7 @@ title: "思い込みって、良くないな"
 description: "文京区音羽のMENSHO。和牛って書いてあるからインバウンド狙いかと思ったら全員日本人だった。西京漬けの味玉が特別だった。"
 pubDate: 2026-06-22T12:00:00+09:00
 emoji: "🥚"
+rating: 4.5
 image: "/images/mensho-otowa-5.jpg"
 imagePosition: "center 40%"
 tags: ["護国寺", "文京区"]

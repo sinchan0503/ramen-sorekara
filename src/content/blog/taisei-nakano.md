@@ -3,6 +3,7 @@ title: "口がしょぼしょぼする、最高"
 description: "麺家たいせい（中野坂上）の家系ラーメンレビュー。豆板醤との相性が最高で、口がしょぼしょぼする系の美味しさ。"
 pubDate: 2026-04-29T00:10:00+09:00
 emoji: "🍖"
+rating: 4.5
 image: "/images/taisei-nakano-02.jpg"
 imagePosition: "center 50%"
 tags: ["中野"]

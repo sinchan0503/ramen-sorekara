@@ -3,6 +3,7 @@ title: "たぶん喜多方、たぶん違う"
 description: "八丁堀の麺や七彩で特製らーめん（煮干）1,900円。喜多方系のはずなのに、スープを見た瞬間「あれ？」ってなった話。"
 pubDate: 2026-07-08
 emoji: "🧅"
+rating: 4.0
 image: "/images/shichisai-hatchobori-01.jpg"
 tags: ["八丁堀", "喜多方系"]
 ---

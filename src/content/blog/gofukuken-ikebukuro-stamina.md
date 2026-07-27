@@ -3,6 +3,10 @@ title: "違うの頼んだら、答えが出た"
 description: "伍福軒 池袋西口店、今回はスタミナらーめんに初挑戦。黒くて細麺なのになぜか二郎系の満腹感。チャーハンは相変わらず安定のうまさ。結論、次からはやっぱり背脂黒醤油に戻る。"
 pubDate: 2026-05-19
 emoji: "🥢"
+rating: 3.5
+shopName: "伍福軒"
+lat: 35.732609
+lng: 139.710251
 image: "/images/gofukuken-stamina-1.jpg"
 imagePosition: "center 50%"
 tags: ["池袋", "スタミナ系"]

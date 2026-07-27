@@ -3,6 +3,7 @@ title: "本店のチャーシュー、ぷりぷりだった"
 description: "板橋・上板橋にある安ざわ家本店。練馬店に続いて2回目。量の調整に成功した日。"
 pubDate: 2026-06-24T12:00:00+09:00
 emoji: "🍖"
+rating: 4.5
 image: "/images/anzawaya-itabashi-1.jpg"
 imagePosition: "center 50%"
 tags: ["上板橋", "板橋区", "醤油ラーメン", "チャーシュー"]

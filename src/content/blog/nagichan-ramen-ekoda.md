@@ -3,6 +3,7 @@ title: "ちゃん系4店舗目、ラーメンより自作丼がやばかった"
 description: "なぎちゃんラーメン江古田練馬旭丘店。リーズナブルなちゃん系に、無料ライスと卓上のタバスコが揃ってしまったら、もう丼を作るしかなかった。"
 pubDate: 2026-06-10T00:00:00+09:00
 emoji: "🍜"
+rating: 4.5
 image: "/images/nagichan-ramen-ekoda-01.jpg"
 imagePosition: "center 40%"
 tags: ["ちゃん系", "江古田", "練馬"]

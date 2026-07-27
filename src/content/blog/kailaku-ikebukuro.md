@@ -3,6 +3,7 @@ title: "目当てはらーめんじゃなかったけど"
 description: "開楽本店（池袋）の東京醤油らーめん。1954年創業の老舗で、シンプルな醤油スープにジャンボ餃子のセットが最高だった話。"
 pubDate: 2026-06-08
 emoji: "🥟"
+rating: 4.5
 image: "/images/kailaku-ikebukuro-03.jpg"
 imagePosition: "center 50%"
 tags: ["池袋", "老舗"]

@@ -3,6 +3,7 @@ title: "また来たくなる、ひろちゃん"
 description: "ひろちゃんラーメン（池袋西口）のレビュー。ちゃん系らしい安定感と、また来たくなる普通のうまさ。"
 pubDate: 2026-04-22
 emoji: "🍜"
+rating: 4.5
 image: "/images/hirochan-ramen-ikebukuro.jpg"
 tags: ["ちゃん系", "池袋"]
 ---

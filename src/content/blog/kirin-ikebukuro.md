@@ -3,6 +3,7 @@ title: "見た目から、もうおいしい"
 description: "中華そば 麒麟（池袋）の昆布水つけ麺レビュー。人生初の昆布水つけ麺は、らーめん屋というより料理屋のような静かな空間で。コッテリ派だけど、こういうのもたまにはいい。"
 pubDate: 2026-05-22
 emoji: "🍋"
+rating: 4.5
 image: "/images/kirin-ikebukuro-1.jpg"
 imagePosition: "center 45%"
 tags: ["池袋"]

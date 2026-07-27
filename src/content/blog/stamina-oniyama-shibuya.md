@@ -3,6 +3,7 @@ title: "スタミナって名前、正直すぎる"
 description: "渋谷・道玄坂のスタミナラーメン鬼山。黒くてずっしり、でもちゃんとまとまってた一杯。"
 pubDate: 2026-05-15
 emoji: "🖤"
+rating: 4.0
 image: "/images/stamina-oniyama-1.jpg"
 imagePosition: "center 65%"
 tags: ["渋谷", "スタミナ系"]

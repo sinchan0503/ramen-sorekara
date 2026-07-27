@@ -3,6 +3,7 @@ title: "並んで、並んで、日付が変わった"
 description: "すず鬼（三鷹）のレビュー。21時40分に到着して日付をまたいで食べた、スタミナ系の聖地的なあのお店。"
 pubDate: 2026-05-06
 emoji: "🍜"
+rating: 4.5
 image: "/images/suzuki-mitaka.jpg"
 imagePosition: "center 60%"
 tags: ["三鷹", "二郎系", "行列"]

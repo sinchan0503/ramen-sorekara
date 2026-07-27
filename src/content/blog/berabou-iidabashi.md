@@ -3,6 +3,7 @@ title: "あおさが、ズルい"
 description: "飯田橋サクラテラスの麺やべらぼう。ガラガラで不安になったけど、あおさのせいで全部持っていかれた一杯。"
 pubDate: 2026-07-02
 emoji: "🌿"
+rating: 4.5
 image: "/images/berabou-iidabashi-01.jpg"
 tags: ["飯田橋", "淡麗系"]
 ---

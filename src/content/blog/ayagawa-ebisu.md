@@ -3,6 +3,7 @@ title: "同じ「綾川」なのに、麺が全然違った"
 description: "恵比寿本店の親鶏中華そば 綾川で極太麺デビュー。行列の謎の波と、まさかの畳席の記録。"
 pubDate: 2026-07-26
 emoji: "🐓"
+rating: 4.0
 image: "/images/ayagawa-ebisu-01.jpg"
 tags: ["恵比寿", "清湯"]
 lat: 35.646578

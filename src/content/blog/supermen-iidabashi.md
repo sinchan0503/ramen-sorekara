@@ -3,6 +3,7 @@ title: "器がハットすぎて、なんか笑えた"
 description: "飯田橋のSUPER MEN。帽子みたいな器のフレンチラーメン系。スーパーレッドを頼んだら、全然辛くなかった。"
 pubDate: 2026-06-20
 emoji: "🎩"
+rating: 4.0
 image: "/images/supermen-iidabashi-1.jpg"
 imagePosition: "center 45%"
 tags: ["飯田橋", "フレンチラーメン"]

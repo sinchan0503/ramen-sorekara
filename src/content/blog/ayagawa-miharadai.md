@@ -3,6 +3,7 @@ title: "黄色いスープ、ずっと気になってた"
 description: "練馬三原台の親鶏中華そば 綾川で味玉中華そば。とりちんたんという読み方を初めて知った日の記録。"
 pubDate: 2026-07-14
 emoji: "🐓"
+rating: 4.0
 image: "/images/ayagawa-miharadai-01.jpg"
 tags: ["石神井公園", "清湯"]
 lat: 35.7546

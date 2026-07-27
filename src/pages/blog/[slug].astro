@@ -46,10 +46,12 @@ const is4koma = post.id.includes('4koma');
 const MAPS_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_KEY ?? 'AIzaSyBGTnyVaOpnFnWHyyM1_lm7zcRs2jnwQsw';
 
 const postSlug = post.id.replace(/\.md$/, '');
-const shopCoord = shops.find(s => s.slug === postSlug)
+const matchedShop = shops.find(s => s.slug === postSlug);
+const shopCoord = matchedShop
   ?? (post.data.lat != null && post.data.lng != null
         ? { lat: post.data.lat, lng: post.data.lng }
         : null);
+const reviewShopName = post.data.shopName ?? matchedShop?.name ?? null;
 
 const siteUrl = 'https://www.ramen-sorekara.com';
 const postUrl = `${siteUrl}/blog/${post.id.replace(/\.md$/, '')}`;
@@ -66,6 +68,27 @@ const articleSchema = {
   "publisher": { "@type": "Organization", "name": "ラーメン、それから。", "url": siteUrl },
   ...(post.data.image ? { "image": `${siteUrl}${post.data.image}` } : {}),
 };
+
+const reviewSchema = (post.data.rating != null && reviewShopName)
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Review",
+      "itemReviewed": {
+        "@type": "Restaurant",
+        "name": reviewShopName,
+        ...(shopCoord ? { "geo": { "@type": "GeoCoordinates", "latitude": shopCoord.lat, "longitude": shopCoord.lng } } : {}),
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": post.data.rating,
+        "bestRating": 5,
+        "worstRating": 1,
+      },
+      "author": { "@type": "Person", "name": "ぽん" },
+      "datePublished": pubDate,
+      "url": postUrl,
+    }
+  : null;
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -86,6 +109,7 @@ const breadcrumbSchema = {
   ogType="article"
 >
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  {reviewSchema && <script type="application/ld+json" set:html={JSON.stringify(reviewSchema)} />}
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="/">ホーム</a>

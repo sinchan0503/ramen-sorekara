@@ -3,6 +3,7 @@ title: "チャーシューが、気づいたら消えてた"
 description: "九段下のRaMen TOMO TOKYO。照明は暗めだけど、スープの渋い茶色とチャーシューが印象的な一杯だった。"
 pubDate: 2026-06-23T12:00:00+09:00
 emoji: "🫥"
+rating: 3.5
 image: "/images/tomo-tokyo-kudanshita-1.jpg"
 imagePosition: "center 55%"
 tags: ["九段下", "千代田区"]

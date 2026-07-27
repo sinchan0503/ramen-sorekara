@@ -3,6 +3,7 @@ title: "チャーシューに、完全に持っていかれた"
 description: "東尾久のにじゅうぶんのいち。特製醤油そばを頼んだら、チャーシューが3種類のレアだった話。"
 pubDate: 2026-05-26
 emoji: "🥢"
+rating: 4.5
 image: "/images/nijubun-no-ichi-01.jpg"
 imagePosition: "center 40%"
 tags: ["東尾久"]

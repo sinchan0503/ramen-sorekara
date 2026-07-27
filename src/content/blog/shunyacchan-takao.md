@@ -3,6 +3,7 @@ title: "2時間、雨の中で待った。"
 description: "高尾にある屋台ラーメン しゅんやっちゃん。ずっと遠い存在だった屋台ラーメンに、雨の夜に初めて行った話。チャーシューメン大盛り＋梅干しキムチ。"
 pubDate: 2026-05-26
 emoji: "🏮"
+rating: 4.5
 image: "/images/shunyacchan-takao-2.jpg"
 imagePosition: "center 50%"
 tags: ["高尾", "行列"]

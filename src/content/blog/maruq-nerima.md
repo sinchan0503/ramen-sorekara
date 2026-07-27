@@ -3,6 +3,7 @@ title: "上司がうまいって言ってたから"
 description: "練馬のラーメンショップ マルQ。移動中にふらっと。ラーショ系、初体験。"
 pubDate: 2026-04-29T00:27:00+09:00
 emoji: "🌶️"
+rating: 3.5
 image: "/images/maruq-nerima-01.jpg"
 imagePosition: "center 40%"
 tags: ["練馬"]

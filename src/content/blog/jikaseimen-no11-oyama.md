@@ -3,6 +3,7 @@ title: "「普通でいいですか」に頷いた代償"
 description: "志茂の自家製麺No11で二郎系らーめん1,300円＋油入り味玉。デフォ350g、なると可愛い、めんまでかい。ジムで鍛えた胃袋が終盤で完敗した話。"
 pubDate: 2026-06-27T12:00:00+09:00
 emoji: "💀"
+rating: 4.0
 image: "/images/jikaseimen-no11-1.jpg"
 imagePosition: "center 50%"
 tags: ["志茂"]

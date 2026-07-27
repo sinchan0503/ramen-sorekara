@@ -3,6 +3,7 @@ title: "限定って聞いたら食べるしかない"
 description: "浅草橋のろく月。限定の冷やしスパイスまぜそば、見た目に釣られていったやつ。"
 pubDate: 2026-05-13
 emoji: "🌶️"
+rating: 3.5
 image: "/images/rokugatu-1.jpg"
 tags: ["浅草橋", "限定"]
 ---
