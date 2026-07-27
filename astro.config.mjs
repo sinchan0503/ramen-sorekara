@@ -4,6 +4,6 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://ramen-sorekara.com',
+  site: 'https://www.ramen-sorekara.com',
   integrations: [sitemap()],
 });

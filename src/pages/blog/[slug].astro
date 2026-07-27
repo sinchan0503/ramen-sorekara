@@ -51,7 +51,7 @@ const shopCoord = shops.find(s => s.slug === postSlug)
         ? { lat: post.data.lat, lng: post.data.lng }
         : null);
 
-const siteUrl = 'https://ramen-sorekara.com';
+const siteUrl = 'https://www.ramen-sorekara.com';
 const postUrl = `${siteUrl}/blog/${post.id.replace(/\.md$/, '')}`;
 const pubDate = post.data.pubDate.toISOString();
 

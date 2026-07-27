@@ -14,7 +14,7 @@ const {
   image,
   ogType = 'website',
 } = Astro.props;
-const siteUrl = 'https://ramen-sorekara.com';
+const siteUrl = 'https://www.ramen-sorekara.com';
 const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 const ogImage = image
   ? (image.startsWith('http') ? image : `${siteUrl}${image}`)

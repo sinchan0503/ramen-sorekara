@@ -686,8 +686,8 @@ function endGame() {
 
   // シェアテキスト設定
   const orderText = orderParts.length===0 ? 'なし' : orderParts.join(' ・ ');
-  const shareText = `🍜 ラーメン呪文リズムゲームで「${orderText}」を注文した！スコア: ${score}\n#ラーメンそれから\nhttps://ramen-sorekara.com/game`;
-  const shareUrl = 'https://ramen-sorekara.com/game';
+  const shareText = `🍜 ラーメン呪文リズムゲームで「${orderText}」を注文した！スコア: ${score}\n#ラーメンそれから\nhttps://www.ramen-sorekara.com/game`;
+  const shareUrl = 'https://www.ramen-sorekara.com/game';
 
   const xBtn = document.getElementById('share-x') as HTMLAnchorElement;
   xBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
