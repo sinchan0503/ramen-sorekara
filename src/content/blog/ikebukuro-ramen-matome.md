@@ -32,6 +32,7 @@ tags: ["池袋", "まとめ"]
 ![ひろちゃんラーメン 池袋西口 醤油ラーメン](/images/hirochan-ramen-ikebukuro.jpg)
 
 - **詳細レビュー**: [また来たくなる、ひろちゃん](/blog/hirochan-ramen-ikebukuro)
+- その後の記録: [スープが飲めなかった日](/blog/hirochan-ramen-ikebukuro-karai)／[飽きたって言ったのに。](/blog/hirochan-ramen-ikebukuro-kaetta)
 
 | | |
 |---|---|
@@ -56,6 +57,7 @@ tags: ["池袋", "まとめ"]
 ![伍福軒 池袋西口店 背脂黒醤油ラーメン](/images/gofukuken-01.jpg)
 
 - **詳細レビュー**: [この黒さ、どこから来るんだろう](/blog/gofukuken-ikebukuro)
+- その後の記録: [違うの頼んだら、答えが出た](/blog/gofukuken-ikebukuro-stamina)
 
 | | |
 |---|---|
