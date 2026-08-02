@@ -56,7 +56,7 @@ tags: ["池袋", "まとめ"]
 
 ![伍福軒 池袋西口店 背脂黒醤油ラーメン](/images/gofukuken-01.jpg)
 
-- **詳細レビュー**: [この黒さ、どこから来るんだろう](/blog/gofukuken-ikebukuro)
+- **詳細レビュー**: [伍福軒 池袋西口店、この黒さはどこから来るんだろう](/blog/gofukuken-ikebukuro)
 - その後の記録: [違うの頼んだら、答えが出た](/blog/gofukuken-ikebukuro-stamina)
 
 | | |
