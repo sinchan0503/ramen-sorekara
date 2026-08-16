@@ -231,8 +231,10 @@ const breadcrumbSchema = {
       </div>
 
       <div class="request-cta">
-        <p class="request-cta-label">次に行ってほしいお店、ある？</p>
-        <a href="/request" class="request-cta-btn">次どこ行くリクエストへ →</a>
+        <p class="request-cta-label">あなたはどの系統タイプ？</p>
+        <a href="/shindan" class="request-cta-btn">ラーメン系統診断をやってみる →</a>
+        <p class="request-cta-label request-cta-label--sub">次に行ってほしいお店、ある？</p>
+        <a href="/request" class="request-cta-btn request-cta-btn--sub">次どこ行くリクエストへ →</a>
       </div>
 
       {!is4koma && recentPosts.length > 0 && (
@@ -708,6 +710,13 @@ const breadcrumbSchema = {
     transition: background 0.2s;
   }
   .request-cta-btn:hover { background: #9b2d22; }
+  .request-cta-label--sub { margin-top: 20px; }
+  .request-cta-btn--sub {
+    background: transparent;
+    color: #b5352a;
+    border: 1px solid #b5352a;
+  }
+  .request-cta-btn--sub:hover { background: #fff; }
 </style>
 
 <style is:global>

@@ -1,0 +1,417 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const all = await getCollection('blog');
+function pick(slug: string) {
+  const p = all.find((x) => x.id.replace(/\.md$/, '') === slug);
+  if (!p) throw new Error(`missing post: ${slug}`);
+  return { slug, title: p.data.title, image: p.data.image ?? null, emoji: p.data.emoji ?? '🍜' };
+}
+
+const TYPES = {
+  JIRO: {
+    label: '二郎系タイプ',
+    emoji: '🧄',
+    catch: 'ニンニク入れますか？に即答できる',
+    comment: 'ガチ勢の顔してる。もやし山盛り、脂多め、それが正義だよね。わかる。',
+    articles: [pick('fujimaru-kamiya'), pick('mizoguchiya-higashijujo'), pick('suzuki-mitaka')],
+  },
+  CHAN: {
+    label: 'ちゃん系タイプ',
+    emoji: '🍥',
+    catch: '毎日でも通える安定感が好き',
+    comment: '奇をてらわない、でも飽きない味が一番強いって知ってる派だ。わたしも同じ。',
+    articles: [pick('hirochan-ramen-ikebukuro'), pick('nagichan-ramen-ekoda'), pick('haruchan-ramen-ginza')],
+  },
+  TANTAN: {
+    label: '担々麺・辛党タイプ',
+    emoji: '🌶️',
+    catch: '汗かいてこそのラーメンだと思ってる',
+    comment: '刺激がないと物足りないタイプだ。花椒とラー油、多めでも平気でしょ？',
+    articles: [pick('jugemu-tantanmen-ueno'), pick('sosho-suginami'), pick('tatami-karai-nihonbashi')],
+  },
+  ASSARI: {
+    label: 'あっさり清湯タイプ',
+    emoji: '🐓',
+    catch: '澄んだスープに品を感じる',
+    comment: '見た目も味も上品なのが好きなんだよね。最後の一滴まで飲み干せる系、わかる。',
+    articles: [pick('ayagawa-ebisu'), pick('ayagawa-miharadai'), pick('hayashida-ramen-ikebukuro')],
+  },
+  KOTTERI: {
+    label: 'こってり背脂タイプ',
+    emoji: '🖤',
+    catch: '脂が浮いてるくらいでちょうどいい',
+    comment: '見た目のインパクトも味のうちだと思ってるでしょ。その感じ、嫌いじゃない。',
+    articles: [pick('gottsu-akihabara'), pick('gofukuken-ikebukuro-stamina'), pick('gofukuken-ikebukuro')],
+  },
+};
+
+type TypeKey = keyof typeof TYPES;
+
+const QUESTIONS: { q: string; options: { text: string; scores: Partial<Record<TypeKey, number>> }[] }[] = [
+  {
+    q: '空腹度は？',
+    options: [
+      { text: 'ぺこぺこ、山盛り食べたい', scores: { JIRO: 2 } },
+      { text: 'ちょうどいい、いつもの量で', scores: { CHAN: 2 } },
+      { text: 'なんか刺激が欲しい', scores: { TANTAN: 2 } },
+      { text: '実はそんなにお腹すいてない、軽めがいい', scores: { ASSARI: 2 } },
+    ],
+  },
+  {
+    q: 'スープはどっち派？',
+    options: [
+      { text: '脂が浮いてるくらいが好き', scores: { KOTTERI: 2 } },
+      { text: 'あっさり透き通ってるのが好き', scores: { ASSARI: 2 } },
+      { text: '濃い口でパンチがあるのがいい', scores: { TANTAN: 1, JIRO: 1 } },
+      { text: '毎日飲んでも飽きない優しい味', scores: { CHAN: 2 } },
+    ],
+  },
+  {
+    q: 'トッピングで一番テンション上がるのは？',
+    options: [
+      { text: 'もやし＆にんにくマシマシ', scores: { JIRO: 2 } },
+      { text: 'チャーシューがどっさり', scores: { KOTTERI: 1, CHAN: 1 } },
+      { text: '白髪ねぎ山盛り', scores: { TANTAN: 1, ASSARI: 1 } },
+      { text: 'シンプルにネギとメンマだけでいい', scores: { CHAN: 1, ASSARI: 1 } },
+    ],
+  },
+  {
+    q: '食後どうなってたい？',
+    options: [
+      { text: '満腹すぎて動けない、最高', scores: { JIRO: 2, KOTTERI: 1 } },
+      { text: 'ちょうどいい満足感', scores: { CHAN: 2 } },
+      { text: '汗かいてスッキリ', scores: { TANTAN: 2 } },
+      { text: '胃もたれなく軽やか', scores: { ASSARI: 2 } },
+    ],
+  },
+  {
+    q: '一緒に頼むならどっち？',
+    options: [
+      { text: '大盛りご飯（追い飯前提）', scores: { JIRO: 1, KOTTERI: 1 } },
+      { text: '餃子', scores: { CHAN: 2 } },
+      { text: '半熟味玉', scores: { TANTAN: 1, ASSARI: 1 } },
+      { text: '何も足さない、スープで完結', scores: { ASSARI: 2 } },
+    ],
+  },
+];
+
+const TYPE_ORDER: TypeKey[] = ['JIRO', 'CHAN', 'TANTAN', 'ASSARI', 'KOTTERI'];
+
+const quizData = { types: TYPES, typeOrder: TYPE_ORDER, questions: QUESTIONS };
+---
+
+<Layout
+  title="あなたのラーメン系統診断 | ラーメン、それから。"
+  description="5つの質問に答えると、あなたのラーメン系統タイプが分かります。ぽんのおすすめ記事付き。"
+>
+  <div class="quiz-wrap">
+    <div id="screen-start" class="screen">
+      <h1>🍜 あなたのラーメン系統診断</h1>
+      <p class="subtitle">5つの質問で、あなたにぴったりの系統がわかる</p>
+      <button class="btn-primary" id="btn-start">診断をはじめる</button>
+    </div>
+
+    <div id="screen-quiz" class="screen hidden">
+      <p class="progress" id="progress">Q1 / 5</p>
+      <h2 id="question-text" class="question-text"></h2>
+      <div id="options" class="options"></div>
+    </div>
+
+    <div id="screen-result" class="screen hidden">
+      <p class="result-label">診断結果</p>
+      <div class="result-emoji" id="result-emoji"></div>
+      <h2 class="result-type" id="result-type"></h2>
+      <p class="result-catch" id="result-catch"></p>
+      <p class="result-comment" id="result-comment"></p>
+
+      <div class="result-articles" id="result-articles"></div>
+
+      <div class="share-btns">
+        <p class="share-label">シェアする</p>
+        <div class="share-row">
+          <a id="share-x" class="share-btn x-btn" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X でシェア
+          </a>
+          <button id="share-copy" class="share-btn copy-btn">結果をコピー</button>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-retry">もう一回診断する</button>
+    </div>
+
+    <div class="quiz-link-section">
+      <a href="/blog" class="quiz-link-btn">記事一覧を見る →</a>
+      <a href="/game" class="quiz-link-btn quiz-link-btn--sub">ミニゲームで遊ぶ →</a>
+    </div>
+  </div>
+
+  <script define:vars={{ quizData }}>
+    const TYPES = quizData.types;
+    const TYPE_ORDER = quizData.typeOrder;
+    const QUESTIONS = quizData.questions;
+
+    let current = 0;
+    const scores = Object.fromEntries(TYPE_ORDER.map((k) => [k, 0]));
+
+    function show(id) {
+      ['screen-start', 'screen-quiz', 'screen-result'].forEach((s) =>
+        document.getElementById(s).classList.add('hidden')
+      );
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function startQuiz() {
+      current = 0;
+      TYPE_ORDER.forEach((k) => (scores[k] = 0));
+      show('screen-quiz');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[current];
+      document.getElementById('progress').textContent = `Q${current + 1} / ${QUESTIONS.length}`;
+      document.getElementById('question-text').textContent = q.q;
+      const optionsEl = document.getElementById('options');
+      optionsEl.innerHTML = '';
+      q.options.forEach((opt) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt.text;
+        btn.addEventListener('click', () => {
+          Object.entries(opt.scores).forEach(([k, v]) => {
+            scores[k] = (scores[k] || 0) + v;
+          });
+          current++;
+          if (current >= QUESTIONS.length) {
+            showResult();
+          } else {
+            renderQuestion();
+          }
+        });
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function showResult() {
+      let bestKey = TYPE_ORDER[0];
+      let bestScore = -1;
+      TYPE_ORDER.forEach((k) => {
+        if (scores[k] > bestScore) {
+          bestScore = scores[k];
+          bestKey = k;
+        }
+      });
+      const t = TYPES[bestKey];
+
+      document.getElementById('result-emoji').textContent = t.emoji;
+      document.getElementById('result-type').textContent = t.label;
+      document.getElementById('result-catch').textContent = `「${t.catch}」`;
+      document.getElementById('result-comment').textContent = `ぽん:「${t.comment}」`;
+
+      const articlesEl = document.getElementById('result-articles');
+      articlesEl.innerHTML = t.articles
+        .map(
+          (a) => `
+        <a href="/blog/${a.slug}" class="result-article-card">
+          <div class="result-article-thumb">
+            ${a.image ? `<img src="${a.image}" alt="${a.title}" loading="lazy" decoding="async" />` : `<span>${a.emoji}</span>`}
+          </div>
+          <p class="result-article-title">${a.title}</p>
+        </a>`
+        )
+        .join('');
+
+      const shareText = `🍜 ラーメン系統診断で「${t.label}」だった！\n${t.catch}\n#ラーメンそれから\nhttps://www.ramen-sorekara.com/shindan`;
+      const xBtn = document.getElementById('share-x');
+      xBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+
+      const copyBtn = document.getElementById('share-copy');
+      copyBtn.onclick = async () => {
+        await navigator.clipboard.writeText(shareText);
+        copyBtn.textContent = '✅ コピーした！';
+        setTimeout(() => { copyBtn.textContent = '結果をコピー'; }, 2000);
+      };
+
+      show('screen-result');
+    }
+
+    document.getElementById('btn-start').addEventListener('click', startQuiz);
+    document.getElementById('btn-retry').addEventListener('click', startQuiz);
+  </script>
+
+  <style>
+    .quiz-wrap {
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hidden { display: none !important; }
+    .screen { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+    h1 {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.6rem;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+    .subtitle { font-size: 0.85rem; color: #999; margin-bottom: 12px; }
+
+    .btn-primary {
+      padding: 13px 36px;
+      background: #b5352a;
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      font-family: 'Noto Sans JP', sans-serif;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-primary:hover { background: #9b2d22; transform: translateY(-1px); }
+
+    .progress {
+      font-size: 0.78rem;
+      color: #c0a090;
+      letter-spacing: 0.08em;
+    }
+    .question-text {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.25rem;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .option-btn {
+      padding: 14px 20px;
+      background: #fff;
+      border: 1px solid #ede0d8;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      color: #2a2a2a;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Noto Sans JP', sans-serif;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    }
+    .option-btn:hover { border-color: #b5352a; background: #fdf8f5; transform: translateX(2px); }
+
+    .result-label { font-size: 0.78rem; color: #aaa; letter-spacing: 0.1em; margin: 0; }
+    .result-emoji { font-size: 3rem; }
+    .result-type {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.6rem;
+      color: #b5352a;
+      font-weight: 700;
+      margin: 0;
+    }
+    .result-catch { font-size: 0.95rem; color: #666; margin: 0; }
+    .result-comment {
+      font-size: 0.9rem;
+      color: #555;
+      background: #fdf0ed;
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin: 0;
+      line-height: 1.8;
+    }
+
+    .result-articles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+    .result-article-card {
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid #f0e8e4;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .result-article-card:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.07); }
+    .result-article-thumb {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #fdf0ed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .result-article-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .result-article-title {
+      font-size: 0.7rem;
+      color: #555;
+      padding: 6px 8px 8px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .share-btns { width: 100%; }
+    .share-label { font-size: 0.75rem; color: #bbb; letter-spacing: 0.08em; margin-bottom: 8px; }
+    .share-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Noto Sans JP', sans-serif;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .share-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .x-btn { background: #000; color: #fff; }
+    .copy-btn { background: #e8e0d8; color: #555; }
+
+    .quiz-link-section {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid #f0e8e4;
+    }
+    .quiz-link-btn {
+      display: inline-block;
+      background: #b5352a;
+      color: #fff;
+      padding: 10px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin: 4px 6px;
+      transition: background 0.2s;
+    }
+    .quiz-link-btn:hover { background: #9b2d22; }
+    .quiz-link-btn--sub {
+      background: transparent;
+      color: #b5352a;
+      border: 1px solid #b5352a;
+    }
+    .quiz-link-btn--sub:hover { background: #fdf0ed; }
+
+    @media (max-width: 480px) {
+      .result-articles { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</Layout>
