@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import RequestBoard from '../components/RequestBoard.astro';
+
+const now = new Date();
+const posts = (await getCollection('blog')).filter(
+  (p) => p.data.pubDate <= now && !p.id.includes('4koma') && p.data.rating != null
+);
+
+const ranked = posts
+  .sort((a, b) => (b.data.rating ?? 0) - (a.data.rating ?? 0) || b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 10);
+
+function stars(rating: number): string {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
+  return '★'.repeat(full) + (half ? '⯪' : '') + '☆'.repeat(5 - full - (half ? 1 : 0));
+}
+---
+
+<Layout
+  title="殿堂入り＆次どこ行くリクエスト | ラーメン、それから。"
+  description="ぽんが食べた中での殿堂入りランキングと、次に行ってほしいお店をリクエストできるコーナー。"
+>
+  <div class="page-header">
+    <h1>🏆 殿堂入り＆次どこ行くリクエスト</h1>
+    <p>ぽんが今まで食べた中での高評価店ランキングと、次に行ってほしいお店のリクエストコーナー。</p>
+  </div>
+
+  <section class="hall-of-fame">
+    <h2 class="hof-title">ぽんの殿堂入りランキング</h2>
+    <ol class="hof-list">
+      {ranked.map((p, i) => (
+        <li class="hof-item">
+          <a href={`/blog/${p.id.replace(/\.md$/, '')}`} class="hof-link">
+            <span class="hof-rank">{i + 1}</span>
+            <div class="hof-thumb">
+              {p.data.image
+                ? <img src={p.data.image} alt={p.data.title} loading="lazy" decoding="async" />
+                : <span class="hof-emoji">{p.data.emoji ?? '🍜'}</span>
+              }
+            </div>
+            <div class="hof-text">
+              <p class="hof-title-text">{p.data.title}</p>
+              <p class="hof-rating">{stars(p.data.rating ?? 0)} <span class="hof-rating-num">{p.data.rating}</span></p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <RequestBoard />
+
+  <style>
+    .page-header { margin-bottom: 40px; }
+    .page-header h1 {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.5rem;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+    .page-header p { color: #888; font-size: 0.88rem; line-height: 1.8; }
+
+    .hall-of-fame { max-width: 720px; margin: 0 auto 56px; }
+    .hof-title {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+    }
+    .hof-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+    .hof-item { border: 1px solid #f0e8e4; border-radius: 12px; background: #fff; transition: transform 0.15s, box-shadow 0.15s; }
+    .hof-item:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
+    .hof-link { display: flex; align-items: center; gap: 14px; padding: 10px 16px; text-decoration: none; color: inherit; }
+    .hof-rank {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: #fdf0ed;
+      color: #b5352a;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .hof-thumb {
+      flex-shrink: 0;
+      width: 56px; height: 56px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fdf0ed;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hof-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .hof-emoji { font-size: 1.4rem; }
+    .hof-text { min-width: 0; }
+    .hof-title-text {
+      font-size: 0.88rem; color: #333; line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .hof-rating { font-size: 0.8rem; color: #e0a000; letter-spacing: 0.02em; }
+    .hof-rating-num { color: #bbb; margin-left: 4px; }
+
+    .section-divider {
+      max-width: 720px;
+      margin: 0 auto 48px;
+      border-top: 1px solid #f0e8e4;
+    }
+  </style>
+</Layout>

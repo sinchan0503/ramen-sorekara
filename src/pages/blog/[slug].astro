@@ -230,6 +230,11 @@ const breadcrumbSchema = {
         <a href={is4koma ? '/4koma' : '/blog'}>{is4koma ? '← 四コマ一覧に戻る' : '← 記事一覧に戻る'}</a>
       </div>
 
+      <div class="request-cta">
+        <p class="request-cta-label">次に行ってほしいお店、ある？</p>
+        <a href="/request" class="request-cta-btn">次どこ行くリクエストへ →</a>
+      </div>
+
       {!is4koma && recentPosts.length > 0 && (
         <div class="mobile-recent">
           <h2 class="related-title">最新記事</h2>
@@ -677,6 +682,32 @@ const breadcrumbSchema = {
     font-weight: 500;
   }
   .post-footer a:hover { text-decoration: underline; }
+
+  /* ── リクエストCTA ── */
+  .request-cta {
+    margin-top: 40px;
+    padding: 24px;
+    background: #fdf0ed;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .request-cta-label {
+    font-size: 0.88rem;
+    color: #666;
+    margin-bottom: 12px;
+  }
+  .request-cta-btn {
+    display: inline-block;
+    background: #b5352a;
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .request-cta-btn:hover { background: #9b2d22; }
 </style>
 
 <style is:global>
