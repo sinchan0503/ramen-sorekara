@@ -30,8 +30,11 @@ PON_CHARACTER = """
 - 画風: 水彩風アニメイラスト、温かみのある淡い色調、漫画コマ枠あり
 """
 
-SYSTEM_PROMPT = """あなたは四コマ漫画のストーリーライターです。
-ラーメン好きOL「ぽん」を主人公にした、クスッと笑えるあるある系四コマを考えます。
+SYSTEM_PROMPT = """あなたは百戦錬磨のギャグ漫画原作者です。
+ラーメン好きOL「ぽん」を主人公にした四コマを考えますが、
+「ほっこりオチ」で満足せず、毎回もっと面白くする気概で書いてください。
+テンプレ通りの型をなぞるだけの予定調和な結末は却下し、
+読者の予想を一段超える意外性・毒っ気・言葉のセンスを狙います。
 必ず日本語で回答してください。"""
 
 WEEKDAY_JA = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"]
@@ -92,6 +95,13 @@ def generate(theme: str) -> dict:
 
 テーマヒント: {theme if theme else "（上記の日付・曜日・季節から自然に）"}
 
+## ギャグセンスを高めるための必須チェック（2026-08-17〜強化）
+- 「意地で完食したら実は隣の注文だった」レベルの、前提そのものをひっくり返す裏切りを最低ラインとする
+- そのオチ、他の四コマ漫画で見たことないか自問する。既視感のある展開（気づいたら〆のセリフで終わる、単に驚くだけ等）は捨てて書き直す
+- オチの一文はできるだけ短く、韻や語感の良さ・言葉のダブルミーニングも狙えないか検討する
+- 最後にダメ押し（二段オチ）を必ず1つ足す。ただの追加情報ではなく、オチをさらに一段ひっくり返す・強める一言にする
+- ぽんの天然さは「無自覚に的確なボケをかます」方向で使う。ただのおっとりでは終わらせない
+
 ## 出力形式（JSON）
 
 ```json
@@ -103,7 +113,7 @@ def generate(theme: str) -> dict:
       "panel": 1,
       "scene": "シーン説明（日本語）",
       "pon_expression": "ぽんの表情・ポーズ（例: 驚き、手を合わせて期待、うなだれる）",
-      "dialogue": "セリフまたはナレーション（吹き出しに入るテキスト）",
+      "dialogue": "セリフまたはナレーション（吹き出しに入るテキスト。「ぽん：」「同僚：」「ナレーション：」等の話者名ラベルは絶対に含めない。誰の発言かは絵（表情・位置）で伝えるので、セリフの中身だけを書く）",
       "chatgpt_prompt": "ChatGPTへの英語プロンプト（後述の形式で）"
     }},
     ... (4コマ分)
@@ -118,6 +128,7 @@ def generate(theme: str) -> dict:
 - そのコマの具体的な状況・表情・背景
 - 季節・曜日が伝わる背景描写（例: spring cherry blossoms, Friday evening glow, summer heat haze など）
 - 「4-panel manga, panel [番号] of 4」を末尾に
+- 話者名ラベル厳禁: セリフは吹き出しに直接入る言葉のみ。"Pon:" や "Coworker:" のような話者表記を吹き出しテキストに含めない
 
 簡潔で笑えるオチがつくように工夫してください。
 """
@@ -143,11 +154,62 @@ def generate(theme: str) -> dict:
         # コードブロックなしの場合
         data = json.loads(raw)
 
+    for p in data["panels"]:
+        p["dialogue"] = strip_speaker_labels(p["dialogue"])
+
     data["pub_date"] = today.isoformat()
     data["slug"] = f"4koma-{today.isoformat()}"
     data["output"] = f"4koma-{today.isoformat()}.png"
+    data["combined_prompt"] = build_combined_prompt(data)
 
     return data
+
+
+# プロンプトで指示しても稀にAIが話者名ラベルを付けてくることがあるための保険（コード側で強制除去）
+SPEAKER_LABELS = ["ぽん", "同僚", "店員", "店主", "友人", "上司", "先輩", "後輩", "客", "ナレーション"]
+
+def strip_speaker_labels(text: str) -> str:
+    lines = text.split("\n")
+    cleaned = []
+    for line in lines:
+        line = line.strip()
+        for label in SPEAKER_LABELS:
+            if line.startswith(f"{label}「"):
+                line = line[len(label) + 1:]
+                if line.endswith("」"):
+                    line = line[:-1]
+                break
+            if line.startswith(f"{label}：") or line.startswith(f"{label}:"):
+                line = line[len(label) + 1:].strip()
+                break
+        cleaned.append(line)
+    return "\n".join(cleaned)
+
+
+def build_combined_prompt(data: dict) -> str:
+    """4コマ分のプロンプトを1枚の統合画像用プロンプトにまとめる"""
+    panel_lines = []
+    for p in data["panels"]:
+        panel_lines.append(
+            f"Panel {p['panel']}: {p['chatgpt_prompt']} "
+            f"Speech bubble text (exact Japanese, keep as-is): \"{p['dialogue']}\""
+        )
+    panels_block = "\n".join(panel_lines)
+
+    return (
+        "Create ONE single vertical image containing a 4-panel manga comic "
+        "(4 panels stacked top to bottom, each panel separated by a thin border, "
+        "no panel numbers or labels drawn on the image). "
+        "watercolor anime style, soft warm colors, clean line art, consistent character design "
+        "across all 4 panels: Japanese office lady \"Pon\", early 20s, short black bob hair with "
+        "a small ahoge, big brown eyes, light blue button-up shirt, dark navy slacks. "
+        "Add a speech bubble with the exact Japanese text shown for each panel. "
+        "Do NOT add any speaker name/label (e.g. do not write \"Pon:\" or a Japanese name) "
+        "inside or above any speech bubble — write ONLY the quoted line itself, nothing else. "
+        f"{panels_block} "
+        "Final panel (bottom) is the punchline — make sure the character's expression there is "
+        "exaggerated/comically deformed (e.g. wide eyes, flustered face) to sell the twist."
+    )
 
 
 def print_instructions(data: dict, out_path: Path):
