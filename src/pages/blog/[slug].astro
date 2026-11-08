@@ -230,9 +230,9 @@ const breadcrumbSchema = {
         <a href={is4koma ? '/4koma' : '/blog'}>{is4koma ? '← 四コマ一覧に戻る' : '← 記事一覧に戻る'}</a>
       </div>
 
-      <div class="request-cta">
-        <p class="request-cta-label">次に行ってほしいお店、ある？</p>
-        <a href="/request" class="request-cta-btn">次どこ行くリクエストへ →</a>
+      <div class="search-cta">
+        <p class="search-cta-label">ほかのお店も探してみる？</p>
+        <a href="/recommend" class="search-cta-btn">🔍 らーめん探しへ →</a>
       </div>
 
       {!is4koma && recentPosts.length > 0 && (
@@ -683,20 +683,20 @@ const breadcrumbSchema = {
   }
   .post-footer a:hover { text-decoration: underline; }
 
-  /* ── リクエストCTA ── */
-  .request-cta {
+  /* ── らーめん探しCTA ── */
+  .search-cta {
     margin-top: 40px;
     padding: 24px;
     background: #fdf0ed;
     border-radius: 12px;
     text-align: center;
   }
-  .request-cta-label {
+  .search-cta-label {
     font-size: 0.88rem;
     color: #666;
     margin-bottom: 12px;
   }
-  .request-cta-btn {
+  .search-cta-btn {
     display: inline-block;
     background: #b5352a;
     color: #fff;
@@ -707,14 +707,7 @@ const breadcrumbSchema = {
     font-weight: 500;
     transition: background 0.2s;
   }
-  .request-cta-btn:hover { background: #9b2d22; }
-  .request-cta-label--sub { margin-top: 20px; }
-  .request-cta-btn--sub {
-    background: transparent;
-    color: #b5352a;
-    border: 1px solid #b5352a;
-  }
-  .request-cta-btn--sub:hover { background: #fff; }
+  .search-cta-btn:hover { background: #9b2d22; }
 </style>
 
 <style is:global>
