@@ -1,12 +1,26 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+
+const now = new Date();
+const posts = (await getCollection('blog'))
+  .filter(p => !p.data.title.startsWith('【四コマ】') && p.data.pubDate <= now)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map(p => ({
+    slug: p.id.replace(/\.md$/, ''),
+    title: p.data.title,
+    description: p.data.description,
+    tags: p.data.tags,
+    shopName: p.data.shopName ?? '',
+    image: p.data.image ?? null,
+  }));
 ---
 
 <Layout
   title="らーめん探し | ラーメン、それから。"
-  description="食べたい気分を教えてくれたら、ぽんのAIアシスタントがおすすめのラーメン店を提案します。"
+  description="エリアや食べたい気分を入れると、ぽんが実際に食べて書いたラーメン記事の中からぴったりのお店を探せます。"
 >
-  <style>
+  <style is:global>
     .page-header { margin-bottom: 2rem; }
     .page-header h1 { font-family: 'Klee One', cursive; font-size: 1.5rem; color: #b5352a; margin-bottom: 0.4rem; }
     .page-header p { color: #888; font-size: 0.85rem; line-height: 1.7; }
@@ -66,22 +80,40 @@ import Layout from '../layouts/Layout.astro';
     }
     .input-row button:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    .result-box {
+    .result-note { color: #888; font-size: 0.85rem; margin-bottom: 1rem; line-height: 1.7; }
+    .result-note a { color: #b5352a; text-decoration: underline; }
+
+    .results { display: grid; gap: 0.9rem; }
+    .result-card {
+      display: flex;
+      gap: 0.9rem;
       background: #fff;
       border: 1px solid #ede0d8;
       border-radius: 12px;
-      padding: 1.2rem 1.4rem;
-      line-height: 1.85;
-      font-size: 0.9rem;
-      color: #2a2a2a;
-      white-space: pre-wrap;
-      display: none;
+      padding: 0.8rem;
+      color: inherit;
+      text-decoration: none;
+      transition: border-color 0.15s;
     }
-    .result-box.visible { display: block; }
-    .result-box a { color: #b5352a; text-decoration: underline; }
-
-    .loading { color: #bbb; font-size: 0.85rem; margin-bottom: 1rem; display: none; }
-    .loading.visible { display: block; }
+    .result-card:hover { border-color: #b5352a; }
+    .result-card img {
+      width: 96px;
+      height: 96px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+    .result-body { min-width: 0; }
+    .result-title { font-size: 0.92rem; font-weight: bold; color: #2a2a2a; line-height: 1.5; margin-bottom: 0.3rem; }
+    .result-desc {
+      font-size: 0.8rem;
+      color: #888;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
     .disclaimer {
       margin-top: 1rem;
@@ -93,81 +125,131 @@ import Layout from '../layouts/Layout.astro';
 
   <div class="page-header">
     <h1>🍜 らーめん探し</h1>
-    <p>食べたい気分やエリアを入力すると、AIがおすすめのラーメン店を提案します。<br>ブログで紹介したお店が含まれていたら記事リンクもお知らせします。</p>
+    <p>エリアや食べたい気分を入れると、ぽんが実際に食べに行ったお店の記事から探します。</p>
   </div>
 
   <div class="chat-wrap">
     <div class="suggestions">
-      <button class="suggestion-btn" data-q="池袋で食べたい">池袋で食べたい</button>
-      <button class="suggestion-btn" data-q="辛いラーメンが食べたい">辛いラーメン</button>
-      <button class="suggestion-btn" data-q="二郎系が食べたい">二郎系</button>
-      <button class="suggestion-btn" data-q="女性一人でも入りやすいおしゃれなお店">おしゃれ系</button>
-      <button class="suggestion-btn" data-q="こってり背脂系が食べたい">こってり背脂</button>
-      <button class="suggestion-btn" data-q="担々麺が食べたい">担々麺</button>
+      <button class="suggestion-btn" data-q="池袋">池袋で食べたい</button>
+      <button class="suggestion-btn" data-q="辛い">辛いラーメン</button>
+      <button class="suggestion-btn" data-q="二郎系">二郎系</button>
+      <button class="suggestion-btn" data-q="ちゃん系">ちゃん系</button>
+      <button class="suggestion-btn" data-q="こってり">こってり</button>
+      <button class="suggestion-btn" data-q="あっさり">あっさり</button>
+      <button class="suggestion-btn" data-q="担々麺">担々麺</button>
+      <button class="suggestion-btn" data-q="味噌">味噌</button>
     </div>
 
     <div class="input-row">
-      <input id="query-input" type="text" placeholder="例：渋谷でつけ麺が食べたい" maxlength="200" />
+      <input id="query-input" type="text" placeholder="例：飯田橋 つけ麺" maxlength="100" />
       <button id="send-btn">探す</button>
     </div>
 
-    <div class="loading" id="loading">考え中...</div>
-    <div class="result-box" id="result-box"></div>
-    <p class="disclaimer">※ AIの回答は情報が古い・不正確な場合があります。訪問前に公式情報をご確認ください。</p>
+    <p class="result-note" id="result-note" hidden></p>
+    <div class="results" id="results"></div>
+    <p class="disclaimer">※ 記事は食べた当時の情報です。メニューや営業時間は、行く前にお店の最新情報を確認してね。</p>
   </div>
 
+  <script is:inline id="posts-data" type="application/json" set:html={JSON.stringify(posts)}></script>
+
   <script>
+    type Post = { slug: string; title: string; description: string; tags: string[]; shopName: string; image: string | null };
+    const posts: Post[] = JSON.parse(document.getElementById('posts-data')!.textContent || '[]');
+
     const input = document.getElementById('query-input') as HTMLInputElement;
     const btn = document.getElementById('send-btn') as HTMLButtonElement;
-    const loading = document.getElementById('loading')!;
-    const resultBox = document.getElementById('result-box')!;
+    const note = document.getElementById('result-note')!;
+    const results = document.getElementById('results')!;
 
-    async function ask(query: string) {
-      if (!query.trim()) return;
-      btn.disabled = true;
-      loading.classList.add('visible');
-      resultBox.classList.remove('visible');
-      resultBox.textContent = '';
+    // 気分ワード → 記事に出てくる言葉
+    const SYNONYMS: Record<string, string[]> = {
+      '辛': ['担々', '担担', '辛', 'スパイス', '麻婆', 'カラシビ'],
+      'こってり': ['こってり', '背脂', '家系', '二郎', 'スタミナ', '濃厚'],
+      'あっさり': ['あっさり', '清湯', '淡麗', '中華そば', '煮干'],
+      'つけ麺': ['つけ麺', 'つけめん'],
+      '二郎': ['二郎'],
+      '家系': ['家系'],
+      '味噌': ['味噌', 'みそ'],
+      '醤油': ['醤油', 'しょうゆ'],
+      '塩': ['塩'],
+      '豚骨': ['豚骨', 'とんこつ'],
+      '煮干': ['煮干'],
+    };
+    const STOP = /(が|で|を|に|の|は|食べたい|たべたい|ラーメン|らーめん|系|お店|店|おすすめ|近く|あたり|辺り|周辺)/g;
 
-      try {
-        const res = await fetch('/api/recommend', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: query }),
-        });
-        const data = await res.json();
+    const toHira = (t: string) => t.replace(/[\u30a1-\u30f6]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60));
+    const norm = (t: string) => toHira(t.normalize('NFKC').toLowerCase());
 
-        if (data.error) {
-          resultBox.textContent = data.error;
-        } else {
-          // /blog/slug 形式のリンクをアンカータグに変換
-          const html = data.response
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/(→\s*)(\/blog\/[\w-]+)/g, (_, arrow: string, path: string) =>
-              `${arrow}<a href="${path}">${path}</a>`
-            );
-          resultBox.innerHTML = html;
-        }
-        resultBox.classList.add('visible');
-      } catch {
-        resultBox.textContent = 'エラーが発生しました。しばらく待ってから試してください。';
-        resultBox.classList.add('visible');
-      } finally {
-        btn.disabled = false;
-        loading.classList.remove('visible');
+    function termsFor(query: string): string[][] {
+      const q = norm(query);
+      const groups: string[][] = [];
+      for (const [key, words] of Object.entries(SYNONYMS)) {
+        if (q.includes(norm(key))) groups.push(words.map(norm));
       }
+      const rest = q
+        .replace(new RegExp(Object.keys(SYNONYMS).map(norm).join('|'), 'g'), ' ')
+        .replace(STOP, ' ')
+        .split(/[\s、。,.!！?？]+/)
+        .filter(w => w.length >= 2 || /[\u4e00-\u9fff]/.test(w));
+      for (const w of rest) groups.push([w]);
+      return groups;
     }
 
-    btn.addEventListener('click', () => ask(input.value));
-    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') ask(input.value); });
+    function score(p: Post, groups: string[][]): number {
+      const tags = p.tags.map(norm);
+      const title = norm(p.title + ' ' + p.shopName);
+      const desc = norm(p.description);
+      let total = 0;
+      for (const words of groups) {
+        let best = 0;
+        for (const w of words) {
+          if (tags.some(t => t.includes(w))) best = Math.max(best, 3);
+          else if (title.includes(w)) best = Math.max(best, 2);
+          else if (desc.includes(w)) best = Math.max(best, 1);
+        }
+        if (best === 0) return 0; // すべての条件に当てはまる記事だけ出す
+        total += best;
+      }
+      return total;
+    }
+
+    function escapeHtml(t: string) {
+      return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function search(query: string) {
+      const groups = termsFor(query);
+      if (groups.length === 0) return;
+      const hits = posts
+        .map(p => ({ p, s: score(p, groups) }))
+        .filter(x => x.s > 0)
+        .sort((a, b) => b.s - a.s);
+
+      note.hidden = false;
+      if (hits.length === 0) {
+        note.innerHTML = 'ごめん、まだそのお店の記事は書いてないみたい……。<a href="/blog/">記事一覧</a>や<a href="/map/">らーめんマップ</a>からも探してみてね。';
+        results.innerHTML = '';
+        return;
+      }
+      note.textContent = hits.length > 8 ? `${hits.length}件見つかったよ。近いものから8件出すね。` : `${hits.length}件見つかったよ。`;
+      results.innerHTML = hits.slice(0, 8).map(({ p }) => `
+        <a class="result-card" href="/blog/${encodeURIComponent(p.slug)}/">
+          ${p.image ? `<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" loading="lazy" />` : ''}
+          <div class="result-body">
+            <div class="result-title">${escapeHtml(p.title)}</div>
+            <div class="result-desc">${escapeHtml(p.description)}</div>
+          </div>
+        </a>`).join('');
+    }
+
+    btn.addEventListener('click', () => search(input.value));
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.isComposing) search(input.value); });
 
     document.querySelectorAll('.suggestion-btn').forEach(b => {
       b.addEventListener('click', () => {
         const q = (b as HTMLElement).dataset.q || '';
         input.value = q;
-        ask(q);
+        search(q);
       });
     });
   </script>
