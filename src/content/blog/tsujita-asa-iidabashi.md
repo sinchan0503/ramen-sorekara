@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/tsujita-asa-iidabashi.jpg"
 imagePosition: "center 50%"
 tags: ["飯田橋"]
+shopName: "つじ田"
 ---
 
 ## つじ田（飯田橋）

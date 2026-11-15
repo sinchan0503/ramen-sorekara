@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/nagichan-takadanobaba-1.jpg"
 imagePosition: "center 55%"
 tags: ["ちゃん系", "高田馬場"]
+shopName: "なぎちゃんラーメン 高田馬場店"
 ---
 
 ## なぎちゃんラーメン 高田馬場店（白鳥会館）

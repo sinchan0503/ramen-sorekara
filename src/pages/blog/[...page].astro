@@ -12,9 +12,22 @@ export async function getStaticPaths({ paginate }) {
 
 const { page } = Astro.props;
 
+// タイトルを「店名」と「ひとこと」に分ける（「店名（エリア）｜ひとこと」形式 or frontmatterのshopName）
+function splitTitle(title: string, shopName?: string) {
+  const i = title.indexOf('｜');
+  if (i > 0) return { shop: title.slice(0, i), catchcopy: title.slice(i + 1) };
+  if (shopName && title.startsWith(shopName)) {
+    // タイトル先頭の店名（とエリア表記・読点）は重複するので省く
+    const rest = title.slice(shopName.length).replace(/^（[^）]*）/, '').replace(/^[、,\s]+/, '');
+    return { shop: shopName, catchcopy: rest || title };
+  }
+  return { shop: shopName ?? null, catchcopy: title };
+}
+
 const allPosts = page.data.map(post => ({
   id: post.id.replace(/\.md$/, ''),
   title: post.data.title,
+  ...splitTitle(post.data.title, post.data.shopName),
   description: post.data.description,
   image: post.data.image || null,
   imagePosition: post.data.imagePosition ?? 'center 30%',
@@ -50,7 +63,10 @@ const allPosts = page.data.map(post => ({
         </div>
         <div class="card-body">
           <time>{post.pubDate}</time>
-          <h2>{post.title}</h2>
+          <h2>
+            {post.shop && <span class="card-shop">{post.shop}</span>}
+            <span class="card-catch">{post.catchcopy}</span>
+          </h2>
           <p>{post.description}</p>
         </div>
       </a>
@@ -250,6 +266,19 @@ const allPosts = page.data.map(post => ({
     color: #2a2a2a;
     line-height: 1.5;
   }
+  .card-shop {
+    display: block;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    color: #2a2a2a;
+    margin-bottom: 2px;
+  }
+  .card-catch {
+    display: block;
+    font-weight: 500;
+    color: #555;
+  }
+  .card-shop + .card-catch { font-size: 0.92em; }
   .card-body p {
     font-size: 0.82rem;
     color: #999;
@@ -297,8 +326,11 @@ const allPosts = page.data.map(post => ({
     .post-grid.cols-2 .card-body h2 {
       font-size: 0.85rem;
       margin: 4px 0 0;
+    }
+    .post-grid.cols-2 .card-shop,
+    .post-grid.cols-2 .card-catch {
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }

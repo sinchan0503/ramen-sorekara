@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/hashigo-ginza-1.jpg"
 imagePosition: "center 50%"
 tags: ["銀座"]
+shopName: "支那麺はしご 本店"
 ---
 
 ## 支那麺はしご 本店（銀座）

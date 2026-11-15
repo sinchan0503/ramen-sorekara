@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/stamina-oniyama-1.jpg"
 imagePosition: "center 65%"
 tags: ["渋谷", "スタミナ系"]
+shopName: "スタミナラーメン鬼山"
 ---
 
 ## スタミナラーメン鬼山（渋谷・道玄坂）

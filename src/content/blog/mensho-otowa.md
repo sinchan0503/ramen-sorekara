@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/mensho-otowa-5.jpg"
 imagePosition: "center 40%"
 tags: ["護国寺", "文京区"]
+shopName: "MENSHO"
 ---
 
 ## MENSHO（護国寺）

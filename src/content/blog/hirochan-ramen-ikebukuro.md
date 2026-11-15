@@ -6,6 +6,7 @@ emoji: "🍜"
 rating: 4.5
 image: "/images/hirochan-ramen-ikebukuro.jpg"
 tags: ["ちゃん系", "池袋"]
+shopName: "ひろちゃんラーメン"
 ---
 
 ## ひろちゃんラーメン（池袋西口）

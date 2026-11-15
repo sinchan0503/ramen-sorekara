@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/mizoguchiya-01.jpg"
 imagePosition: "center 50%"
 tags: ["東十条", "二郎系"]
+shopName: "ミゾグチヤ東十条店"
 ---
 
 ## ミゾグチヤ東十条店

@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/sosho-suginami-01.jpg"
 imagePosition: "center 45%"
 tags: ["杉並", "担々麺"]
+shopName: "豚骨蒼翔"
 ---
 
 ## 豚骨蒼翔（杉並）

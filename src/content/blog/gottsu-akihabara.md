@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/gottsu-akihabara.jpg"
 imagePosition: "center 50%"
 tags: ["秋葉原", "こってり", "背脂"]
+shopName: "超ごってり麺 ごっつ 秋葉原店"
 ---
 
 ## 超ごってり麺 ごっつ 秋葉原店

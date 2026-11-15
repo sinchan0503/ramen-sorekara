@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/shion-takadanobaba-01.jpg"
 imagePosition: "center 40%"
 tags: ["高田馬場"]
+shopName: "RAMEN紫苑"
 ---
 
 ## RAMEN紫苑（高田馬場）

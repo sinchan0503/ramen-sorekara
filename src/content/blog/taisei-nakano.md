@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/taisei-nakano-02.jpg"
 imagePosition: "center 50%"
 tags: ["中野"]
+shopName: "麺家たいせい"
 ---
 
 ## 麺家たいせい（中野坂上）

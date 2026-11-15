@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/anzawaya-nerima-01.jpg"
 imagePosition: "center 45%"
 tags: ["練馬"]
+shopName: "安ざわ家"
 ---
 
 ## 安ざわ家（練馬）

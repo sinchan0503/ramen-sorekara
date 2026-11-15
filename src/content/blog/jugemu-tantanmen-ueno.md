@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/jugemu-tantanmen-ueno.jpg"
 imagePosition: "center 45%"
 tags: ["上野", "担々麺"]
+shopName: "寿限無 担々麺"
 ---
 
 ## 寿限無 担々麺（上野）

@@ -7,6 +7,7 @@ rating: 3.0
 image: "/images/hayashida-ikebukuro-1.jpg"
 imagePosition: "center 55%"
 tags: ["池袋"]
+shopName: "らぁ麺 はやし田"
 ---
 
 ## らぁ麺 はやし田（池袋）

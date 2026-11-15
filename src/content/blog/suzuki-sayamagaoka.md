@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/suzuki-sayamagaoka.jpg"
 imagePosition: "center 55%"
 tags: ["狭山ヶ丘", "二郎系"]
+shopName: "すず鬼 狭山ヶ丘分店"
 ---
 
 ## すず鬼 狭山ヶ丘分店

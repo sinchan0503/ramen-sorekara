@@ -7,6 +7,7 @@ rating: 3.5
 image: "/images/marue-chuka-soba-sugamo-1.jpeg"
 imagePosition: "center 50%"
 tags: ["巣鴨"]
+shopName: "まるえ中華そば"
 ---
 
 ## まるえ中華そば（巣鴨）

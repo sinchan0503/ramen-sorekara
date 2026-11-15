@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/nijubun-no-ichi-01.jpg"
 imagePosition: "center 40%"
 tags: ["東尾久"]
+shopName: "にじゅうぶんのいち"
 ---
 
 ## にじゅうぶんのいち（東尾久）

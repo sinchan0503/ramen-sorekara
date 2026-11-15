@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/gofukuken-01.jpg"
 imagePosition: "center 50%"
 tags: ["池袋"]
+shopName: "伍福軒 池袋西口店"
 ---
 
 ## 伍福軒 池袋西口店

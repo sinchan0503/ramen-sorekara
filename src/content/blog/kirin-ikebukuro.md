@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/kirin-ikebukuro-1.jpg"
 imagePosition: "center 45%"
 tags: ["池袋"]
+shopName: "中華そば 麒麟"
 ---
 
 ## 中華そば 麒麟（池袋）

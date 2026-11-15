@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/fujimaru-01.jpg"
 imagePosition: "center 55%"
 tags: ["神谷", "二郎系"]
+shopName: "ラーメン富士丸 神谷本店"
 ---
 
 ## ラーメン富士丸 神谷本店

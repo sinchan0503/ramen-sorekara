@@ -7,6 +7,7 @@ rating: 3.5
 image: "/images/tomo-tokyo-kudanshita-1.jpg"
 imagePosition: "center 55%"
 tags: ["九段下", "千代田区"]
+shopName: "RaMen TOMO TOKYO"
 ---
 
 ## RaMen TOMO TOKYO（九段下）

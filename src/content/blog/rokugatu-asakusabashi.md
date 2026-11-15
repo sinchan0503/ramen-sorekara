@@ -6,6 +6,7 @@ emoji: "🌶️"
 rating: 3.5
 image: "/images/rokugatu-1.jpg"
 tags: ["浅草橋", "限定"]
+shopName: "ろく月"
 ---
 
 ## ろく月（浅草橋）

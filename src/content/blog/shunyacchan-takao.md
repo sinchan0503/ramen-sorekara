@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/shunyacchan-takao-2.jpg"
 imagePosition: "center 50%"
 tags: ["高尾", "行列"]
+shopName: "屋台ラーメン しゅんやっちゃん"
 ---
 
 ## 屋台ラーメン しゅんやっちゃん（高尾）

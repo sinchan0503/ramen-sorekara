@@ -6,6 +6,7 @@ emoji: "🌸"
 rating: 4.5
 image: "/images/haruchan-ramen-ginza-03.jpg"
 tags: ["ちゃん系", "銀座"]
+shopName: "銀座はるちゃんラーメン"
 ---
 
 ## 銀座はるちゃんラーメン

@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/haggy-chofu-1.jpg"
 imagePosition: "center 45%"
 tags: ["調布"]
+shopName: "らーめん HAGGY"
 ---
 
 ## らーめん HAGGY（調布）

@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/shinchan-shinjuku-01.jpg"
 imagePosition: "center 50%"
 tags: ["ちゃん系", "新宿"]
+shopName: "シンちゃんラーメン"
 ---
 
 ## シンちゃんラーメン（新宿）

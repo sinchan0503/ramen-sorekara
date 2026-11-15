@@ -6,6 +6,7 @@ emoji: "🌿"
 rating: 4.5
 image: "/images/berabou-iidabashi-01.jpg"
 tags: ["飯田橋", "淡麗系"]
+shopName: "麺や べらぼう"
 ---
 
 ## 麺や べらぼう（飯田橋）

@@ -6,6 +6,7 @@ emoji: "🧅"
 rating: 4.0
 image: "/images/shichisai-hatchobori-01.jpg"
 tags: ["八丁堀", "喜多方系"]
+shopName: "麺や 七彩"
 ---
 
 ## 麺や 七彩（八丁堀）

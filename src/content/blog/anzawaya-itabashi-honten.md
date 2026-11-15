@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/anzawaya-itabashi-1.jpg"
 imagePosition: "center 50%"
 tags: ["上板橋", "板橋区", "醤油ラーメン", "チャーシュー"]
+shopName: "Heart Restaurant 安ざわ家 本店"
 ---
 
 ## Heart Restaurant 安ざわ家 本店（上板橋）

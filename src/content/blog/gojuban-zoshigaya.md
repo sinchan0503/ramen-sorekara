@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/gojuban-01.jpg"
 imagePosition: "center 40%"
 tags: ["雑司ヶ谷", "麻婆系"]
+shopName: "らーめん護什番"
 ---
 
 ## らーめん護什番（雑司ヶ谷）

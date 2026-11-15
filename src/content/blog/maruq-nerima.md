@@ -7,6 +7,7 @@ rating: 3.5
 image: "/images/maruq-nerima-01.jpg"
 imagePosition: "center 40%"
 tags: ["練馬"]
+shopName: "ラーメンショップ マルQ"
 ---
 
 ## ラーメンショップ マルQ（練馬）

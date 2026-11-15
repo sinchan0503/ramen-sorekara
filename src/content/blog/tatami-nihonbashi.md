@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/tatami-nihonbashi.jpg"
 imagePosition: "60% center"
 tags: ["日本橋"]
+shopName: "たた味"
 ---
 
 ## たた味（日本橋小伝馬町）

@@ -7,6 +7,7 @@ rating: 4.5
 image: "/images/suzuki-mitaka.jpg"
 imagePosition: "center 60%"
 tags: ["三鷹", "二郎系", "行列"]
+shopName: "すず鬼"
 ---
 
 ## すず鬼（三鷹）

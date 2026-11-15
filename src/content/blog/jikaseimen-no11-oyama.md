@@ -7,6 +7,7 @@ rating: 4.0
 image: "/images/jikaseimen-no11-1.jpg"
 imagePosition: "center 50%"
 tags: ["志茂"]
+shopName: "自家製麺No11"
 ---
 
 ## 自家製麺No11（志茂）
