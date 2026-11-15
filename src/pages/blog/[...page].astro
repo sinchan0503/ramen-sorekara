@@ -33,6 +33,10 @@ const allPosts = page.data.map(post => ({
         <option value={n}>{n}件</option>
       ))}
     </select>
+    <div class="layout-switcher" role="group" aria-label="表示の並べ方">
+      <button type="button" class="layout-btn" data-cols="1" aria-pressed="true">1列</button>
+      <button type="button" class="layout-btn" data-cols="2" aria-pressed="false">2列</button>
+    </div>
   </div>
 
   <div class="post-grid" id="post-grid">
@@ -105,6 +109,23 @@ const allPosts = page.data.map(post => ({
     }
   }
 
+  // layout switch（スマホのみ表示）
+  const LAYOUT_KEY = 'blog_layout_cols';
+  let layoutCols = '1';
+  try { layoutCols = localStorage.getItem(LAYOUT_KEY) === '2' ? '2' : '1'; } catch {}
+  const layoutBtns = Array.from(document.querySelectorAll('.layout-btn'));
+
+  function applyLayout() {
+    grid.classList.toggle('cols-2', layoutCols === '2');
+    layoutBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.cols === layoutCols)));
+  }
+  layoutBtns.forEach(b => b.addEventListener('click', () => {
+    layoutCols = b.dataset.cols;
+    try { localStorage.setItem(LAYOUT_KEY, layoutCols); } catch {}
+    applyLayout();
+  }));
+  applyLayout();
+
   // size select
   const select = document.getElementById('page-size-select');
   select.value = pageSize;
@@ -156,6 +177,29 @@ const allPosts = page.data.map(post => ({
   .size-select:focus {
     outline: none;
     border-color: #b5352a;
+  }
+
+  /* ── Layout switcher（スマホのみ） ── */
+  .layout-switcher {
+    display: none;
+    margin-left: auto;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .layout-btn {
+    border: none;
+    background: transparent;
+    padding: 4px 14px;
+    font-size: 0.82rem;
+    font-family: inherit;
+    color: #999;
+    cursor: pointer;
+  }
+  .layout-btn[aria-pressed="true"] {
+    background: #b5352a;
+    color: #fff;
   }
 
   .post-grid {
@@ -239,6 +283,26 @@ const allPosts = page.data.map(post => ({
   .page-info {
     font-size: 0.82rem;
     color: #bbb;
+  }
+  @media (max-width: 640px) {
+    .layout-switcher { display: flex; }
+    .post-grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .post-grid.cols-2 .post-card { border-radius: 12px; }
+    .post-grid.cols-2 .card-thumb { aspect-ratio: 1 / 1; }
+    .post-grid.cols-2 .card-body { padding: 10px 12px 12px; }
+    .post-grid.cols-2 .card-body time { font-size: 0.68rem; }
+    .post-grid.cols-2 .card-body h2 {
+      font-size: 0.85rem;
+      margin: 4px 0 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .post-grid.cols-2 .card-body p { display: none; }
   }
   .search-link { margin: -0.5rem 0 1.2rem; font-size: 0.85rem; }
   .search-link a { color: #b5352a; text-decoration: none; border-bottom: 1px solid #f0c9c2; }
